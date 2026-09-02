@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 
-import { ChartRenderer, DataComponent, MetricCard, useDataApp } from "../../data-app-public.jsx";
+import { ChartRenderer, DataComponent, DataTable, MetricCard, useDataApp } from "../../data-app-public.jsx";
 
 const statusSpec = { type: "bar", x: "category", y: "startups", showXAxisLabel: false, showYAxisLabel: false };
 const stageSpec = { type: "rankedList", x: "stage", y: "startups", initialVisibleCount: 6 };
