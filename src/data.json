@@ -14,10 +14,10 @@
       "rows": [
         {
           "directoryStartups": 66,
-          "researched": 53,
-          "nonMainnet": 27,
-          "mainnetQueue": 26,
-          "completionRate": 0.803030303030303
+          "researched": 66,
+          "nonMainnet": 33,
+          "mainnetQueue": 33,
+          "completionRate": 1
         }
       ],
       "source": {
@@ -62,27 +62,31 @@
       "rows": [
         {
           "category": "Devnet/testnet",
-          "startups": 3
-        },
-        {
-          "category": "Unverified",
-          "startups": 8
-        },
-        {
-          "category": "Mainnet",
-          "startups": 22
-        },
-        {
-          "category": "Infrastructure",
-          "startups": 2
-        },
-        {
-          "category": "Off-chain",
-          "startups": 10
+          "startups": 4
         },
         {
           "category": "Historical mainnet",
           "startups": 2
+        },
+        {
+          "category": "Inactive",
+          "startups": 1
+        },
+        {
+          "category": "Infrastructure",
+          "startups": 3
+        },
+        {
+          "category": "Mainnet",
+          "startups": 29
+        },
+        {
+          "category": "Mainnet infrastructure",
+          "startups": 2
+        },
+        {
+          "category": "Off-chain",
+          "startups": 12
         },
         {
           "category": "Pre-launch",
@@ -93,12 +97,8 @@
           "startups": 1
         },
         {
-          "category": "Mainnet infrastructure",
-          "startups": 2
-        },
-        {
-          "category": "Inactive",
-          "startups": 1
+          "category": "Unverified",
+          "startups": 10
         }
       ],
       "source": {
@@ -120,27 +120,19 @@
     "researched_stages": {
       "rows": [
         {
-          "stage": "Raising pre-seed",
-          "startups": 3
-        },
-        {
-          "stage": "Self-funded",
+          "stage": "Acquired",
           "startups": 1
-        },
-        {
-          "stage": "Pre-seed closed",
-          "startups": 1
-        },
-        {
-          "stage": "Wound Down",
-          "startups": 4
         },
         {
           "stage": "Early Development",
           "startups": 5
         },
         {
-          "stage": "Seed Closed",
+          "stage": "Not publicly verified",
+          "startups": 22
+        },
+        {
+          "stage": "Not Raising (Self Funded)",
           "startups": 5
         },
         {
@@ -148,28 +140,28 @@
           "startups": 2
         },
         {
-          "stage": "Raising Pre-Seed",
-          "startups": 9
+          "stage": "Pre-seed closed",
+          "startups": 6
         },
         {
-          "stage": "Pre-Seed Closed",
-          "startups": 5
-        },
-        {
-          "stage": "Not Raising (Self Funded)",
-          "startups": 5
+          "stage": "Raising pre-seed",
+          "startups": 12
         },
         {
           "stage": "Raising Seed",
           "startups": 3
         },
         {
-          "stage": "Not publicly verified",
-          "startups": 9
+          "stage": "Seed Closed",
+          "startups": 5
         },
         {
-          "stage": "Acquired",
+          "stage": "Self-funded",
           "startups": 1
+        },
+        {
+          "stage": "Wound Down",
+          "startups": 4
         }
       ],
       "source": {
@@ -193,14 +185,14 @@
         {
           "startup": "Fanplay / WTF Games",
           "network": "Mainnet + hybrid",
-          "entryPoint": "Missing - attribution required",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Identify one legitimate deposit, withdrawal or bet transaction, verify the receiving entity and expand it into an operational-wallet cluster.",
           "status": "Queued"
         },
         {
           "startup": "Fundl",
           "network": "Historical Solana mainnet + hybrid",
-          "entryPoint": "Missing - attribution required",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Discover or obtain a historical Fundl transaction, campaign wallet, treasury, vault or program address, confirm its attribution, and use it to reconstruct historical users, contributions and USDC/SOL volume.",
           "status": "Queued"
         },
@@ -214,162 +206,211 @@
         {
           "startup": "AgriDex",
           "network": "Claimed Solana mainnet settlement",
-          "entryPoint": "Missing - attribution required",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Obtain one officially attributable settlement transaction, program, treasury or operational wallet before calculating users, transactions, stablecoin volume or corridor activity.",
           "status": "Queued"
         },
         {
           "startup": "Makina Finance",
           "network": "Cross-chain EVM DeFi execution and vault infrastructure",
-          "entryPoint": "Missing - attribution required",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Obtain verified contracts from official documentation",
           "status": "Queued"
         },
         {
           "startup": "HawkFi",
           "network": "Solana mainnet liquidity-management product",
-          "entryPoint": "Missing - attribution required",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Verify program IDs and vault accounts",
           "status": "Queued"
         },
         {
           "startup": "Zynta",
           "network": "Stablecoin payment infrastructure with mainnet activity requiring attribution",
-          "entryPoint": "Missing - attribution required",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Identify settlement chains",
           "status": "Queued"
         },
         {
           "startup": "Agant",
           "network": "Multi-chain GBP stablecoin infrastructure",
-          "entryPoint": "Missing - attribution required",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Verify official GBPA mint on each supported chain",
           "status": "Queued"
         },
         {
           "startup": "BananaZone",
           "network": "Solana paid-play functionality requires operational-address verification",
-          "entryPoint": "Missing - attribution required",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Identify escrow, treasury and settlement addresses",
           "status": "Queued"
         },
         {
           "startup": "Saga Monkes",
           "network": "Solana mainnet NFT collections",
-          "entryPoint": "Missing - attribution required",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Verify every official collection address",
           "status": "Queued"
         },
         {
           "startup": "Pyra",
           "network": "DeFi product with mainnet activity requiring contract attribution",
-          "entryPoint": "Missing - attribution required",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Verify official contracts and supported chains",
           "status": "Queued"
         },
         {
           "startup": "dWallet Labs / Ika",
           "network": "Ika beta on Sui; Solana described as pre-alpha",
-          "entryPoint": "Missing - attribution required",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Verify official package IDs, contracts and network addresses",
           "status": "Queued"
         },
         {
           "startup": "LivingIP",
           "network": "Reported as launched on Solana in 2022",
-          "entryPoint": "Historical entry point missing",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Verify historical Solana program and asset addresses",
           "status": "Queued"
         },
         {
           "startup": "Poll.fun",
           "network": "Uses USDC balances and Solana withdrawals; operational entry point unverified",
-          "entryPoint": "Missing - attribution required",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Perform a controlled deposit/withdrawal trace if authorised and economically sensible",
           "status": "Queued"
         },
         {
           "startup": "Reflect",
           "network": "Solana-native yield-bearing stablecoin infrastructure",
-          "entryPoint": "Missing - attribution required",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Verify mint/program IDs/vaults/treasuries/strategy accounts",
           "status": "Queued"
         },
         {
           "startup": "Rise of the Gorecats",
           "network": "Current game primarily off-chain; historical Web3 collectibles may exist",
-          "entryPoint": "Historical entry point missing",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Authenticate collections and chain",
           "status": "Queued"
         },
         {
           "startup": "Legion",
           "network": "MiCA-compliant token-sale and fundraising platform",
-          "entryPoint": "Missing - attribution required",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Authenticate official contracts per chain",
           "status": "Queued"
         },
         {
           "startup": "ReFi Hub",
           "network": "Energy infrastructure investment with on-chain cash-flow distribution",
-          "entryPoint": "Missing - attribution required",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Authenticate asset tokens, investment contracts, treasury/distribution wallets",
           "status": "Queued"
         },
         {
           "startup": "Raiku",
           "network": "Solana validator client supporting compute reservations and MEV bundles",
-          "entryPoint": "Missing - attribution required",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Authenticate validator identities, vote/stake accounts, programs/service addresses",
           "status": "Queued"
         },
         {
           "startup": "Otus",
           "network": "Automated allocation across on-chain financial products",
-          "entryPoint": "Missing - attribution required",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Authenticate networks, protocols, vault/router/smart-account addresses",
           "status": "Queued"
         },
         {
           "startup": "cherry.fun",
           "network": "Live Solana wallet-based messaging and social application",
-          "entryPoint": "Missing - attribution required",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Identify verified operational programs, wallets or transaction entry points before calculating activity.",
           "status": "Queued"
         },
         {
           "startup": "Vanish",
           "network": "Live private-trading infrastructure and API using disposable Solana trading accounts and Jito-related execution",
-          "entryPoint": "Missing - attribution required",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Verify its program, operational wallets or identifiable transaction pattern before counting activity.",
           "status": "Queued"
         },
         {
           "startup": "Darklake",
           "network": "Historical Solana mainnet trading and zero-knowledge liquidity infrastructure",
-          "entryPoint": "Historical entry point missing",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Separate pre-acquisition Darklake activity from any later operator activity.",
           "status": "Queued"
         },
         {
           "startup": "FairScale",
           "network": "Mainnet and token-related evidence exists for a reputation and scoring API",
-          "entryPoint": "Missing - attribution required",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Verify the official mint, program or operational wallet before market/on-chain analysis.",
           "status": "Queued"
         },
         {
           "startup": "Xeno Money",
           "network": "Live contactless stablecoin payment product with mainnet-facing settlement rails",
-          "entryPoint": "Missing - attribution required",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Identify supported stablecoin rails and verified operational transaction entry points.",
           "status": "Queued"
         },
         {
           "startup": "Altify",
           "network": "Live regulated custodial digital-asset brokerage and investment platform",
-          "entryPoint": "Missing - attribution required",
+          "entryPoint": "Not publicly verified",
           "nextAction": "Request or identify attributable operational wallets before measuring flows.",
+          "status": "Queued"
+        },
+        {
+          "startup": "Yield OS",
+          "network": "Project-claimed Solana mainnet; production address not publicly verified.",
+          "entryPoint": "Not publicly verified",
+          "nextAction": null,
+          "status": "Queued"
+        },
+        {
+          "startup": "Tramplin.io",
+          "network": "Live Solana mainnet",
+          "entryPoint": "Not publicly verified",
+          "nextAction": null,
+          "status": "Queued"
+        },
+        {
+          "startup": "DegenDome",
+          "network": "Live Solana-facing product",
+          "entryPoint": "Not publicly verified",
+          "nextAction": null,
+          "status": "Queued"
+        },
+        {
+          "startup": "Soilonic",
+          "network": "Public Solana token-market evidence; official mint attribution incomplete",
+          "entryPoint": "Not publicly verified",
+          "nextAction": null,
+          "status": "Queued"
+        },
+        {
+          "startup": "Prob Trade",
+          "network": "Project-claimed live Solana mainnet functionality",
+          "entryPoint": "Not publicly verified",
+          "nextAction": null,
+          "status": "Queued"
+        },
+        {
+          "startup": "Parasol",
+          "network": "Live Solana-facing analytical product",
+          "entryPoint": "Not publicly verified",
+          "nextAction": null,
+          "status": "Queued"
+        },
+        {
+          "startup": "Bonfires.ai",
+          "network": "Live product with Ethereum NFT evidence",
+          "entryPoint": "Not publicly verified",
+          "nextAction": null,
           "status": "Queued"
         }
       ],
@@ -3711,6 +3752,832 @@
           "outstandingAnalysis": [
             "Request or identify attributable operational wallets before measuring flows."
           ]
+        },
+        {
+          "id": "STUK-054",
+          "startup": "Yield OS",
+          "monogram": "YO",
+          "founder": "Ediris Mohamed",
+          "founderVerification": "Official company/founder profiles",
+          "website": "https://yieldos.fi",
+          "sector": "DeFi / RWA / Yield infrastructure",
+          "directoryStage": "Not publicly verified",
+          "observedStatus": "Public project presence; known previous identity Chainvest",
+          "technicalStatus": "Project-claimed Solana mainnet; production address not publicly verified.",
+          "technicalState": "Mainnet",
+          "classification": "Mainnet candidate",
+          "queue": "Mainnet Analysis Queue",
+          "analysisStatus": "Address-led mainnet research required",
+          "summary": "Infrastructure for programmable yield across staking, stablecoins, RWAs and credit markets.",
+          "canonicalFinding": "Yield OS evolved from Chainvest into programmable-yield infrastructure. Its public company materials state that it is live on Solana mainnet, but an attributable production contract or program remains unavailable.",
+          "projectReportedMetrics": [],
+          "dataQualityNotes": [
+            "Known previous identity: Chainvest.",
+            "Operator: Falcrow Labs Inc.",
+            "Do not describe Yield OS as a verified mainnet protocol without an attributable production address."
+          ],
+          "outstandingAnalysis": [
+            "Obtain the production program ID, contract, treasury or an official transaction signature before calculating users, volume, deposits or yield distributed."
+          ],
+          "sources": [
+            "https://yieldos.fi",
+            "https://ie.linkedin.com/company/yieldos",
+            "https://uk.linkedin.com/in/ediris"
+          ],
+          "logoPath": null,
+          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoAuditSources": [
+            "Official website returned 404 during the 2026-09-02 asset audit; official LinkedIn pages did not provide a safely downloadable project asset."
+          ],
+          "logoSourceUrl": null,
+          "stage": "Not publicly verified",
+          "productStatus": "Public project presence; known previous identity Chainvest",
+          "oneLine": "Infrastructure for programmable yield across staking, stablecoins, RWAs and credit markets.",
+          "finding": "Yield OS evolved from Chainvest into programmable-yield infrastructure. Its public company materials state that it is live on Solana mainnet, but an attributable production contract or program remains unavailable.",
+          "whatItBuilds": "Infrastructure for programmable yield across staking, stablecoins, RWAs and credit markets.",
+          "productEvidence": "Public project presence; known previous identity Chainvest",
+          "chainEvidence": "Analysis outstanding",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "verifiedMetrics": [],
+          "metrics": [],
+          "completedAnalysis": [
+            "Canonical identity and product classification completed"
+          ],
+          "technicalEntryPoints": [],
+          "logo": null,
+          "logoSource": null,
+          "logoVerificationStatus": "monogram-no-downloadable-asset",
+          "logoSourceType": "monogram-no-downloadable-asset",
+          "lastReviewed": "2026-09-02"
+        },
+        {
+          "id": "STUK-055",
+          "startup": "Tramplin.io",
+          "monogram": "TR",
+          "founder": "Not publicly verified",
+          "website": "https://tramplin.io",
+          "sector": "DeFi / Staking",
+          "directoryStage": "Not publicly verified",
+          "observedStatus": "Live; official public launch reported 4 February 2026",
+          "technicalStatus": "Live Solana mainnet",
+          "technicalState": "Mainnet",
+          "classification": "Mainnet",
+          "queue": "Mainnet Analysis Queue",
+          "analysisStatus": "Address-led mainnet research required",
+          "summary": "Non-custodial prize-linked native SOL staking that pools rewards for periodic prize allocations.",
+          "canonicalFinding": "Tramplin is a live Solana-native staking product with sufficient mainnet evidence for address-led analysis, but reported staking totals must be reproduced from verified validator and operational addresses.",
+          "projectReportedMetrics": [
+            {
+              "label": "SOL staked",
+              "value": "149,681 SOL",
+              "qualifier": "Project-reported after approximately ten days of public operation",
+              "sourceUrl": "https://blog.tramplin.io/"
+            },
+            {
+              "label": "Approximate value",
+              "value": "$12.7 million",
+              "qualifier": "Project-reported equivalent",
+              "sourceUrl": "https://blog.tramplin.io/"
+            },
+            {
+              "label": "Weekly SOL added",
+              "value": "43,500 SOL",
+              "qualifier": "Project-reported for the preceding week",
+              "sourceUrl": "https://blog.tramplin.io/"
+            }
+          ],
+          "dataQualityNotes": [
+            "MixBytes audit information and Gate Wallet integration are project-published evidence.",
+            "Reported staking totals are not independently reproduced."
+          ],
+          "outstandingAnalysis": [
+            "Identify official validator vote and stake accounts",
+            "Verify program IDs, treasury and reward-distribution transactions",
+            "Calculate stakers, deposits, withdrawals, net growth, rewards, retention, concentration and transaction success"
+          ],
+          "sources": [
+            "https://tramplin.io",
+            "https://blog.tramplin.io/",
+            "https://www.linkedin.com/company/tramplin-io"
+          ],
+          "logoPath": null,
+          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoAuditSources": [
+            "Official website favicon referenced the project CDN, but the official CDN repeatedly closed the download connection during the 2026-09-02 audit."
+          ],
+          "logoSourceUrl": null,
+          "stage": "Not publicly verified",
+          "productStatus": "Live; official public launch reported 4 February 2026",
+          "oneLine": "Non-custodial prize-linked native SOL staking that pools rewards for periodic prize allocations.",
+          "finding": "Tramplin is a live Solana-native staking product with sufficient mainnet evidence for address-led analysis, but reported staking totals must be reproduced from verified validator and operational addresses.",
+          "whatItBuilds": "Non-custodial prize-linked native SOL staking that pools rewards for periodic prize allocations.",
+          "productEvidence": "Live; official public launch reported 4 February 2026",
+          "chainEvidence": "Analysis outstanding",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "verifiedMetrics": [],
+          "metrics": [],
+          "completedAnalysis": [
+            "Canonical identity and product classification completed"
+          ],
+          "technicalEntryPoints": [],
+          "logo": null,
+          "logoSource": null,
+          "logoVerificationStatus": "monogram-no-downloadable-asset",
+          "logoSourceType": "monogram-no-downloadable-asset",
+          "lastReviewed": "2026-09-02"
+        },
+        {
+          "id": "STUK-056",
+          "startup": "DegenDome",
+          "monogram": "DD",
+          "founder": "Not publicly verified",
+          "xAccount": "https://x.com/DegenDomeSolana",
+          "website": "https://degendome.xyz/",
+          "sector": "AI / Trading / Gaming",
+          "directoryStage": "Not publicly verified",
+          "observedStatus": "Live public product",
+          "technicalStatus": "Live Solana-facing product",
+          "technicalState": "Mainnet",
+          "classification": "Mainnet",
+          "queue": "Mainnet Analysis Queue",
+          "analysisStatus": "Address-led mainnet research required",
+          "summary": "Competitive AI-agent trading arena where bots compete in leveraged trading duels using live market data.",
+          "canonicalFinding": "The product is publicly accessible and presents itself as a Solana trading arena, but its official operational program, trading accounts and settlement wallets must still be identified before activity can be measured.",
+          "projectReportedMetrics": [],
+          "dataQualityNotes": [
+            "Project claims first place in the Colosseum Agent Hackathon and identifies Solana and Pyth infrastructure.",
+            "Do not attach a DegenDome or DOME mint without direct first-party endorsement of the exact address."
+          ],
+          "outstandingAnalysis": [
+            "Identify program ID, trading and settlement wallets, vaults, markets, battle instructions, deposits, payouts and any official mint",
+            "Calculate funded users, bots, battles, volume, win/loss distribution, payouts and retention"
+          ],
+          "sources": [
+            "https://degendome.xyz/",
+            "https://x.com/DegenDomeSolana",
+            "https://bags.fm/apps/b174c284-2ec8-4b57-972d-bf297f6bfc2f"
+          ],
+          "logoPath": "/brands/startups/degendome.png",
+          "logoAuditCategory": "authenticated-app-icon",
+          "logoAuditSources": [
+            "Official website 192px application icon"
+          ],
+          "logoSourceUrl": "https://degendome.xyz/icon-192.png",
+          "stage": "Not publicly verified",
+          "productStatus": "Live public product",
+          "oneLine": "Competitive AI-agent trading arena where bots compete in leveraged trading duels using live market data.",
+          "finding": "The product is publicly accessible and presents itself as a Solana trading arena, but its official operational program, trading accounts and settlement wallets must still be identified before activity can be measured.",
+          "whatItBuilds": "Competitive AI-agent trading arena where bots compete in leveraged trading duels using live market data.",
+          "productEvidence": "Live public product",
+          "chainEvidence": "Analysis outstanding",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "verifiedMetrics": [],
+          "metrics": [],
+          "completedAnalysis": [
+            "Canonical identity and product classification completed"
+          ],
+          "technicalEntryPoints": [],
+          "logo": "/brands/startups/degendome.png",
+          "logoSource": "https://degendome.xyz/icon-192.png",
+          "logoVerificationStatus": "authenticated-app-icon",
+          "logoSourceType": "authenticated-app-icon",
+          "lastReviewed": "2026-09-02"
+        },
+        {
+          "id": "STUK-057",
+          "startup": "Cluck Rush",
+          "monogram": "CR",
+          "founder": "Not publicly verified",
+          "website": "https://cluckrush.fun/",
+          "sector": "Gaming / Wagering",
+          "directoryStage": "Not publicly verified",
+          "observedStatus": "Public product site and signup/waitlist",
+          "technicalStatus": "Solana wagering claim; operational mainnet activity not verified",
+          "technicalState": "Unverified",
+          "classification": "Pre-launch / mainnet unverified",
+          "queue": "Non-Mainnet Research",
+          "analysisStatus": "Production entry point not verified",
+          "summary": "Skill-based player-versus-player wagering game presented as operating on Solana.",
+          "canonicalFinding": "Cluck Rush has a public-facing product and Solana wagering claim, but no verified mainnet program, treasury, wager transaction or payout signature was found.",
+          "projectReportedMetrics": [],
+          "dataQualityNotes": [
+            "A signup or waitlist does not prove completed mainnet wagers or payouts.",
+            "Move to Queue B only after a mainnet entry point or verifiable production transaction is confirmed."
+          ],
+          "outstandingAnalysis": [
+            "Request program ID, wager vault, treasury, example wager and payout transactions, launch confirmation and public user or match metrics"
+          ],
+          "sources": [
+            "https://cluckrush.fun/",
+            "https://www.youtube.com/@playsolana"
+          ],
+          "logoPath": "/brands/startups/cluck-rush.png",
+          "logoAuditCategory": "authenticated-favicon",
+          "logoAuditSources": [
+            "Official website favicon and apple-touch icon"
+          ],
+          "logoSourceUrl": "https://cluckrush.fun/favicon.png",
+          "stage": "Not publicly verified",
+          "productStatus": "Public product site and signup/waitlist",
+          "oneLine": "Skill-based player-versus-player wagering game presented as operating on Solana.",
+          "finding": "Cluck Rush has a public-facing product and Solana wagering claim, but no verified mainnet program, treasury, wager transaction or payout signature was found.",
+          "whatItBuilds": "Skill-based player-versus-player wagering game presented as operating on Solana.",
+          "productEvidence": "Public product site and signup/waitlist",
+          "chainEvidence": "Not publicly verifiable",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "verifiedMetrics": [],
+          "metrics": [],
+          "completedAnalysis": [
+            "Canonical identity and product classification completed"
+          ],
+          "technicalEntryPoints": [],
+          "logo": "/brands/startups/cluck-rush.png",
+          "logoSource": "https://cluckrush.fun/favicon.png",
+          "logoVerificationStatus": "authenticated-favicon",
+          "logoSourceType": "authenticated-favicon",
+          "lastReviewed": "2026-09-02"
+        },
+        {
+          "id": "STUK-058",
+          "startup": "Soilonic",
+          "monogram": "SO",
+          "founder": "Benjamin Eymère",
+          "founderVerification": "Official project/company evidence",
+          "website": "https://soilonic.com/",
+          "sector": "RWA / Regenerative finance / Agriculture",
+          "directoryStage": "Not publicly verified",
+          "observedStatus": "Public token/RWA project",
+          "technicalStatus": "Public Solana token-market evidence; official mint attribution incomplete",
+          "technicalState": "Mainnet",
+          "classification": "Mainnet candidate",
+          "queue": "Mainnet Analysis Queue",
+          "analysisStatus": "Token-address verification required",
+          "summary": "A proposed tradeable token backed by healthy fertile soil, regenerative farmland and soil-related assets.",
+          "canonicalFinding": "Soilonic has a clear token/RWA proposition and public same-name token evidence, but the canonical Solana mint has not been authenticated through a project-controlled source.",
+          "projectReportedMetrics": [
+            {
+              "label": "Investment commitment",
+              "value": "$50 million",
+              "qualifier": "Externally reported commitment; not verified funding received",
+              "sourceUrl": "https://wwd.com/sourcing-journal/industry-news/soil-balenciaga-bag-soilonic-token-crypto-currency-solana-1238857315/"
+            }
+          ],
+          "dataQualityNotes": [
+            "$SOILO is referenced publicly, but no mint is canonical until first-party confirmation.",
+            "Do not report token holders, liquidity, ATH, ATL or market capitalisation before official attribution."
+          ],
+          "outstandingAnalysis": [
+            "Confirm official mint, issuing entity, treasury, custody, redemption, asset backing, holder rights and launch date",
+            "After confirmation calculate holders, transfers, concentration, liquidity, volume, treasury flows and redemptions"
+          ],
+          "sources": [
+            "https://soilonic.com/",
+            "https://www.linkedin.com/company/soilonic",
+            "https://www.instagram.com/soilonic_/",
+            "https://wwd.com/sourcing-journal/industry-news/soil-balenciaga-bag-soilonic-token-crypto-currency-solana-1238857315/"
+          ],
+          "logoPath": "/brands/startups/soilonic.svg",
+          "logoAuditCategory": "authenticated-favicon",
+          "logoAuditSources": [
+            "Official website SVG favicon"
+          ],
+          "logoSourceUrl": "https://soilonic.com/favicon.svg",
+          "stage": "Not publicly verified",
+          "productStatus": "Public token/RWA project",
+          "oneLine": "A proposed tradeable token backed by healthy fertile soil, regenerative farmland and soil-related assets.",
+          "finding": "Soilonic has a clear token/RWA proposition and public same-name token evidence, but the canonical Solana mint has not been authenticated through a project-controlled source.",
+          "whatItBuilds": "A proposed tradeable token backed by healthy fertile soil, regenerative farmland and soil-related assets.",
+          "productEvidence": "Public token/RWA project",
+          "chainEvidence": "Analysis outstanding",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "verifiedMetrics": [],
+          "metrics": [],
+          "completedAnalysis": [
+            "Canonical identity and product classification completed"
+          ],
+          "technicalEntryPoints": [],
+          "logo": "/brands/startups/soilonic.svg",
+          "logoSource": "https://soilonic.com/favicon.svg",
+          "logoVerificationStatus": "authenticated-favicon",
+          "logoSourceType": "authenticated-favicon",
+          "lastReviewed": "2026-09-02"
+        },
+        {
+          "id": "STUK-059",
+          "startup": "Coldstar",
+          "monogram": "CS",
+          "founder": "Syrem / verified repository owner where supported",
+          "founderVerification": "Repository-linked developer identity; full legal identity not publicly verified",
+          "xAccount": "https://x.com/buildcoldstar",
+          "website": "https://github.com/devsyrem/coldstar",
+          "sector": "Wallet infrastructure / Security / Developer tooling",
+          "directoryStage": "Not publicly verified",
+          "observedStatus": "Open-source product and demonstrations",
+          "technicalStatus": "Open-source off-chain signing infrastructure",
+          "technicalState": "Infrastructure",
+          "classification": "Off-chain tooling",
+          "queue": "Non-Mainnet Research",
+          "analysisStatus": "Off-chain product analysis",
+          "summary": "CLI-first cold-wallet tooling that turns a USB drive into a disposable RAM-only air-gapped Solana signing medium.",
+          "canonicalFinding": "Coldstar has verifiable open-source software and real product demonstrations, but no unique production protocol address through which user activity can be comprehensively measured.",
+          "projectReportedMetrics": [],
+          "dataQualityNotes": [
+            "Coldstar-signed transactions do not automatically identify themselves as Coldstar-generated.",
+            "Do not associate an unrelated $COLD token without first-party mint confirmation."
+          ],
+          "outstandingAnalysis": [
+            "Measure releases, commits, contributors, stars, forks, downloads, installations, demonstrated users, signed releases, security reviews and integrations"
+          ],
+          "sources": [
+            "https://github.com/devsyrem/coldstar",
+            "https://github.com/ExpertVagabond/coldstar-colosseum",
+            "https://x.com/buildcoldstar",
+            "https://uk.linkedin.com/company/superteam-ireland"
+          ],
+          "logoPath": null,
+          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoAuditSources": [
+            "Official repositories and X identity checked; no distinct project-controlled downloadable logo was established."
+          ],
+          "logoSourceUrl": null,
+          "stage": "Not publicly verified",
+          "productStatus": "Open-source product and demonstrations",
+          "oneLine": "CLI-first cold-wallet tooling that turns a USB drive into a disposable RAM-only air-gapped Solana signing medium.",
+          "finding": "Coldstar has verifiable open-source software and real product demonstrations, but no unique production protocol address through which user activity can be comprehensively measured.",
+          "whatItBuilds": "CLI-first cold-wallet tooling that turns a USB drive into a disposable RAM-only air-gapped Solana signing medium.",
+          "productEvidence": "Open-source product and demonstrations",
+          "chainEvidence": "Not publicly verifiable",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "verifiedMetrics": [],
+          "metrics": [],
+          "completedAnalysis": [
+            "Canonical identity and product classification completed"
+          ],
+          "technicalEntryPoints": [],
+          "logo": null,
+          "logoSource": null,
+          "logoVerificationStatus": "monogram-no-downloadable-asset",
+          "logoSourceType": "monogram-no-downloadable-asset",
+          "lastReviewed": "2026-09-02"
+        },
+        {
+          "id": "STUK-060",
+          "startup": "Fitter Circle",
+          "monogram": "FC",
+          "founder": "Vijendra Kunwar",
+          "founderVerification": "Official company evidence where supported",
+          "website": "https://www.fittercircle.com/",
+          "sector": "Consumer / AI / FinTech",
+          "directoryStage": "Not publicly verified",
+          "observedStatus": "Live Apple App Store product",
+          "technicalStatus": "Live off-chain consumer application",
+          "technicalState": "Off-chain",
+          "classification": "Off-chain",
+          "queue": "Non-Mainnet Research",
+          "analysisStatus": "Product analytics required",
+          "summary": "AI-powered cashback, voucher and product-discovery application operated by Fitter Circle Ltd.",
+          "canonicalFinding": "Fitter Circle is a live consumer cashback application, but its measurable operational activity is held in private application analytics rather than an attributable blockchain protocol.",
+          "projectReportedMetrics": [
+            {
+              "label": "Redemption threshold",
+              "value": "1,000 points = £10",
+              "qualifier": "Official terms; time-sensitive product rule",
+              "sourceUrl": "https://www.fittercircle.com/terms"
+            }
+          ],
+          "dataQualityNotes": [
+            "Users must register, be 18+ and UK resident according to official terms.",
+            "Cashback points are account-bound and non-transferable, not automatically cryptocurrency.",
+            "Do not associate a same-name $FIT token without exact first-party mint confirmation."
+          ],
+          "outstandingAnalysis": [
+            "Request users, MAU, purchases, GMV, cashback issued/redeemed, repeat purchase, retail partners, retention and AI-search conversion"
+          ],
+          "sources": [
+            "https://www.fittercircle.com/",
+            "https://www.fittercircle.com/terms",
+            "https://apps.apple.com/gb/app/fitter-circle/id6751108650",
+            "https://www.linkedin.com/company/fitter-circle"
+          ],
+          "logoPath": "/brands/startups/fitter-circle.png",
+          "logoAuditCategory": "authenticated-app-icon",
+          "logoAuditSources": [
+            "Official website apple-touch application icon"
+          ],
+          "logoSourceUrl": "https://www.fittercircle.com/apple-touch-icon.png",
+          "stage": "Not publicly verified",
+          "productStatus": "Live Apple App Store product",
+          "oneLine": "AI-powered cashback, voucher and product-discovery application operated by Fitter Circle Ltd.",
+          "finding": "Fitter Circle is a live consumer cashback application, but its measurable operational activity is held in private application analytics rather than an attributable blockchain protocol.",
+          "whatItBuilds": "AI-powered cashback, voucher and product-discovery application operated by Fitter Circle Ltd.",
+          "productEvidence": "Live Apple App Store product",
+          "chainEvidence": "Not publicly verifiable",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "verifiedMetrics": [],
+          "metrics": [],
+          "completedAnalysis": [
+            "Canonical identity and product classification completed"
+          ],
+          "technicalEntryPoints": [],
+          "logo": "/brands/startups/fitter-circle.png",
+          "logoSource": "https://www.fittercircle.com/apple-touch-icon.png",
+          "logoVerificationStatus": "authenticated-app-icon",
+          "logoSourceType": "authenticated-app-icon",
+          "lastReviewed": "2026-09-02"
+        },
+        {
+          "id": "STUK-061",
+          "startup": "Nexus AI",
+          "monogram": "NA",
+          "founder": "Not publicly verified",
+          "founderVerification": "Identity unresolved",
+          "sector": "AI / Unresolved",
+          "directoryStage": "Not publicly verified",
+          "observedStatus": "Identity unresolved",
+          "technicalStatus": "Unverified",
+          "technicalState": "Unverified",
+          "classification": "Identity unresolved",
+          "queue": "Non-Mainnet Research",
+          "analysisStatus": "Identity verification required",
+          "summary": "A Superteam UK-referenced startup whose official company and product identity remain unresolved.",
+          "canonicalFinding": "The directory startup’s canonical identity remains unresolved, so product and on-chain claims cannot be safely attributed.",
+          "projectReportedMetrics": [],
+          "dataQualityNotes": [
+            "Do not connect this record to Nexus AI Data Labs, AI storage, construction AI, same-name tokens or other Nexus companies without direct directory evidence."
+          ],
+          "outstandingAnalysis": [
+            "Request the canonical founder contact, website and official social account from Superteam UK"
+          ],
+          "sources": [
+            "https://www.linkedin.com/posts/capinuk_7-funds-7-founders-1-london-demo-dinner-activity-7460277231190360064-beK0"
+          ],
+          "logoPath": null,
+          "logoAuditCategory": "monogram-identity-unresolved",
+          "logoAuditSources": [
+            "Identity collision audit completed; no official project-controlled source can yet be attributed safely."
+          ],
+          "logoSourceUrl": null,
+          "stage": "Not publicly verified",
+          "productStatus": "Identity unresolved",
+          "oneLine": "A Superteam UK-referenced startup whose official company and product identity remain unresolved.",
+          "finding": "The directory startup’s canonical identity remains unresolved, so product and on-chain claims cannot be safely attributed.",
+          "whatItBuilds": "A Superteam UK-referenced startup whose official company and product identity remain unresolved.",
+          "productEvidence": "Identity unresolved",
+          "chainEvidence": "Not publicly verifiable",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "verifiedMetrics": [],
+          "metrics": [],
+          "completedAnalysis": [
+            "Canonical identity and product classification completed"
+          ],
+          "technicalEntryPoints": [],
+          "logo": null,
+          "logoSource": null,
+          "logoVerificationStatus": "monogram-identity-unresolved",
+          "logoSourceType": "monogram-identity-unresolved",
+          "lastReviewed": "2026-09-02"
+        },
+        {
+          "id": "STUK-062",
+          "startup": "Percolator",
+          "monogram": "PE",
+          "founder": "Khubair Nasir (directory-linked, if confirmed)",
+          "founderVerification": "Directory-linked relationship requires confirmation; protocol repositories originate from Anatoly Yakovenko",
+          "website": "https://github.com/aeyakovenko/percolator",
+          "sector": "DeFi / Perpetual futures / Infrastructure",
+          "directoryStage": "Not publicly verified",
+          "observedStatus": "Experimental repositories and devnet configuration",
+          "technicalStatus": "Solana devnet / experimental",
+          "technicalState": "Devnet/testnet",
+          "classification": "Devnet",
+          "queue": "Non-Mainnet Research",
+          "analysisStatus": "Devnet report required",
+          "summary": "Experimental Solana perpetual-futures risk engine and program architecture.",
+          "canonicalFinding": "Percolator has public program code and a documented devnet entry point, but no verified production mainnet deployment was established.",
+          "projectReportedMetrics": [],
+          "technicalEntryPoints": [
+            {
+              "name": "Percolator devnet program",
+              "network": "Solana Devnet",
+              "address": "2SSnp35m7FQ7cRLNKGdW5UzjYFF6RBUNq7d3m5mqNByp",
+              "type": "Experimental program",
+              "attributionStatus": "Documented in the official public CLI configuration; devnet only",
+              "explorerUrl": "https://explorer.solana.com/address/2SSnp35m7FQ7cRLNKGdW5UzjYFF6RBUNq7d3m5mqNByp?cluster=devnet"
+            }
+          ],
+          "dataQualityNotes": [
+            "Official repositories describe the software as experimental, unaudited, educational and unsuitable for production or real funds.",
+            "Do not merge unofficial forks or treat the devnet program as mainnet."
+          ],
+          "outstandingAnalysis": [
+            "Report devnet signatures, instruction success/failure, signers, accounts, markets, activity dates, instruction distribution and developer deployment periods"
+          ],
+          "sources": [
+            "https://github.com/aeyakovenko/percolator",
+            "https://github.com/aeyakovenko/percolator-prog",
+            "https://github.com/aeyakovenko/percolator-cli"
+          ],
+          "logoPath": null,
+          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoAuditSources": [
+            "Official protocol repositories checked; no distinct project-controlled brand asset was established."
+          ],
+          "logoSourceUrl": null,
+          "stage": "Not publicly verified",
+          "productStatus": "Experimental repositories and devnet configuration",
+          "oneLine": "Experimental Solana perpetual-futures risk engine and program architecture.",
+          "finding": "Percolator has public program code and a documented devnet entry point, but no verified production mainnet deployment was established.",
+          "whatItBuilds": "Experimental Solana perpetual-futures risk engine and program architecture.",
+          "productEvidence": "Experimental repositories and devnet configuration",
+          "chainEvidence": "Not publicly verifiable",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "verifiedMetrics": [],
+          "metrics": [],
+          "completedAnalysis": [
+            "Canonical identity and product classification completed"
+          ],
+          "logo": null,
+          "logoSource": null,
+          "logoVerificationStatus": "monogram-no-downloadable-asset",
+          "logoSourceType": "monogram-no-downloadable-asset",
+          "lastReviewed": "2026-09-02"
+        },
+        {
+          "id": "STUK-063",
+          "startup": "Prob Trade",
+          "monogram": "PT",
+          "founder": "Not publicly verified",
+          "xAccount": "https://x.com/ProbTradeAI",
+          "website": "https://app.prob.trade",
+          "sector": "Prediction markets / Trading / AI",
+          "directoryStage": "Not publicly verified",
+          "observedStatus": "Project-claimed live product",
+          "technicalStatus": "Project-claimed live Solana mainnet functionality",
+          "technicalState": "Mainnet",
+          "classification": "Mainnet",
+          "queue": "Mainnet Analysis Queue",
+          "analysisStatus": "Address-led mainnet research required",
+          "summary": "AI-assisted trading terminal, information hub and aggregator for prediction markets.",
+          "canonicalFinding": "Prob Trade claims native Solana market creation and low-cost transactions, providing a credible mainnet research direction. However, its official program, market accounts and treasury must be identified before metrics are calculated.",
+          "projectReportedMetrics": [],
+          "dataQualityNotes": [
+            "Separate off-chain or third-party Polymarket aggregation from claimed native Solana market creation.",
+            "Do not attribute all Polymarket activity displayed in the terminal to Prob Trade."
+          ],
+          "outstandingAnalysis": [
+            "Identify program ID, market-creation instructions/accounts, creators, vaults, settlement, treasury, resolution/oracle and example signatures",
+            "Calculate markets, creators, traders, trades, volume, liquidity, fees, creator earnings, settlements, failures and retention"
+          ],
+          "sources": [
+            "https://x.com/ProbTradeAI/status/2053062502557049313",
+            "https://x.com/ProbTradeAI",
+            "https://app.prob.trade"
+          ],
+          "logoPath": "/brands/startups/prob-trade.svg",
+          "logoAuditCategory": "authenticated-favicon",
+          "logoAuditSources": [
+            "Official application SVG favicon"
+          ],
+          "logoSourceUrl": "https://app.prob.trade/favicon.svg",
+          "stage": "Not publicly verified",
+          "productStatus": "Project-claimed live product",
+          "oneLine": "AI-assisted trading terminal, information hub and aggregator for prediction markets.",
+          "finding": "Prob Trade claims native Solana market creation and low-cost transactions, providing a credible mainnet research direction. However, its official program, market accounts and treasury must be identified before metrics are calculated.",
+          "whatItBuilds": "AI-assisted trading terminal, information hub and aggregator for prediction markets.",
+          "productEvidence": "Project-claimed live product",
+          "chainEvidence": "Analysis outstanding",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "verifiedMetrics": [],
+          "metrics": [],
+          "completedAnalysis": [
+            "Canonical identity and product classification completed"
+          ],
+          "technicalEntryPoints": [],
+          "logo": "/brands/startups/prob-trade.svg",
+          "logoSource": "https://app.prob.trade/favicon.svg",
+          "logoVerificationStatus": "authenticated-favicon",
+          "logoSourceType": "authenticated-favicon",
+          "lastReviewed": "2026-09-02"
+        },
+        {
+          "id": "STUK-064",
+          "startup": "MeetSend",
+          "monogram": "MS",
+          "founder": "Joana Anderson Reyes",
+          "founderVerification": "Official founder/company and Companies House evidence",
+          "website": "https://meetsend.ai/",
+          "sector": "AI / Sales technology / Events",
+          "directoryStage": "Not publicly verified",
+          "observedStatus": "Live product; MEETSEND LTD active",
+          "technicalStatus": "Live off-chain SaaS",
+          "technicalState": "Off-chain",
+          "classification": "Off-chain",
+          "queue": "Non-Mainnet Research",
+          "analysisStatus": "Product analytics required",
+          "summary": "AI assistant for event and trade-show follow-up using captured contacts, context and personalised messages.",
+          "canonicalFinding": "MeetSend is a live SaaS product with identifiable founder and company evidence, but no blockchain function is documented in its product flow.",
+          "projectReportedMetrics": [
+            {
+              "label": "Individual plan",
+              "value": "£99 per month",
+              "qualifier": "Official website claim; time-sensitive pricing",
+              "sourceUrl": "https://meetsend.ai/"
+            },
+            {
+              "label": "Contextual follow-ups",
+              "value": "100 per month",
+              "qualifier": "Official website plan limit; time-sensitive",
+              "sourceUrl": "https://meetsend.ai/"
+            }
+          ],
+          "dataQualityNotes": [
+            "Operator: MEETSEND LTD, Companies House 14912570, active, incorporated 3 June 2023."
+          ],
+          "outstandingAnalysis": [
+            "Request users, customers, events, leads, follow-ups generated/sent, open/reply rate, conversion, retention and MRR"
+          ],
+          "sources": [
+            "https://meetsend.ai/",
+            "https://uk.linkedin.com/company/meetsend",
+            "https://uk.linkedin.com/in/joana-anderson-reyes",
+            "https://find-and-update.company-information.service.gov.uk/company/14912570",
+            "https://x.com/formacity/article/2081818014521897345"
+          ],
+          "logoPath": "/brands/startups/meetsend.png",
+          "logoAuditCategory": "authenticated-favicon",
+          "logoAuditSources": [
+            "Official website favicon using project-controlled CMS asset"
+          ],
+          "logoSourceUrl": "https://cdn.cmsfly.com/6970e01e26a9a9012d3ec351/images/LimeandBlackModernFinanceLogo2-uyOAl.png",
+          "stage": "Not publicly verified",
+          "productStatus": "Live product; MEETSEND LTD active",
+          "oneLine": "AI assistant for event and trade-show follow-up using captured contacts, context and personalised messages.",
+          "finding": "MeetSend is a live SaaS product with identifiable founder and company evidence, but no blockchain function is documented in its product flow.",
+          "whatItBuilds": "AI assistant for event and trade-show follow-up using captured contacts, context and personalised messages.",
+          "productEvidence": "Live product; MEETSEND LTD active",
+          "chainEvidence": "Not publicly verifiable",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "verifiedMetrics": [],
+          "metrics": [],
+          "completedAnalysis": [
+            "Canonical identity and product classification completed"
+          ],
+          "technicalEntryPoints": [],
+          "logo": "/brands/startups/meetsend.png",
+          "logoSource": "https://cdn.cmsfly.com/6970e01e26a9a9012d3ec351/images/LimeandBlackModernFinanceLogo2-uyOAl.png",
+          "logoVerificationStatus": "authenticated-favicon",
+          "logoSourceType": "authenticated-favicon",
+          "lastReviewed": "2026-09-02"
+        },
+        {
+          "id": "STUK-065",
+          "startup": "Parasol",
+          "monogram": "PS",
+          "founder": "Daniel Stephenson (directory-linked, if confirmed)",
+          "founderVerification": "Directory-linked founder relationship requires confirmation",
+          "xAccount": "https://x.com/ParasolSolana",
+          "website": "https://parasol.so",
+          "sector": "AI / On-chain analytics / Memecoin tooling",
+          "directoryStage": "Not publicly verified",
+          "observedStatus": "Live public product identity",
+          "technicalStatus": "Live Solana-facing analytical product",
+          "technicalState": "Mainnet",
+          "classification": "Mainnet-facing tooling",
+          "queue": "Mainnet Analysis Queue",
+          "analysisStatus": "Operational entry-point research required",
+          "summary": "Solana memecoin intelligence layer for deploying, creating or connecting analytical agents.",
+          "canonicalFinding": "Parasol has a live public identity and a clear Solana intelligence proposition, but an attributable operational contract or transaction marker was not found.",
+          "projectReportedMetrics": [],
+          "dataQualityNotes": [
+            "DJ TRIX / @DJTRIXUK publicly identifies himself as a Parasol developer.",
+            "Tokens, wallets, DEX transactions and third-party activity analysed by Parasol are not automatically Parasol-generated activity."
+          ],
+          "outstandingAnalysis": [
+            "Determine whether Parasol uses a custom program, agent-creation transactions, access NFTs, token gates, operational wallets, off-chain subscriptions or private indexed data",
+            "If no unique on-chain interaction exists, use product analytics instead of protocol volume"
+          ],
+          "sources": [
+            "https://x.com/ParasolSolana",
+            "https://parasol.so",
+            "https://x.com/DJTRIXUK"
+          ],
+          "logoPath": "/brands/startups/parasol.svg",
+          "logoAuditCategory": "authenticated-app-icon",
+          "logoAuditSources": [
+            "Official website icon and apple-touch icon"
+          ],
+          "logoSourceUrl": "https://parasol.so/icon.svg",
+          "stage": "Not publicly verified",
+          "productStatus": "Live public product identity",
+          "oneLine": "Solana memecoin intelligence layer for deploying, creating or connecting analytical agents.",
+          "finding": "Parasol has a live public identity and a clear Solana intelligence proposition, but an attributable operational contract or transaction marker was not found.",
+          "whatItBuilds": "Solana memecoin intelligence layer for deploying, creating or connecting analytical agents.",
+          "productEvidence": "Live public product identity",
+          "chainEvidence": "Analysis outstanding",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "verifiedMetrics": [],
+          "metrics": [],
+          "completedAnalysis": [
+            "Canonical identity and product classification completed"
+          ],
+          "technicalEntryPoints": [],
+          "logo": "/brands/startups/parasol.svg",
+          "logoSource": "https://parasol.so/icon.svg",
+          "logoVerificationStatus": "authenticated-app-icon",
+          "logoSourceType": "authenticated-app-icon",
+          "lastReviewed": "2026-09-02"
+        },
+        {
+          "id": "STUK-066",
+          "startup": "Bonfires.ai",
+          "monogram": "BA",
+          "founder": "Not publicly verified",
+          "website": "https://bonfires.ai/",
+          "xAccount": "https://x.com/bonfiresai",
+          "sector": "AI / DeSci / Knowledge infrastructure",
+          "directoryStage": "Not publicly verified",
+          "observedStatus": "Live product with Ethereum NFT evidence",
+          "technicalStatus": "Live product with Ethereum NFT evidence",
+          "technicalState": "Mainnet",
+          "classification": "Mainnet",
+          "queue": "Mainnet Analysis Queue",
+          "analysisStatus": "NFT/contract-led research required",
+          "summary": "AI-based team knowledge graphs and agents with provenance-aware access and monetisation.",
+          "canonicalFinding": "Bonfires.ai is live and has credible Ethereum mainnet/NFT entry-point evidence, but the canonical Genesis NFT contract must still be extracted and verified before calculating holders, mint revenue or secondary-market activity.",
+          "projectReportedMetrics": [
+            {
+              "label": "Genesis mint price",
+              "value": "0.1 ETH",
+              "qualifier": "Project-reported Genesis NFT mint terms",
+              "sourceUrl": "https://x.com/bonfiresai/status/1993668329211585017"
+            }
+          ],
+          "dataQualityNotes": [
+            "Related organisation: DeSciWorld.",
+            "A future $KNOW allocation is not proof that a liquid or transferable token launched; do not add a contract without exact official publication."
+          ],
+          "outstandingAnalysis": [
+            "Identify Genesis NFT contract, mint transaction, deployer, treasury, holders, mint count/revenue, transfers, sales and active knowledge publishers",
+            "Add a $KNOW contract only if officially launched and published"
+          ],
+          "sources": [
+            "https://bonfires.ai/",
+            "https://x.com/bonfiresai",
+            "https://uk.linkedin.com/company/desciworld",
+            "https://x.com/DeSciWorld/highlights",
+            "https://x.com/bonfiresai/status/1993668329211585017"
+          ],
+          "logoPath": "/brands/startups/bonfires-ai.svg",
+          "logoAuditCategory": "authenticated-logo",
+          "logoAuditSources": [
+            "Official website square logo"
+          ],
+          "logoSourceUrl": "https://bonfires.ai/logo-square.svg",
+          "stage": "Not publicly verified",
+          "productStatus": "Live product with Ethereum NFT evidence",
+          "oneLine": "AI-based team knowledge graphs and agents with provenance-aware access and monetisation.",
+          "finding": "Bonfires.ai is live and has credible Ethereum mainnet/NFT entry-point evidence, but the canonical Genesis NFT contract must still be extracted and verified before calculating holders, mint revenue or secondary-market activity.",
+          "whatItBuilds": "AI-based team knowledge graphs and agents with provenance-aware access and monetisation.",
+          "productEvidence": "Live product with Ethereum NFT evidence",
+          "chainEvidence": "Analysis outstanding",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "verifiedMetrics": [],
+          "metrics": [],
+          "completedAnalysis": [
+            "Canonical identity and product classification completed"
+          ],
+          "technicalEntryPoints": [],
+          "logo": "/brands/startups/bonfires-ai.svg",
+          "logoSource": "https://bonfires.ai/logo-square.svg",
+          "logoVerificationStatus": "authenticated-logo",
+          "logoSourceType": "authenticated-logo",
+          "lastReviewed": "2026-09-02"
         }
       ],
       "source": {
