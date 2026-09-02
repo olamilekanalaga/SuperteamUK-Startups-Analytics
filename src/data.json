@@ -436,10 +436,10 @@
           "id": "STUK-001",
           "startup": "PrimeSkill",
           "monogram": "PS",
-          "logoPath": null,
-          "logoSourceUrl": null,
-          "logoSourceType": "monogram-identity-unresolved",
-          "logoVerificationStatus": "monogram-identity-unresolved",
+          "logoPath": "/brands/startups/primeskill.webp",
+          "logoSourceUrl": "https://startups.superteamuk.org/logos/primeskill.webp",
+          "logoSourceType": "authenticated-logo",
+          "logoVerificationStatus": "authenticated-logo",
           "founder": "No directory-linked founder found",
           "sector": "Gaming",
           "stage": "Raising pre-seed",
@@ -493,11 +493,12 @@
           "founderVerification": "Not verified",
           "projectReportedMetrics": [],
           "classification": "Devnet/testnet",
-          "logo": null,
-          "logoSource": null,
-          "logoAuditCategory": "monogram-identity-unresolved",
+          "logo": "/brands/startups/primeskill.webp",
+          "logoSource": "https://startups.superteamuk.org/logos/primeskill.webp",
+          "logoAuditCategory": "authenticated-logo",
           "logoAuditSources": [
-            "existing local asset rejected: third-party PlayToEarn source; no official project-controlled source in record"
+            "Exact Prime Skill record in the authenticated Superteam UK directory",
+            "https://startups.superteamuk.org/logos/primeskill.webp"
           ]
         },
         {
@@ -2055,7 +2056,9 @@
           "logoVerificationStatus": "monogram-identity-unresolved",
           "logoAuditCategory": "monogram-identity-unresolved",
           "logoAuditSources": [
-            "no attributable official website or product account in record"
+            "Authenticated Superteam UK directory checked; no exact Joyplay Ltd record was present",
+            "The directory record named Joy was rejected because its canonical name and @playonjoy identity do not establish continuity with Joyplay Ltd",
+            "No official website, X account, documentation, repository or LinkedIn company page is attributable to this record"
           ],
           "logoSourceUrl": null,
           "logoSourceType": "monogram-identity-unresolved"
@@ -2288,16 +2291,17 @@
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
-          "logo": null,
-          "logoSource": null,
-          "logoPath": null,
-          "logoVerificationStatus": "monogram-no-downloadable-asset",
-          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logo": "/brands/startups/livingip.jpg",
+          "logoSource": "https://pbs.twimg.com/profile_images/1938634564814929920/lXde5XcU_400x400.jpg",
+          "logoPath": "/brands/startups/livingip.jpg",
+          "logoVerificationStatus": "authenticated-logo",
+          "logoAuditCategory": "authenticated-logo",
           "logoAuditSources": [
-            "official product X"
+            "Official LivingIP X profile image",
+            "https://x.com/LIVING_IP"
           ],
-          "logoSourceUrl": null,
-          "logoSourceType": "monogram-no-downloadable-asset"
+          "logoSourceUrl": "https://pbs.twimg.com/profile_images/1938634564814929920/lXde5XcU_400x400.jpg",
+          "logoSourceType": "authenticated-logo"
         },
         {
           "id": "STUK-030",
@@ -2410,16 +2414,17 @@
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
-          "logo": null,
-          "logoSource": null,
-          "logoPath": null,
-          "logoVerificationStatus": "monogram-identity-unresolved",
-          "logoAuditCategory": "monogram-identity-unresolved",
+          "logo": "/brands/startups/quantum-street.webp",
+          "logoSource": "https://startups.superteamuk.org/logos/quantum-street.webp",
+          "logoPath": "/brands/startups/quantum-street.webp",
+          "logoVerificationStatus": "authenticated-logo",
+          "logoAuditCategory": "authenticated-logo",
           "logoAuditSources": [
-            "no attributable official website or product account in record"
+            "Exact Quantum Street record in the authenticated Superteam UK directory",
+            "https://startups.superteamuk.org/logos/quantum-street.webp"
           ],
-          "logoSourceUrl": null,
-          "logoSourceType": "monogram-identity-unresolved"
+          "logoSourceUrl": "https://startups.superteamuk.org/logos/quantum-street.webp",
+          "logoSourceType": "authenticated-logo"
         },
         {
           "id": "STUK-032",
@@ -2532,17 +2537,17 @@
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
-          "logo": null,
-          "logoSource": null,
-          "logoPath": null,
-          "logoVerificationStatus": "monogram-no-downloadable-asset",
-          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logo": "/brands/startups/wizzaid.jpg",
+          "logoSource": "https://pbs.twimg.com/profile_images/2054111803911680000/ziVWWKEE_400x400.jpg",
+          "logoPath": "/brands/startups/wizzaid.jpg",
+          "logoVerificationStatus": "authenticated-logo",
+          "logoAuditCategory": "authenticated-logo",
           "logoAuditSources": [
-            "official website",
-            "official product X"
+            "Official Wizzaid X profile image",
+            "https://x.com/WizzaidOS"
           ],
-          "logoSourceUrl": null,
-          "logoSourceType": "monogram-no-downloadable-asset"
+          "logoSourceUrl": "https://pbs.twimg.com/profile_images/2054111803911680000/ziVWWKEE_400x400.jpg",
+          "logoSourceType": "authenticated-logo"
         },
         {
           "founder": "Not verified",
@@ -2861,8 +2866,9 @@
           "logoVerificationStatus": "monogram-no-downloadable-asset",
           "logoAuditCategory": "monogram-no-downloadable-asset",
           "logoAuditSources": [
-            "founder website favicon rejected as personal identity",
-            "founder source material"
+            "Authenticated Superteam UK directory checked; no exact Cesto record was present",
+            "Founder website https://www.jasonr.org/ checked; its personal favicon is not Cesto project branding",
+            "No authenticated Cesto website, X account, documentation, repository or LinkedIn company page was established"
           ],
           "logoSourceUrl": null,
           "logoSourceType": "monogram-no-downloadable-asset"
@@ -3090,7 +3096,9 @@
           "logoVerificationStatus": "monogram-identity-unresolved",
           "logoAuditCategory": "monogram-identity-unresolved",
           "logoAuditSources": [
-            "no attributable official website or product account in record"
+            "Authenticated Superteam UK directory checked; no exact Yauga record was present",
+            "No official website, X account, documentation, repository or LinkedIn company page is attributable to this unresolved identity",
+            "Same-name search results were rejected"
           ],
           "logoSourceUrl": null,
           "logoSourceType": "monogram-identity-unresolved"
@@ -3425,8 +3433,8 @@
             "Separate pre-acquisition Darklake activity from subsequent SOL Strategies activity."
           ],
           "metrics": [],
-          "logo": null,
-          "logoSource": null,
+          "logo": "/brands/startups/darklake.jpg",
+          "logoSource": "https://pbs.twimg.com/profile_images/1990356131189866496/0xtKwDfz_400x400.jpg",
           "lastReviewed": "2026-09-02",
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
@@ -3447,14 +3455,15 @@
           "finding": "SOL Strategies reported completing the Darklake asset acquisition in April 2026 for USD $1.2 million; historical Darklake activity must be separated from later operator activity.",
           "nextAction": "Separate pre-acquisition Darklake activity from any later operator activity.",
           "analysisStatus": "Historical mainnet analysis required",
-          "logoPath": null,
-          "logoVerificationStatus": "monogram-no-downloadable-asset",
-          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoPath": "/brands/startups/darklake.jpg",
+          "logoVerificationStatus": "authenticated-logo",
+          "logoAuditCategory": "authenticated-logo",
           "logoAuditSources": [
-            "official Darklake website and GitHub checked; no downloadable project-controlled logo established"
+            "Official Darklake X profile image",
+            "https://x.com/darklakefi"
           ],
-          "logoSourceUrl": null,
-          "logoSourceType": "monogram-no-downloadable-asset",
+          "logoSourceUrl": "https://pbs.twimg.com/profile_images/1990356131189866496/0xtKwDfz_400x400.jpg",
+          "logoSourceType": "authenticated-logo",
           "directoryStage": "Acquired",
           "productStatus": "Acquired in April 2026",
           "oneLine": "Historical Solana trading, liquidity and zero-knowledge privacy infrastructure.",
@@ -3682,7 +3691,9 @@
           "logoVerificationStatus": "monogram-identity-unresolved",
           "logoAuditCategory": "monogram-identity-unresolved",
           "logoAuditSources": [
-            "Superteam UK directory identity trail checked; generic and ambiguous namesakes rejected"
+            "Authenticated Superteam UK directory checked; no exact Pangea record was present",
+            "No project-controlled website, X account, documentation, repository or LinkedIn company page is attributable to this unresolved identity",
+            "Generic and same-name search results were rejected"
           ],
           "logoSourceUrl": null,
           "logoSourceType": "monogram-identity-unresolved",
@@ -3788,12 +3799,13 @@
             "https://ie.linkedin.com/company/yieldos",
             "https://uk.linkedin.com/in/ediris"
           ],
-          "logoPath": null,
-          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoPath": "/brands/startups/yield-os.jpg",
+          "logoAuditCategory": "authenticated-logo",
           "logoAuditSources": [
-            "Official website returned 404 during the 2026-09-02 asset audit; official LinkedIn pages did not provide a safely downloadable project asset."
+            "Official Yield OS LinkedIn company image; company page confirms Chainvest-to-Yield OS continuity",
+            "https://ie.linkedin.com/company/yieldos"
           ],
-          "logoSourceUrl": null,
+          "logoSourceUrl": "https://media.licdn.com/dms/image/v2/D4E0BAQH-uBBmra59Nw/img-crop_100/img-crop_100/0/1718808839896?e=2147483647&v=beta&t=KrEFs7hPMektKBP1b9ju8VpGXbzeFQnV_CY2jCBAXVM",
           "stage": "Not publicly verified",
           "productStatus": "Public project presence; known previous identity Chainvest",
           "oneLine": "Infrastructure for programmable yield across staking, stablecoins, RWAs and credit markets.",
@@ -3810,10 +3822,10 @@
             "Canonical identity and product classification completed"
           ],
           "technicalEntryPoints": [],
-          "logo": null,
-          "logoSource": null,
-          "logoVerificationStatus": "monogram-no-downloadable-asset",
-          "logoSourceType": "monogram-no-downloadable-asset",
+          "logo": "/brands/startups/yield-os.jpg",
+          "logoSource": "https://media.licdn.com/dms/image/v2/D4E0BAQH-uBBmra59Nw/img-crop_100/img-crop_100/0/1718808839896?e=2147483647&v=beta&t=KrEFs7hPMektKBP1b9ju8VpGXbzeFQnV_CY2jCBAXVM",
+          "logoVerificationStatus": "authenticated-logo",
+          "logoSourceType": "authenticated-logo",
           "lastReviewed": "2026-09-02"
         },
         {
@@ -3866,12 +3878,13 @@
             "https://blog.tramplin.io/",
             "https://www.linkedin.com/company/tramplin-io"
           ],
-          "logoPath": null,
-          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoPath": "/brands/startups/tramplin.jpg",
+          "logoAuditCategory": "authenticated-logo",
           "logoAuditSources": [
-            "Official website favicon referenced the project CDN, but the official CDN repeatedly closed the download connection during the 2026-09-02 audit."
+            "Official Tramplin X profile image used after the official website CDN repeatedly reset direct downloads",
+            "https://x.com/tramplin_io"
           ],
-          "logoSourceUrl": null,
+          "logoSourceUrl": "https://pbs.twimg.com/profile_images/2018754413750333440/rsCdN27A_400x400.jpg",
           "stage": "Not publicly verified",
           "productStatus": "Live; official public launch reported 4 February 2026",
           "oneLine": "Non-custodial prize-linked native SOL staking that pools rewards for periodic prize allocations.",
@@ -3888,10 +3901,10 @@
             "Canonical identity and product classification completed"
           ],
           "technicalEntryPoints": [],
-          "logo": null,
-          "logoSource": null,
-          "logoVerificationStatus": "monogram-no-downloadable-asset",
-          "logoSourceType": "monogram-no-downloadable-asset",
+          "logo": "/brands/startups/tramplin.jpg",
+          "logoSource": "https://pbs.twimg.com/profile_images/2018754413750333440/rsCdN27A_400x400.jpg",
+          "logoVerificationStatus": "authenticated-logo",
+          "logoSourceType": "authenticated-logo",
           "lastReviewed": "2026-09-02"
         },
         {
@@ -4108,12 +4121,14 @@
             "https://x.com/buildcoldstar",
             "https://uk.linkedin.com/company/superteam-ireland"
           ],
-          "logoPath": null,
-          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoPath": "/brands/startups/coldstar.jpg",
+          "logoAuditCategory": "authenticated-logo",
           "logoAuditSources": [
-            "Official repositories and X identity checked; no distinct project-controlled downloadable logo was established."
+            "Official Coldstar X profile image linked to the same project as the official repository",
+            "https://x.com/buildcoldstar",
+            "https://github.com/devsyrem/coldstar"
           ],
-          "logoSourceUrl": null,
+          "logoSourceUrl": "https://pbs.twimg.com/profile_images/2005665874934382592/MUK8BR8k_400x400.jpg",
           "stage": "Not publicly verified",
           "productStatus": "Open-source product and demonstrations",
           "oneLine": "CLI-first cold-wallet tooling that turns a USB drive into a disposable RAM-only air-gapped Solana signing medium.",
@@ -4130,10 +4145,10 @@
             "Canonical identity and product classification completed"
           ],
           "technicalEntryPoints": [],
-          "logo": null,
-          "logoSource": null,
-          "logoVerificationStatus": "monogram-no-downloadable-asset",
-          "logoSourceType": "monogram-no-downloadable-asset",
+          "logo": "/brands/startups/coldstar.jpg",
+          "logoSource": "https://pbs.twimg.com/profile_images/2005665874934382592/MUK8BR8k_400x400.jpg",
+          "logoVerificationStatus": "authenticated-logo",
+          "logoSourceType": "authenticated-logo",
           "lastReviewed": "2026-09-02"
         },
         {
@@ -4232,7 +4247,9 @@
           "logoPath": null,
           "logoAuditCategory": "monogram-identity-unresolved",
           "logoAuditSources": [
-            "Identity collision audit completed; no official project-controlled source can yet be attributed safely."
+            "Authenticated Superteam UK directory checked; no exact Nexus AI record was present",
+            "The authenticated event reference names Nexus AI but provides no project logo or canonical product account",
+            "No official website, X account, documentation, repository or LinkedIn company page can be safely attributed; same-name companies were rejected"
           ],
           "logoSourceUrl": null,
           "stage": "Not publicly verified",
@@ -4300,7 +4317,9 @@
           "logoPath": null,
           "logoAuditCategory": "monogram-no-downloadable-asset",
           "logoAuditSources": [
-            "Official protocol repositories checked; no distinct project-controlled brand asset was established."
+            "Authenticated Superteam UK directory checked; no exact Percolator record was present",
+            "Official repositories https://github.com/aeyakovenko/percolator, https://github.com/aeyakovenko/percolator-prog and https://github.com/aeyakovenko/percolator-cli checked; no distinct project brand asset is present",
+            "Community forks and unrelated Percolator branding were rejected"
           ],
           "logoSourceUrl": null,
           "stage": "Not publicly verified",
