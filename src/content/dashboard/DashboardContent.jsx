@@ -173,15 +173,26 @@ function StartupDetail({ startup, onBack }) {
     <MetricSection title="Project-reported metrics" metrics={[...(startup.projectReportedMetrics ?? []), ...(startup.metrics ?? []).filter((metric) => /reported|claim/i.test(metric.qualifier ?? ""))]} />
     <TextList title="Data-quality warnings" items={startup.dataQualityNotes ?? []} />
     <SourceLinks startup={startup} />
-    <p className="last-reviewed">Last reviewed Ã‚Â· {publicValue(startup.lastReviewed)}</p>
+    <p className="last-reviewed">Last reviewed - {publicValue(startup.lastReviewed)}</p>
   </section>;
 }
 
 const internalResearchPipeline = ["Directory intake", "Identity verification", "Product research", "Technical classification", "Evidence collection", "Queue assignment", "Publication"];
 
 function QueueList({ rows }) {
-  return <section className="mainnet-queue" aria-label="Mainnet analysis queue"><h2>Mainnet analysis queue</h2><div>{rows.map((row) => <article key={row.profilePath}><div><h3>{row.startup}</h3><p>{row.network}</p></div><StatusPill tone={row.entryPoint.startsWith("Missing") || row.entryPoint.startsWith("Historical") ? "outstanding" : "verified"}>{row.entryPoint}</StatusPill><p>{row.nextAction}</p><a href={row.profilePath}>Open startup profile</a></article>)}</div></section>;
+  return <section className="mainnet-queue" aria-label="Mainnet analysis queue"><h2>Mainnet analysis queue</h2><div>{rows.map((row) => <article key={row.profilePath}><div><h3>{row.startup}</h3><p>{row.network}</p></div><StatusPill tone={row.addressStatus === "Verified address - ready for analysis" ? "verified" : "outstanding"}>{row.addressStatus}</StatusPill>{row.entryPoint && <a href={row.entryPointUrl} target="_blank" rel="noopener noreferrer">{row.entryPoint}</a>}<p>{row.nextAction}</p><a href={row.profilePath}>Open startup profile</a></article>)}</div></section>;
 }
+
+const addressStatus = (startup) => {
+  const entries = (startup.technicalEntryPoints ?? []).filter((entry) => entry.address);
+  if (!entries.length) return "On-chain address needed";
+  const officiallyAttributed = entries.some((entry) => {
+    const attribution = String(entry.attributionStatus ?? "");
+    const explicitlyUnconfirmed = /not yet|unconfirmed|candidate|probable|third-party|verification needed|requires? confirmation/iu.test(attribution);
+    return !explicitlyUnconfirmed && /official(?:ly)?|founder-confirmed|verified attribution/iu.test(attribution);
+  });
+  return officiallyAttributed ? "Verified address - ready for analysis" : "Address found - verification needed";
+};
 function InsightsView({ statusRows, stageRows, queueRows, chartProps, researchedCount }) {
   void internalResearchPipeline;
   return <section className="insights-view">
@@ -219,7 +230,9 @@ export function DashboardContent() {
     startup: displayName(item),
     currentBrand: item.currentBrand ?? "",
     network: item.technicalStatus,
-    entryPoint: item.technicalEntryPoints?.[0]?.address ?? (item.classification?.includes("Historical") ? "Historical entry point missing" : "Missing Ã¢â‚¬â€ attribution required"),
+    entryPoint: item.technicalEntryPoints?.[0]?.address ?? null,
+    entryPointUrl: item.technicalEntryPoints?.[0]?.explorerUrl,
+    addressStatus: addressStatus(item),
     nextAction: item.nextAction,
     status: "Queued",
     profilePath: startupPath(item),

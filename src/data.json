@@ -2829,8 +2829,8 @@
             "Keep outside mainnet until deployment verified."
           ],
           "metrics": [],
-          "logo": null,
-          "logoSource": null,
+          "logo": "/brands/startups/cesto.png",
+          "logoSource": "https://cesto.co/",
           "lastReviewed": "2026-09-02",
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
@@ -2862,16 +2862,18 @@
           "analysisStatus": "Pre-launch",
           "productEvidence": "Early-stage/incubation",
           "chainEvidence": "Not publicly verifiable",
-          "logoPath": null,
-          "logoVerificationStatus": "monogram-no-downloadable-asset",
-          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoPath": "/brands/startups/cesto.png",
+          "logoVerificationStatus": "authenticated-logo",
+          "logoAuditCategory": "authenticated-logo",
           "logoAuditSources": [
-            "Authenticated Superteam UK directory checked; no exact Cesto record was present",
-            "Founder website https://www.jasonr.org/ checked; its personal favicon is not Cesto project branding",
-            "No authenticated Cesto website, X account, documentation, repository or LinkedIn company page was established"
+            "User-supplied authenticated Cesto project image",
+            "https://cesto.co/",
+            "https://app.cesto.co/",
+            "https://x.com/cesto_co",
+            "https://docs.cesto.co/"
           ],
-          "logoSourceUrl": null,
-          "logoSourceType": "monogram-no-downloadable-asset"
+          "logoSourceUrl": "https://cesto.co/",
+          "logoSourceType": "authenticated-logo"
         },
         {
           "founder": "Junaid Peer; Kobie McGlashan",
@@ -3612,8 +3614,8 @@
             "Do not associate unrelated same-name tokens or Xeno-branded projects with Xeno Money."
           ],
           "metrics": [],
-          "logo": "/brands/startups/xeno-money.svg",
-          "logoSource": "https://xeno.money/logo.svg",
+          "logo": "/brands/startups/xeno-money.png",
+          "logoSource": "https://xeno.money/",
           "lastReviewed": "2026-09-02",
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
@@ -3634,13 +3636,16 @@
           "finding": "The project explicitly states that it has no XENO token; supported rails and attributable operational transaction entry points still require verification.",
           "nextAction": "Identify supported stablecoin rails and verified operational transaction entry points.",
           "analysisStatus": "Mainnet analysis required",
-          "logoPath": "/brands/startups/xeno-money.svg",
+          "logoPath": "/brands/startups/xeno-money.png",
           "logoVerificationStatus": "authenticated-logo",
           "logoAuditCategory": "authenticated-logo",
           "logoAuditSources": [
-            "official website header logo"
+            "User-supplied authenticated yellow Xeno Money project image",
+            "https://xeno.money/",
+            "https://x.com/Xeno_Money",
+            "https://uk.linkedin.com/company/xeno-money"
           ],
-          "logoSourceUrl": "https://xeno.money/logo.svg",
+          "logoSourceUrl": "https://xeno.money/",
           "logoSourceType": "authenticated-logo",
           "directoryStage": "Not publicly verified",
           "productStatus": "Live mainnet product",

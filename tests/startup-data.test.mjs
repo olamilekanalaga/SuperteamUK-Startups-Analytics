@@ -72,13 +72,15 @@ test("every verified logo is local and resolvable; every fallback is documented"
 });
 
 test("unresolved identities never receive unrelated images", () => {
-  for (const name of ["PrimeSkill", "Joyplay Ltd", "Quantum Street", "Yauga", "Pangea"]) {
+  for (const name of ["Joyplay Ltd", "Yauga", "Pangea"]) {
     const startup = startups.find((row) => row.startup === name);
     assert.ok(startup, name);
     assert.equal(startup.logoPath, null, name);
     assert.equal(startup.logoAuditCategory, "monogram-identity-unresolved", name);
   }
   assert.equal(startups.find((row) => row.startup === "Nexus AI").logoAuditCategory, "monogram-identity-unresolved");
+  assert.equal(startups.find((row) => row.startup === "PrimeSkill").logoPath, "/brands/startups/primeskill.webp");
+  assert.equal(startups.find((row) => row.startup === "Quantum Street").logoPath, "/brands/startups/quantum-street.webp");
 });
 
 test("the common logo component has meaningful alt text, lazy list loading, and finite monogram fallback", () => {
@@ -204,4 +206,46 @@ test("final batch logos are local or have a documented monogram decision", async
     else assert.match(row.logoAuditCategory, /^monogram-/);
   }
   assert.equal(startups.find((row) => row.id === "STUK-061").logoAuditCategory, "monogram-identity-unresolved");
+});
+
+
+test("Cesto and Xeno Money use the authenticated replacement images", async () => {
+  const cesto = startups.find((row) => row.startup === "Cesto");
+  const xeno = startups.find((row) => row.startup === "Xeno Money");
+  assert.equal(cesto.logoPath, "/brands/startups/cesto.png");
+  assert.equal(xeno.logoPath, "/brands/startups/xeno-money.png");
+  assert.equal(cesto.logoAuditCategory, "authenticated-logo");
+  assert.equal(xeno.logoAuditCategory, "authenticated-logo");
+  await access(new URL("public" + cesto.logoPath, root));
+  await access(new URL("public" + xeno.logoPath, root));
+  const authenticated = startups.filter((row) => row.logoPath);
+  const monograms = startups.filter((row) => !row.logoPath).map((row) => row.startup);
+  assert.equal(authenticated.length, 61);
+  assert.deepEqual(monograms, ["Joyplay Ltd", "Yauga", "Pangea", "Nexus AI", "Percolator"]);
+});
+
+test("address status labels derive from entry-point attribution and preserve the Purebet candidate address", () => {
+  for (const label of [
+    "On-chain address needed",
+    "Address found - verification needed",
+    "Verified address - ready for analysis",
+  ]) assert.ok(source.includes(label), label);
+  assert.match(source, /technicalEntryPoints/);
+  assert.match(source, /attributionStatus/);
+  assert.doesNotMatch(source.slice(source.indexOf("function QueueList"), source.indexOf("function InsightsView")), /Ã|â‚¬|â€/u);
+  const purebet = startups.find((row) => row.startup === "Purebet");
+  assert.equal(purebet.technicalEntryPoints[0].address, "39mBcnQ27QA9nNZmM6VrumE2vtqs5v3HD7t7RGv9kXUV");
+  assert.match(purebet.technicalEntryPoints[0].attributionStatus, /not yet official|third-party/i);
+  assert.match(source, /entryPoint: item\.technicalEntryPoints\?\.\[0\]\?\.address \?\? null/u);
+  assert.doesNotMatch(source, /startup\s*===\s*["']Purebet/u);
+});
+
+test("image and status corrections preserve all research records and queue membership", () => {
+  const fingerprint = createHash("sha256")
+    .update(JSON.stringify(startups.map((row) => Object.fromEntries(Object.entries(row).filter(([key]) => !logoKeys.has(key))))))
+    .digest("hex");
+  assert.equal(fingerprint, "74e8a74caa0f1e56cbd6318316ddc1868578a1a7942afb45ea8efe6d20696820");
+  assert.equal(startups.length, 66);
+  assert.equal(mainnet.length, 33);
+  assert.equal(startups.length - mainnet.length, 33);
 });
