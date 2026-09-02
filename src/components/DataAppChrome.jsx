@@ -433,17 +433,22 @@ function DataAppOverflowMenu({
       trigger={<HeaderOverflowButton ref={triggerRef} />}
     >
       {compactAskMenu && (
-        <>
-          <MenuItem
-            icon="chatgpt"
-            className="dashboard-action-menu-item"
-            onSelect={() => window.setTimeout(() => onOpenAsk?.(triggerRef.current), 0)}
-          >
-            Ask ChatGPT
-          </MenuItem>
-          <MenuSeparator />
-        </>
+        <MenuItem
+          icon="chatgpt"
+          className="dashboard-action-menu-item"
+          onSelect={() => window.setTimeout(() => onOpenAsk?.(triggerRef.current), 0)}
+        >
+          Ask ChatGPT
+        </MenuItem>
       )}
+      <MenuItem
+        icon="theme"
+        className="dashboard-action-menu-item"
+        onSelect={() => window.setTimeout(() => onOpenThemes?.(), 0)}
+      >
+        Theme and appearance
+      </MenuItem>
+      <MenuSeparator />
       {published && (
         <MenuItem
           icon="link"
