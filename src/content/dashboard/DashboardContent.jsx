@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 
 import { ChartRenderer, DataComponent, DataTable, MetricCard, useDataApp } from "../../data-app-public.jsx";
+import superteamUkLogo from "../assets/superteam-uk-logo.jpg";
 
 const statusSpec = { type: "bar", x: "category", y: "startups", showXAxisLabel: false, showYAxisLabel: false };
 const stageSpec = { type: "rankedList", x: "stage", y: "startups", initialVisibleCount: 6 };
@@ -17,7 +18,7 @@ const evidenceTone = {
 };
 
 function BrandMark() {
-  return <div className="brand-mark" aria-hidden="true"><span>ST</span><b>UK</b></div>;
+  return <img className="brand-mark" src={superteamUkLogo} alt="Superteam UK" />;
 }
 
 function StatusPill({ children, tone = "neutral" }) {
@@ -66,28 +67,20 @@ function StartupDetail({ startup }) {
   </section>;
 }
 
-function PipelineView() {
-  const phases = [
-    ["01", "Directory intake", "Capture startup, founder, X, website, sector and funding stage."],
-    ["02", "Identity verification", "Confirm the correct project, current brand and official public sources."],
-    ["03", "Technical classification", "Assign Idea, Off-chain, Devnet, Mainnet, Hybrid or Sunset."],
-    ["04", "Queue routing", "Finish off-chain and devnet research first. Hold mainnet projects for address-led analysis."],
-    ["05", "Metric extraction", "Collect comparable product, developer and chain metrics without mixing claims with verification."],
-    ["06", "Quality control", "Attach evidence level, definition, coverage period, limitations and founder validation."],
-    ["07", "Publication", "Merge reviewed records into startup pages, comparisons, visuals and ecosystem findings."],
-  ];
-  return <section className="pipeline-view">
-    <header className="section-intro"><p className="eyebrow">Research architecture</p><h2>One pipeline, two analytical queues.</h2>
-      <p>Mainnet products are classified immediately, then analysed deeply after the faster off-chain and devnet census is complete.</p></header>
-    <div className="pipeline-track">{phases.map((phase, index) => <article className="pipeline-step" key={phase[0]}>
-      <span>{phase[0]}</span><div><h3>{phase[1]}</h3><p>{phase[2]}</p></div>{index < phases.length - 1 && <b aria-hidden="true">→</b>}
-    </article>)}</div>
-    <div className="queue-split">
-      <article><span className="queue-kicker">Queue A · complete first</span><h3>Off-chain and Devnet</h3>
-        <p>Product → users → social → GitHub → test transactions → milestones → evidence grade → completed profile</p></article>
-      <article><span className="queue-kicker">Queue B · deep analysis</span><h3>Mainnet and Hybrid</h3>
-        <p>Official entry point → wallet cluster → raw transactions → entity labels → users → volume → retention → fund flows</p></article>
-    </div>
+const internalResearchPipeline = ["Directory intake", "Identity verification", "Product research", "Technical classification", "Evidence collection", "Queue assignment", "Publication"];
+
+function InsightsView({ statusRows, stageRows, queueRows, chartProps }) {
+  void internalResearchPipeline;
+  return <section className="insights-view">
+    <header className="section-intro"><p className="eyebrow">Cross-startup findings</p><h2>What the current sample shows.</h2>
+      <p>Descriptive distributions and evidence-led findings from the five completed startup records.</p></header>
+    <section className="overview-grid">
+      <DataComponent id="technical-status-chart" variant="card" queryId="technical_status" sourceRows={statusRows} title="Technical status of researched startups" kind="chart"><ChartRenderer spec={statusSpec} rows={statusRows} height={300} {...chartProps("technical-status-chart")} /></DataComponent>
+      <DataComponent id="stage-chart" variant="card" queryId="researched_stages" sourceRows={stageRows} title="Funding stage in the current sample" kind="chart"><ChartRenderer spec={stageSpec} rows={stageRows} height={300} {...chartProps("stage-chart")} /></DataComponent>
+    </section>
+    <section className="insight-banner"><div><span>Current finding</span><h2>Public presence does not equal measurable on-chain activity.</h2></div><p>Four of the first five startups can be documented primarily through off-chain or test activity. Fanplay/WTF Games remains in the mainnet queue until an operational wallet or verified transaction is discovered.</p></section>
+    <DataComponent id="mainnet-queue-table" variant="card" queryId="mainnet_queue" sourceRows={queueRows} title="Mainnet analysis queue" kind="table"><DataTable rows={queueRows} columns={queueColumns} /></DataComponent>
+    <div className="queue-split"><article><span className="queue-kicker">Queue A &middot; complete first</span><h3>Off-chain and Devnet</h3><p>Product &rarr; users &rarr; social &rarr; GitHub &rarr; test transactions &rarr; milestones &rarr; evidence grade &rarr; completed profile</p></article><article><span className="queue-kicker">Queue B &middot; deep analysis</span><h3>Mainnet and Hybrid</h3><p>Official entry point &rarr; wallet cluster &rarr; raw transactions &rarr; entity labels &rarr; users &rarr; volume &rarr; retention &rarr; fund flows</p></article></div>
   </section>;
 }
 
@@ -102,19 +95,19 @@ export function DashboardContent() {
   const stageRows = reviewedRows("researched_stages");
   const queueRows = reviewedRows("mainnet_queue");
 
-  return <article className="page startup-archive" aria-label="Superteam UK startup intelligence"><div className="archive-frame">
+  return <article className="page startup-archive" aria-label="Superteam UK startup analytics"><div className="archive-frame">
     <aside className="archive-rail" aria-label="Archive sections"><BrandMark />
       <button className={view === "overview" ? "active" : ""} onClick={() => setView("overview")} aria-label="Overview">⌂</button>
-      <button className={view === "archive" ? "active" : ""} onClick={() => setView("archive")} aria-label="Startup archive">▦</button>
-      <button className={view === "pipeline" ? "active" : ""} onClick={() => setView("pipeline")} aria-label="Research pipeline">↳</button>
+      <button className={view === "archive" ? "active" : ""} onClick={() => setView("archive")} aria-label="Startups">▦</button>
+      <button className={view === "insights" ? "active" : ""} onClick={() => setView("insights")} aria-label="Insights">↳</button>
     </aside>
     <div className="archive-main">
-      <header className="archive-header"><div><p className="eyebrow">Independent ecosystem intelligence · Prototype 01</p>
-        <h1>Startup <em>archive.</em></h1></div>
+      <header className="archive-header"><div><p className="eyebrow">Superteam UK Startup Analytics</p>
+        <h1>Startup <em>analytics.</em></h1><p className="header-description">Products, evidence, users and activity across the Superteam UK startup ecosystem.</p></div>
         <div className="header-actions" role="tablist" aria-label="Views">
           <button className={view === "overview" ? "active" : ""} onClick={() => setView("overview")}>Overview</button>
-          <button className={view === "archive" ? "active" : ""} onClick={() => setView("archive")}>5 startups</button>
-          <button className={view === "pipeline" ? "active" : ""} onClick={() => setView("pipeline")}>Pipeline</button>
+          <button className={view === "archive" ? "active" : ""} onClick={() => setView("archive")}>Startups</button>
+          <button className={view === "insights" ? "active" : ""} onClick={() => setView("insights")}>Insights</button>
         </div></header>
       {view === "overview" && <>
         <section className="metric-strip" aria-label="Research progress">
@@ -122,12 +115,6 @@ export function DashboardContent() {
           <MetricCard id="researched" queryId="research_summary" sourceRows={[summary]} title="Researched" value={String(summary.researched)} description="Profiles currently classified." />
           <MetricCard id="non-mainnet" queryId="research_summary" sourceRows={[summary]} title="Queue A" value={String(summary.nonMainnet)} description="Off-chain, devnet or testnet." />
           <MetricCard id="mainnet" queryId="research_summary" sourceRows={[summary]} title="Queue B" value={String(summary.mainnetQueue)} description="Mainnet analysis pending." />
-        </section>
-        <section className="overview-grid">
-          <DataComponent id="technical-status-chart" variant="card" queryId="technical_status" sourceRows={statusRows} title="Technical status of researched startups" kind="chart">
-            <ChartRenderer spec={statusSpec} rows={statusRows} height={300} {...chartProps("technical-status-chart")} /></DataComponent>
-          <DataComponent id="stage-chart" variant="card" queryId="researched_stages" sourceRows={stageRows} title="Funding stage in the current sample" kind="chart">
-            <ChartRenderer spec={stageSpec} rows={stageRows} height={300} {...chartProps("stage-chart")} /></DataComponent>
         </section>
         <section className="insight-banner"><div><span>Current finding</span><h2>Public presence does not equal measurable on-chain activity.</h2></div>
           <p>Four of the first five startups can be documented primarily through off-chain or test activity. Fanplay/WTF Games is routed to the mainnet queue because its operational wallet is not publicly documented.</p></section>
@@ -137,7 +124,7 @@ export function DashboardContent() {
       {view === "archive" && <section className="archive-browser"><div className="startup-list">
         {startups.map((startup) => <StartupCard key={startup.id} startup={startup} selected={startup.id === selected?.id} onSelect={setSelectedId} />)}
       </div>{selected && <StartupDetail startup={selected} />}</section>}
-      {view === "pipeline" && <PipelineView />}
+      {view === "insights" && <InsightsView statusRows={statusRows} stageRows={stageRows} queueRows={queueRows} chartProps={chartProps} />}
       <footer className="archive-footer"><span>Evidence-led research by Olamilekan Alaga</span>
         <span>Data cutoff · {snapshot.report?.asOf ?? "2026-09-02"}</span></footer>
     </div>

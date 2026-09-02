@@ -453,11 +453,6 @@ function DataAppOverflowMenu({
           Copy link
         </MenuItem>
       )}
-      {canEdit && (
-        <MenuItem icon="palette" className="dashboard-action-menu-item" onSelect={onOpenThemes}>
-          Edit theme
-        </MenuItem>
-      )}
       {canEdit && mode === "edit" && hiddenCount > 0 && (
         <MenuItem icon="eye" className="dashboard-action-menu-item" onSelect={onRestoreHidden}>
           Restore hidden ({hiddenCount})

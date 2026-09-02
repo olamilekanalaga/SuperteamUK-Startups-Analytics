@@ -1,6 +1,7 @@
 :root {
-  color-scheme: light dark;
-  --adaptive-theme: 1;
+  color-scheme: dark;
+  --fixed-theme-scheme: dark;
+  --adaptive-theme: 0;
   --font-sans-default: -apple-system-body, ui-sans-serif, -apple-system, system-ui, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
   --font-sans: var(--vscode-font-family, var(--font-sans-default));
   --background: var(--color-token-main-surface-primary, var(--color-background-surface, light-dark(#fbfaf6, #111726)));

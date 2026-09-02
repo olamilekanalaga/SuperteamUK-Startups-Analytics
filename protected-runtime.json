@@ -8,7 +8,7 @@
   "files": {
     ".openai/hosting.json": "ccb536e99ac2495e55d02530ebb303350ad91a0f91ca1dfdeac6b46110d3ab96",
     "AGENTS.md": "b03cd184dd9d8eebbd60bc873f9015abbaed01599e8dd4df50a31d31d677f293",
-    "index.html": "5748178754cd9e77c2d8da23364d95c46759bf2d0d1f2dd603de03abbe67a1c6",
+    "index.html": "d2b3cb055d9c649924933d5275f8b494bd6ed4e8ace62f4f8c56f701f7504124",
     "package-lock.json": "f41ec1999edc81f88e2ab14bb1d99e1eaccc4bd0554b1006f2c3c1c625637859",
     "package.json": "3922b668b09b9cd0b54002277a0112b6f9bc16112d9c24ba91e838b08e29dd82",
     "scripts/authorize-protected-change.mjs": "9b9f012d65c34a1f9ac4d107ba226f82aadabde72980c2d393c63e9d68eff6a3",
@@ -41,7 +41,7 @@
     "src/components/CustomBlockHost.jsx": "b7bfec00a46435291b07d32ff39a2ec65e309aa532902fd94e9b1c72a8994a32",
     "src/components/DashboardAsk.jsx": "9fbc160aa428017e00d2c5d5da2f27d102206d6150c8b241a63931e2ff663a50",
     "src/components/DashboardTabs.jsx": "917ab17031f99eb7a90ad2c5c549eca9a845794357c3a129963d2a325519b3d6",
-    "src/components/DataAppChrome.jsx": "5a27f7edeb9b29151392f79041598888a22e5bc62ae38954fb91682065a96643",
+    "src/components/DataAppChrome.jsx": "ea1dddcfe292f5619d3d3ea79d9ac5d26afcd16b885c803d114035279b20d258",
     "src/components/DataAppToast.jsx": "1c80d8723f951755c132c5b1e51fab8dafd38cd6312ad7bc9e5a98d4403c2213",
     "src/components/DataComponent.jsx": "8ec9d828c51f7295201bd65dcfefda75f9c261894a9290284a8bdaa953676e41",
     "src/components/EditableText.jsx": "d86a22e16e067f284bd51ae7b96a6d5b0af51b8098f267a0790b0962dfe38ad0",
