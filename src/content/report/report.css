@@ -1,0 +1,31 @@
+.report-page {
+  --data-app-layout-intent: authored-report;
+  --data-app-content-width: 1180px;
+  --data-app-layout-gutter: 36px;
+  max-width: calc(var(--data-app-content-width) + 2 * var(--data-app-layout-gutter));
+  padding: 48px var(--data-app-layout-gutter) 120px;
+}
+.report-content { display: grid; gap: 48px; width: 100%; }
+.report-content > * { min-width: 0; }
+.report-hero { display: grid; gap: 18px; max-width: 880px; }
+.report-hero h1 { margin: 0; font-size: 50px; line-height: 1.05; letter-spacing: -.035em; }
+.report-page :is(.rich-narrative-content,.report-rich-editable) { color: color-mix(in srgb,var(--text) 68%,var(--secondary)); font-size: 16px; line-height: 1.65; }
+.report-page :is(.rich-narrative-content,.report-rich-editable) h2 { color: var(--text); margin: 0 0 14px; font-size: 25px; line-height: 1.2; letter-spacing: -.025em; }
+.report-page :is(.rich-narrative-content,.report-rich-editable) p { margin: 0 0 12px; }
+.report-page :is(.rich-narrative-content,.report-rich-editable) :is(ol,ul) { padding-left: 24px; }
+.report-page :is(.rich-narrative-content,.report-rich-editable) li + li { margin-top: 8px; }
+.report-deck { max-width: 760px; font-size: 18px !important; }
+.report-facts { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 12px; }
+.report-section { display: grid; gap: 22px; }
+.report-two-up { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; align-items: start; }
+.wide-table { overflow: hidden; }
+.wide-table [role="table"], .wide-table table { min-width: 980px; }
+.report-disclosure { padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px !important; }
+@media (max-width: 900px) {
+  .report-page { --data-app-layout-gutter: 20px; padding-top: 32px; }
+  .report-facts { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .report-two-up { grid-template-columns: 1fr; }
+  .report-hero h1 { font-size: 38px; }
+}
+@media (max-width: 560px) { .report-facts { grid-template-columns: 1fr; } }
+@media print { .report-page { max-width: none; padding: 20px; } .report-content { gap: 28px; } }

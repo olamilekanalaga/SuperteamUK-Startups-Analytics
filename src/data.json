@@ -1,0 +1,215 @@
+{
+  "id": "2f90e2a4-91ef-4e66-8a3a-063ae425d5fb",
+  "surface": "dashboard",
+  "title": "Superteam UK Startup Intelligence",
+  "generatedAt": "2026-09-02T06:00:00Z",
+  "status": "reviewed",
+  "filters": [],
+  "report": { "asOf": "2026-09-02" },
+  "queries": {
+    "research_summary": {
+      "rows": [
+        { "directoryStartups": 66, "researched": 5, "nonMainnet": 4, "mainnetQueue": 1, "completionRate": 0.0758 }
+      ],
+      "source": {
+        "label": "Authenticated Superteam UK Startup Directory and the first five reviewed startup records",
+        "tables": ["Startup Directory", "Research Archive"],
+        "metricDefinitions": [
+          { "label": "Directory universe", "definition": "Distinct startup cards visible in the authenticated Startup Directory.", "componentIds": ["directory-size"] },
+          { "label": "Researched", "definition": "Startups with a completed first-pass identity and technical classification.", "componentIds": ["researched"] },
+          { "label": "Queue A", "definition": "Reviewed startups classified as off-chain, devnet, testnet or sunset for first-pass completion.", "componentIds": ["non-mainnet"] },
+          { "label": "Queue B", "definition": "Reviewed startups with confirmed mainnet use that require address-led analysis.", "componentIds": ["mainnet"] }
+        ]
+      }
+    },
+    "technical_status": {
+      "rows": [
+        { "category": "Devnet", "startups": 2 },
+        { "category": "Off-chain / unclear", "startups": 1 },
+        { "category": "Testnet + off-chain", "startups": 1 },
+        { "category": "Mainnet + hybrid", "startups": 1 }
+      ],
+      "source": {
+        "label": "Technical classification from official product material, public deployments and founder responses",
+        "tables": ["Research Archive"],
+        "metricDefinitions": [
+          { "label": "Technical status", "definition": "Primary technical classification assigned during the first research pass; it is not a quality ranking.", "componentIds": ["technical-status-chart"] }
+        ]
+      }
+    },
+    "researched_stages": {
+      "rows": [
+        { "stage": "Raising pre-seed", "startups": 3 },
+        { "stage": "Self-funded", "startups": 1 },
+        { "stage": "Pre-seed closed", "startups": 1 }
+      ],
+      "source": {
+        "label": "Stage labels displayed in the Superteam UK Startup Directory",
+        "tables": ["Startup Directory"],
+        "metricDefinitions": [
+          { "label": "Funding stage", "definition": "Displayed directory stage for the five researched startups.", "componentIds": ["stage-chart"] }
+        ]
+      }
+    },
+    "mainnet_queue": {
+      "rows": [
+        {
+          "startup": "Fanplay",
+          "currentBrand": "WTF Games",
+          "network": "Arbitrum → Solana",
+          "entryPoint": "Not publicly documented",
+          "nextAction": "Obtain or discover an operational wallet",
+          "status": "Queued"
+        }
+      ],
+      "source": {
+        "label": "Official migration announcements and public-address review",
+        "tables": ["Research Archive"],
+        "metricDefinitions": [
+          { "label": "Mainnet queue", "definition": "Confirmed mainnet or hybrid products awaiting an official contract, wallet or transaction entry point.", "componentIds": ["mainnet-queue-table"] }
+        ]
+      }
+    },
+    "researched_startups": {
+      "rows": [
+        {
+          "id": "STUK-001",
+          "startup": "PrimeSkill",
+          "monogram": "PS",
+          "founder": "No directory-linked founder found",
+          "sector": "Gaming",
+          "stage": "Raising pre-seed",
+          "productStatus": "Inactive evidence",
+          "technicalStatus": "Solana devnet",
+          "queue": "Queue A",
+          "analysisStatus": "Devnet report complete",
+          "oneLine": "FrontStrike competitive gaming product with a verified Solana devnet program.",
+          "whatItBuilds": "PrimeSkill Studio developed FrontStrike, a competitive gaming product using a Solana devnet program and a devnet test token.",
+          "finding": "Mainnet deployment was not verified and the official X account was suspended when checked. The devnet program recorded 443 signatures with a 91.87% success rate; its latest observed activity was 20 September 2025.",
+          "nextAction": "Founder verification is required to confirm whether FrontStrike migrated, paused or was abandoned.",
+          "productEvidence": "Publicly observed",
+          "chainEvidence": "On-chain verified",
+          "userEvidence": "On-chain verified",
+          "transactionEvidence": "On-chain verified",
+          "revenueEvidence": "Not publicly verifiable",
+          "metrics": [
+            { "label": "Devnet signatures", "value": "443", "qualifier": "On-chain verified" },
+            { "label": "Success rate", "value": "91.87%", "qualifier": "On-chain verified" },
+            { "label": "Program accounts", "value": "440", "qualifier": "On-chain verified" },
+            { "label": "Player wallets", "value": "6", "qualifier": "Decoded estimate" }
+          ]
+        },
+        {
+          "id": "STUK-002",
+          "startup": "END Corp",
+          "monogram": "EC",
+          "founder": "Andrew Robinson",
+          "sector": "Climate data / DePIN",
+          "stage": "Raising pre-seed",
+          "productStatus": "Live data product",
+          "technicalStatus": "Live off-chain + Solana devnet",
+          "queue": "Queue A",
+          "analysisStatus": "Devnet report shared",
+          "oneLine": "Climate-data infrastructure with live SST dashboards and a pre-mainnet Solana layer.",
+          "whatItBuilds": "END Corp operates public sea-surface-temperature data products and is developing decentralised satellite ground-station and token infrastructure.",
+          "finding": "The public climate dashboard is live and updated daily. All verified END Corp program and token addresses were on Solana devnet; no known mainnet address was found.",
+          "nextAction": "Validate the devnet findings with the founder and request a production deployment address when mainnet launches.",
+          "productEvidence": "Publicly observed",
+          "chainEvidence": "On-chain verified",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "On-chain verified",
+          "revenueEvidence": "Not publicly verifiable",
+          "metrics": [
+            { "label": "Historical signatures", "value": "565", "qualifier": "Devnet verified" },
+            { "label": "Historical success", "value": "92.92%", "qualifier": "Devnet verified" },
+            { "label": "Dashboard rows", "value": "16,435", "qualifier": "Publicly observed" },
+            { "label": "Test-token mints", "value": "3", "qualifier": "Devnet verified" }
+          ]
+        },
+        {
+          "id": "STUK-003",
+          "startup": "Home Harvest",
+          "monogram": "HH",
+          "founder": "No directory-linked founder found",
+          "sector": "DePIN / Consumer",
+          "stage": "Raising pre-seed",
+          "productStatus": "Unconfirmed",
+          "technicalStatus": "Off-chain / insufficient evidence",
+          "queue": "Queue A",
+          "analysisStatus": "Founder verification needed",
+          "oneLine": "A consumer and DePIN concept with insufficient public product or chain evidence.",
+          "whatItBuilds": "The directory positions Home Harvest across consumer and DePIN, but the available public presence did not provide enough material to validate a live product or blockchain deployment.",
+          "finding": "The reviewed X page contained no usable product evidence. No verified mainnet deployment, public contract or measurable user activity was identified.",
+          "nextAction": "Ask the founder for the product URL, current build status, user metrics and any devnet or mainnet deployment.",
+          "productEvidence": "Not publicly verifiable",
+          "chainEvidence": "Not publicly verifiable",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "metrics": []
+        },
+        {
+          "id": "STUK-004",
+          "startup": "Scrolly",
+          "monogram": "SC",
+          "founder": "Dean Ball",
+          "sector": "Gaming",
+          "stage": "Self-funded",
+          "productStatus": "Sunset",
+          "technicalStatus": "Testnet + off-chain",
+          "queue": "Queue A",
+          "analysisStatus": "Historical profile complete",
+          "oneLine": "A short-form playable-game feed that supported a large no-code game jam.",
+          "whatItBuilds": "Scrolly was a feed for instantly playable games, shared points, leaderboards and developer distribution. The founder confirmed that activity and Coinflow payments were off-chain.",
+          "finding": "No official token or public Scrolly program was verified. Public records support 300 submissions as a project-reported count, while 27 games and 25 developers were individually named in the public census. Production ended on 26 June 2026.",
+          "nextAction": "Retain as a historical ecosystem-support case study and keep platform-wide claims separate from named developer evidence.",
+          "productEvidence": "Founder-confirmed",
+          "chainEvidence": "Founder-confirmed",
+          "userEvidence": "Project-reported",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "metrics": [
+            { "label": "Submissions", "value": "300", "qualifier": "Project-reported" },
+            { "label": "Named games", "value": "27", "qualifier": "Public census" },
+            { "label": "Named developers", "value": "25", "qualifier": "Public census" },
+            { "label": "Winners", "value": "10", "qualifier": "Official announcement" }
+          ]
+        },
+        {
+          "id": "STUK-005",
+          "startup": "Fanplay",
+          "monogram": "FP",
+          "founder": "Gregor Cooney",
+          "sector": "Gaming / Crypto casino",
+          "stage": "Pre-seed closed",
+          "productStatus": "Live / rebranded",
+          "technicalStatus": "Mainnet + hybrid",
+          "queue": "Mainnet queue",
+          "analysisStatus": "Awaiting wallet entry point",
+          "oneLine": "Fanplay evolved into WTF Games after moving its crypto-payment rails to Solana.",
+          "whatItBuilds": "Fanplay launched live-event wagering using USDC, first on Arbitrum and later on Solana, before evolving into the WTF Games crypto-casino brand.",
+          "finding": "Mainnet use is supported by official migration and product evidence, but no operational wallet, treasury, vault, program ID or verified transaction has been publicly documented. Public evidence indicates a hybrid model where crypto payments may be on-chain while wagering logic remains internal.",
+          "nextAction": "Identify one legitimate deposit, withdrawal or bet transaction, verify the receiving entity and expand it into an operational-wallet cluster.",
+          "productEvidence": "Publicly observed",
+          "chainEvidence": "Publicly observed",
+          "userEvidence": "Project-reported",
+          "transactionEvidence": "Project-reported",
+          "revenueEvidence": "Not publicly verifiable",
+          "metrics": [
+            { "label": "Wallets", "value": "10K", "qualifier": "Project-reported" },
+            { "label": "Transactions", "value": "10K", "qualifier": "Project-reported" },
+            { "label": "Site visits", "value": "100K", "qualifier": "Project-reported" },
+            { "label": "Social views", "value": "3M+", "qualifier": "Project-reported" }
+          ]
+        }
+      ],
+      "source": {
+        "label": "Working evidence archive for PrimeSkill, END Corp, Home Harvest, Scrolly and Fanplay",
+        "tables": ["Startup Directory", "Devnet reports", "Official product material", "Founder responses"],
+        "metricDefinitions": [
+          { "label": "Evidence confidence", "definition": "Each field is separately labelled on-chain verified, founder-confirmed, publicly observed, project-reported or not publicly verifiable.", "componentIds": [] }
+        ]
+      }
+    }
+  }
+}
