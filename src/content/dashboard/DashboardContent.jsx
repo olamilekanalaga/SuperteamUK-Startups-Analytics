@@ -50,22 +50,42 @@ function ProjectLogo({ startup, profile = false }) {
   </span>;
 }
 
+const compactStatus = (startup) => {
+  const value = String(startup.classification ?? startup.technicalState ?? startup.queue ?? "").toLowerCase();
+  if (value.includes("historical mainnet")) return { label: "Historical", tone: "historical" };
+  if (value.includes("mainnet")) return { label: "Mainnet", tone: "mainnet" };
+  if (value.includes("devnet")) return { label: "Devnet", tone: "devnet" };
+  if (value.includes("testnet")) return { label: "Testnet", tone: "testnet" };
+  if (value.includes("infrastructure")) return { label: "Infrastructure", tone: "infrastructure" };
+  if (value.includes("pre-launch")) return { label: "Pre-launch", tone: "prelaunch" };
+  if (value.includes("wound") || value.includes("inactive")) return { label: "Wound down", tone: "sunset" };
+  if (value.includes("acquired") || value.includes("exited")) return { label: "Acquired", tone: "acquired" };
+  if (value.includes("identity") || value.includes("unverified")) return { label: "Unverified", tone: "unverified" };
+  if (value.includes("off-chain")) return { label: "Off-chain", tone: "offchain" };
+  return { label: isMainnet(startup) ? "Mainnet" : "Reviewed", tone: isMainnet(startup) ? "mainnet" : "research" };
+};
+
 function StartupCard({ startup, onSelect }) {
-  const tone = isMainnet(startup) ? "mainnet" : startup.productStatus === "Sunset" ? "sunset" : "research";
-  return <button type="button" className="startup-card" onClick={() => onSelect(startup)}>
+  const status = compactStatus(startup);
+  const openProfile = (event) => {
+    event.preventDefault();
+    onSelect(startup);
+  };
+  const handleKeyDown = (event) => {
+    if (event.key === " ") {
+      event.preventDefault();
+      onSelect(startup);
+    }
+  };
+  return <a className="startup-card" href={startupPath(startup)} onClick={openProfile} onKeyDown={handleKeyDown} aria-label={"View " + displayName(startup) + " profile"}>
     <div className="startup-card__top">
       <ProjectLogo startup={startup} />
-      <StatusPill tone={tone}>{startup.analysisStatus}</StatusPill>
+      <StatusPill tone={status.tone}>{status.label}</StatusPill>
     </div>
-    <div><h3>{displayName(startup)}</h3><p>{startup.summary ?? startup.oneLine}</p></div>
-    <dl className="startup-card__facts">
-      <div><dt>Sector</dt><dd>{startup.sector}</dd></div>
-      <div><dt>Stage</dt><dd>{publicValue(startup.directoryStage ?? startup.stage)}</dd></div>
-      <div><dt>Technical status</dt><dd>{startup.technicalStatus}</dd></div>
-    </dl>
-  </button>;
+    <div className="startup-card__identity"><h3>{displayName(startup)}</h3><p>{publicValue(startup.sector)}</p></div>
+    <div className="startup-card__action"><span>View profile</span><span aria-hidden="true">&rarr;</span></div>
+  </a>;
 }
-
 function EvidenceLedger({ startup }) {
   const rows = [["Product", startup.productEvidence], ["Chain", startup.chainEvidence], ["Users", startup.userEvidence],
     ["Transactions", startup.transactionEvidence], ["Revenue", startup.revenueEvidence]];
@@ -138,7 +158,7 @@ function StartupDetail({ startup, onBack }) {
     <MetricSection title="Project-reported metrics" metrics={[...(startup.projectReportedMetrics ?? []), ...(startup.metrics ?? []).filter((metric) => /reported|claim/i.test(metric.qualifier ?? ""))]} />
     <TextList title="Data-quality warnings" items={startup.dataQualityNotes ?? []} />
     <SourceLinks startup={startup} />
-    <p className="last-reviewed">Last reviewed Â· {publicValue(startup.lastReviewed)}</p>
+    <p className="last-reviewed">Last reviewed Ã‚Â· {publicValue(startup.lastReviewed)}</p>
   </section>;
 }
 
@@ -167,7 +187,8 @@ export function DashboardContent() {
   const startups = reviewedRows("researched_startups");
   const initialSlug = pathSlug();
   const initialStartup = startups.find((item) => startupSlug(item) === initialSlug);
-  const [view, setView] = useState(initialStartup ? "archive" : "overview");
+  const initialArchive = Boolean(initialStartup) || globalThis.location.pathname === "/startups" || globalThis.location.pathname === "/startups/";
+  const [view, setView] = useState(initialArchive ? "archive" : "overview");
   const [selectedId, setSelectedId] = useState(initialStartup?.id ?? null);
   const summarySource = reviewedRows("research_summary")[0];
   const summary = useMemo(() => ({
@@ -184,7 +205,7 @@ export function DashboardContent() {
     startup: displayName(item),
     currentBrand: item.currentBrand ?? "",
     network: item.technicalStatus,
-    entryPoint: item.technicalEntryPoints?.[0]?.address ?? (item.classification?.includes("Historical") ? "Historical entry point missing" : "Missing â€” attribution required"),
+    entryPoint: item.technicalEntryPoints?.[0]?.address ?? (item.classification?.includes("Historical") ? "Historical entry point missing" : "Missing Ã¢â‚¬â€ attribution required"),
     nextAction: item.nextAction,
     status: "Queued",
     profilePath: startupPath(item),

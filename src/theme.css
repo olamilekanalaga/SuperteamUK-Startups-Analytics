@@ -36,9 +36,15 @@
   --card-radius: 16px;
   --data-card-radius: 22px;
   --data-card-background: var(--background);
+  --card-background: var(--background);
+  --card-border: light-dark(rgb(15 23 42 / 6%), rgb(255 255 255 / 8%));
+  --card-shadow: light-dark(0 2px 4px rgb(15 23 42 / 4%), 0 2px 5px rgb(0 0 0 / 22%)), light-dark(0 10px 28px rgb(15 23 42 / 9%), 0 14px 32px rgb(0 0 0 / 30%));
+  --card-shadow-hover: light-dark(0 4px 8px rgb(15 23 42 / 6%), 0 4px 8px rgb(0 0 0 / 25%)), light-dark(0 16px 34px rgb(15 23 42 / 13%), 0 18px 38px rgb(0 0 0 / 36%));
+  --card-text: var(--text);
+  --card-muted-text: var(--secondary);
+  --card-focus-ring: color-mix(in srgb, var(--accent) 78%, transparent);
   --control-radius: 12px;
   --mark-radius: 8;
-  --card-shadow: 0 4px 12px rgb(0 0 0 / 1%);
   --shadow: 0 8px 16px -4px rgb(0 0 0 / 12%);
 }
 

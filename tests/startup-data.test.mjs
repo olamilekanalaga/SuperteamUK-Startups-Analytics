@@ -4,6 +4,7 @@ import test from "node:test";
 const snapshot=JSON.parse(await readFile(new URL("../src/data.json",import.meta.url),"utf8"));
 const source=await readFile(new URL("../src/content/dashboard/DashboardContent.jsx",import.meta.url),"utf8");
 const css=await readFile(new URL("../src/content/dashboard/dashboard.css",import.meta.url),"utf8");
+const awaitTheme=await readFile(new URL("../src/theme.css",import.meta.url),"utf8");
 const startups=snapshot.queries.researched_startups.rows,mainnet=startups.filter(r=>r.queue==="Mainnet Analysis Queue");
 const slug=r=>(r.displayAlias?r.startup+"-"+r.displayAlias:r.currentBrand?r.startup+"-"+r.currentBrand:r.startup).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"");
 test("canonical research contains STUK-001 through STUK-043",()=>assert.deepEqual(startups.map(r=>r.id),Array.from({length:43},(_,i)=>"STUK-"+String(i+1).padStart(3,"0"))));
@@ -18,3 +19,34 @@ test("project claims are labelled and unknowns are not encoded as zero",()=>{for
 test("Yauga remains unresolved and has no logo asset",()=>{const y=startups.find(r=>r.id==="STUK-042");assert.equal(y.classification,"Identity Verification Required");assert.equal(y.logoPath,null);assert.equal(y.sources.length,0);assert.equal(y.founder,"Not verified")});
 test("six-theme infrastructure parity and mobile two-column metrics/startups are preserved",()=>{assert.match(source,/useDataApp\(\)/);assert.match(css,/\.metric-strip \{ grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/);assert.match(css,/\.startup-list \{ grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/);assert.doesNotMatch(source,/theme/i)});
 test("mobile layout contains overflow safeguards",()=>{assert.match(css,/min-width: 0/);assert.match(css,/overflow-wrap: anywhere/);assert.match(css,/@media \(max-width: 720px\)/)});
+
+
+test("compact directory cards use one shared route-aware component", () => {
+  assert.match(source, /function StartupCard\(\{ startup, onSelect \}\)/);
+  assert.match(source, /href=\{startupPath\(startup\)\}/);
+  assert.match(source, /onKeyDown=\{handleKeyDown\}/);
+  assert.match(source, /startup-card__identity/);
+  assert.match(source, /startup-card__action/);
+});
+
+test("compact cards exclude long research content while profiles retain it", () => {
+  const cardBlock = source.slice(source.indexOf("function StartupCard"), source.indexOf("function EvidenceLedger"));
+  assert.doesNotMatch(cardBlock, /summary \?\?|oneLine|whatItBuilds|canonicalFinding|technicalStatus|directoryStage|founder/);
+  const profileBlock = source.slice(source.indexOf("function StartupDetail"), source.indexOf("const internalResearchPipeline"));
+  assert.match(profileBlock, /whatItBuilds/);
+  assert.match(profileBlock, /canonicalFinding/);
+  assert.doesNotMatch(cardBlock, /startup\.id|STUK-/);
+});
+
+test("compact status mappings cover public classifications", () => {
+  for (const label of ["Mainnet","Historical","Devnet","Testnet","Off-chain","Infrastructure","Pre-launch","Wound down","Acquired","Unverified"]) {
+    assert.ok(source.includes('label: "' + label + '"'), label);
+  }
+});
+
+test("cards use semantic theme tokens, square geometry and reduced-motion support", () => {
+  for (const token of ["--card-background","--card-border","--card-shadow","--card-shadow-hover","--card-text","--card-muted-text","--card-focus-ring"]) assert.ok(awaitTheme.includes(token), token);
+  assert.match(css, /\.startup-card[\s\S]*aspect-ratio: 1 \/ 1/);
+  assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
+  assert.match(css, /\.startup-card:focus-visible/);
+});
