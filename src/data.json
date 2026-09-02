@@ -14,10 +14,10 @@
       "rows": [
         {
           "directoryStartups": 66,
-          "researched": 33,
-          "nonMainnet": 19,
-          "mainnetQueue": 14,
-          "completionRate": 0.5
+          "researched": 43,
+          "nonMainnet": 23,
+          "mainnetQueue": 20,
+          "completionRate": 0.6515151515151515
         }
       ],
       "source": {
@@ -65,20 +65,40 @@
           "startups": 3
         },
         {
-          "category": "Infrastructure",
-          "startups": 2
+          "category": "Unverified",
+          "startups": 7
         },
         {
           "category": "Mainnet",
-          "startups": 14
+          "startups": 18
+        },
+        {
+          "category": "Infrastructure",
+          "startups": 2
         },
         {
           "category": "Off-chain",
           "startups": 8
         },
         {
-          "category": "Unverified",
-          "startups": 6
+          "category": "Historical mainnet",
+          "startups": 1
+        },
+        {
+          "category": "Pre-launch",
+          "startups": 1
+        },
+        {
+          "category": "Testnet",
+          "startups": 1
+        },
+        {
+          "category": "Mainnet infrastructure",
+          "startups": 1
+        },
+        {
+          "category": "Inactive",
+          "startups": 1
         }
       ],
       "source": {
@@ -100,39 +120,47 @@
     "researched_stages": {
       "rows": [
         {
-          "stage": "Early Development",
-          "startups": 5
-        },
-        {
-          "stage": "Not Raising (Self Funded)",
-          "startups": 4
-        },
-        {
-          "stage": "Not Raising / Self-Funded",
-          "startups": 2
-        },
-        {
-          "stage": "Pre-seed closed",
-          "startups": 6
-        },
-        {
           "stage": "Raising pre-seed",
-          "startups": 8
-        },
-        {
-          "stage": "Raising Seed",
           "startups": 3
-        },
-        {
-          "stage": "Seed Closed",
-          "startups": 1
         },
         {
           "stage": "Self-funded",
           "startups": 1
         },
         {
+          "stage": "Pre-seed closed",
+          "startups": 1
+        },
+        {
           "stage": "Wound Down",
+          "startups": 4
+        },
+        {
+          "stage": "Early Development",
+          "startups": 5
+        },
+        {
+          "stage": "Seed Closed",
+          "startups": 5
+        },
+        {
+          "stage": "Not Raising / Self-Funded",
+          "startups": 2
+        },
+        {
+          "stage": "Raising Pre-Seed",
+          "startups": 9
+        },
+        {
+          "stage": "Pre-Seed Closed",
+          "startups": 5
+        },
+        {
+          "stage": "Not Raising (Self Funded)",
+          "startups": 5
+        },
+        {
+          "stage": "Raising Seed",
           "startups": 3
         }
       ],
@@ -155,101 +183,143 @@
     "mainnet_queue": {
       "rows": [
         {
-          "startup": "Fanplay / WTF Games",
+          "startup": "Fanplay",
           "network": "Mainnet + hybrid",
-          "entryPoint": "Not verified",
+          "entryPoint": "Missing - attribution required",
           "nextAction": "Identify one legitimate deposit, withdrawal or bet transaction, verify the receiving entity and expand it into an operational-wallet cluster.",
           "status": "Queued"
         },
         {
           "startup": "Fundl",
           "network": "Historical Solana mainnet + hybrid",
-          "entryPoint": "Not verified",
+          "entryPoint": "Missing - attribution required",
           "nextAction": "Discover or obtain a historical Fundl transaction, campaign wallet, treasury, vault or program address, confirm its attribution, and use it to reconstruct historical users, contributions and USDC/SOL volume.",
           "status": "Queued"
         },
         {
           "startup": "Purebet",
           "network": "Historical Solana mainnet",
-          "entryPoint": "39mBcnQ27QA9nNZmM6VrumE2vtqs5v3HD7t7RGv9kXUV",
+          "entryPoint": "Missing - attribution required",
           "nextAction": "Confirm the program attribution using an official source or founder response, retrieve its complete archival history, decode program instructions and calculate users, betting volume, payouts, retention and market-making concentration.",
           "status": "Queued"
         },
         {
           "startup": "AgriDex",
           "network": "Claimed Solana mainnet settlement",
-          "entryPoint": "Not verified",
+          "entryPoint": "Missing - attribution required",
           "nextAction": "Obtain one officially attributable settlement transaction, program, treasury or operational wallet before calculating users, transactions, stablecoin volume or corridor activity.",
           "status": "Queued"
         },
         {
           "startup": "Makina Finance",
           "network": "Cross-chain EVM DeFi execution and vault infrastructure",
-          "entryPoint": "Not verified",
+          "entryPoint": "Missing - attribution required",
           "nextAction": "Obtain verified contracts from official documentation",
           "status": "Queued"
         },
         {
           "startup": "HawkFi",
           "network": "Solana mainnet liquidity-management product",
-          "entryPoint": "Not verified",
+          "entryPoint": "Missing - attribution required",
           "nextAction": "Verify program IDs and vault accounts",
           "status": "Queued"
         },
         {
           "startup": "Zynta",
           "network": "Stablecoin payment infrastructure with mainnet activity requiring attribution",
-          "entryPoint": "Not verified",
+          "entryPoint": "Missing - attribution required",
           "nextAction": "Identify settlement chains",
           "status": "Queued"
         },
         {
           "startup": "Agant",
           "network": "Multi-chain GBP stablecoin infrastructure",
-          "entryPoint": "Not verified",
+          "entryPoint": "Missing - attribution required",
           "nextAction": "Verify official GBPA mint on each supported chain",
           "status": "Queued"
         },
         {
           "startup": "BananaZone",
           "network": "Solana paid-play functionality requires operational-address verification",
-          "entryPoint": "Not verified",
+          "entryPoint": "Missing - attribution required",
           "nextAction": "Identify escrow, treasury and settlement addresses",
           "status": "Queued"
         },
         {
           "startup": "Saga Monkes",
           "network": "Solana mainnet NFT collections",
-          "entryPoint": "Not verified",
+          "entryPoint": "Missing - attribution required",
           "nextAction": "Verify every official collection address",
           "status": "Queued"
         },
         {
           "startup": "Pyra",
           "network": "DeFi product with mainnet activity requiring contract attribution",
-          "entryPoint": "Not verified",
+          "entryPoint": "Missing - attribution required",
           "nextAction": "Verify official contracts and supported chains",
           "status": "Queued"
         },
         {
-          "startup": "dWallet Labs / Ika",
+          "startup": "dWallet Labs",
           "network": "Ika beta on Sui; Solana described as pre-alpha",
-          "entryPoint": "Not verified",
+          "entryPoint": "Missing - attribution required",
           "nextAction": "Verify official package IDs, contracts and network addresses",
           "status": "Queued"
         },
         {
           "startup": "LivingIP",
           "network": "Reported as launched on Solana in 2022",
-          "entryPoint": "Not verified",
+          "entryPoint": "Historical entry point missing",
           "nextAction": "Verify historical Solana program and asset addresses",
           "status": "Queued"
         },
         {
           "startup": "Poll.fun",
           "network": "Uses USDC balances and Solana withdrawals; operational entry point unverified",
-          "entryPoint": "Not verified",
+          "entryPoint": "Missing - attribution required",
           "nextAction": "Perform a controlled deposit/withdrawal trace if authorised and economically sensible",
+          "status": "Queued"
+        },
+        {
+          "startup": "Reflect",
+          "network": "Solana-native yield-bearing stablecoin infrastructure",
+          "entryPoint": "Missing - attribution required",
+          "nextAction": "Verify mint/program IDs/vaults/treasuries/strategy accounts",
+          "status": "Queued"
+        },
+        {
+          "startup": "Rise of the Gorecats",
+          "network": "Current game primarily off-chain; historical Web3 collectibles may exist",
+          "entryPoint": "Historical entry point missing",
+          "nextAction": "Authenticate collections and chain",
+          "status": "Queued"
+        },
+        {
+          "startup": "Legion",
+          "network": "MiCA-compliant token-sale and fundraising platform",
+          "entryPoint": "Missing - attribution required",
+          "nextAction": "Authenticate official contracts per chain",
+          "status": "Queued"
+        },
+        {
+          "startup": "ReFi Hub",
+          "network": "Energy infrastructure investment with on-chain cash-flow distribution",
+          "entryPoint": "Missing - attribution required",
+          "nextAction": "Authenticate asset tokens, investment contracts, treasury/distribution wallets",
+          "status": "Queued"
+        },
+        {
+          "startup": "Raiku",
+          "network": "Solana validator client supporting compute reservations and MEV bundles",
+          "entryPoint": "Missing - attribution required",
+          "nextAction": "Authenticate validator identities, vote/stake accounts, programs/service addresses",
+          "status": "Queued"
+        },
+        {
+          "startup": "Otus",
+          "network": "Automated allocation across on-chain financial products",
+          "entryPoint": "Missing - attribution required",
+          "nextAction": "Authenticate networks, protocols, vault/router/smart-account addresses",
           "status": "Queued"
         }
       ],
@@ -2140,6 +2210,527 @@
           "revenueEvidence": "Not publicly verifiable",
           "logo": null,
           "logoSource": null
+        },
+        {
+          "founder": "Not verified",
+          "founderVerification": "Not verified",
+          "verifiedMetrics": [],
+          "projectReportedMetrics": [
+            {
+              "label": "Products",
+              "value": "USDC+ / protection / tranching",
+              "qualifier": "Project-reported claim",
+              "sourceUrl": "https://docs.reflect.money/introduction"
+            }
+          ],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "sources": [
+            "https://x.com/reflectmoney",
+            "https://docs.reflect.money/introduction"
+          ],
+          "dataQualityNotes": [
+            "Never report advertised APY as realised yield."
+          ],
+          "metrics": [],
+          "logo": null,
+          "logoSource": null,
+          "lastReviewed": "2026-09-02",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "id": "STUK-034",
+          "startup": "Reflect",
+          "monogram": "RF",
+          "directoryXAccount": "@REFLECTMONEY",
+          "xAccount": "https://x.com/reflectmoney",
+          "website": "https://reflect.money",
+          "sector": "Stablecoins / DeFi yield infrastructure",
+          "stage": "Seed Closed",
+          "observedStatus": "Live",
+          "technicalStatus": "Solana-native yield-bearing stablecoin infrastructure",
+          "technicalState": "Mainnet",
+          "classification": "Mainnet Analysis Queue",
+          "queue": "Mainnet Analysis Queue",
+          "summary": "Reflect provides programmable stablecoin yield infrastructure, including USDC+ and protection/tranching products.",
+          "finding": "Appears live and Solana-native, but independently verify official USDC+ mint, programs, vaults and strategy accounts.",
+          "outstandingAnalysis": [
+            "Verify mint/program IDs/vaults/treasuries/strategy accounts",
+            "Calculate current/historical TVL, unique depositors, deposits, withdrawals, minting and redemption",
+            "Separate protocol from underlying strategy activity"
+          ],
+          "directoryStage": "Seed Closed",
+          "productStatus": "Live",
+          "oneLine": "Reflect provides programmable stablecoin yield infrastructure, including USDC+ and protection/tranching products.",
+          "canonicalFinding": "Appears live and Solana-native, but independently verify official USDC+ mint, programs, vaults and strategy accounts.",
+          "whatItBuilds": "Reflect provides programmable stablecoin yield infrastructure, including USDC+ and protection/tranching products.",
+          "nextAction": "Verify mint/program IDs/vaults/treasuries/strategy accounts",
+          "analysisStatus": "Mainnet analysis required",
+          "productEvidence": "Live",
+          "chainEvidence": "Analysis outstanding"
+        },
+        {
+          "founder": "Adam Jeffcoat",
+          "founderVerification": "Not verified",
+          "verifiedMetrics": [],
+          "projectReportedMetrics": [],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "sources": [
+            "https://studionx.com/portfolio/gorecats/",
+            "https://x.com/RiseOfGorecats",
+            "https://gorecats.itch.io/rise-of-the-gorecats"
+          ],
+          "dataQualityNotes": [],
+          "metrics": [],
+          "logo": null,
+          "logoSource": null,
+          "lastReviewed": "2026-09-02",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "id": "STUK-035",
+          "startup": "Rise of the Gorecats",
+          "monogram": "RG",
+          "directoryXAccount": "@STUDIONX",
+          "xAccount": "https://x.com/RiseOfGorecats",
+          "website": "https://studionx.com/portfolio/gorecats/",
+          "sector": "Gaming / digital collectibles",
+          "stage": "Not Raising (Self Funded)",
+          "observedStatus": "Public beta game",
+          "technicalStatus": "Current game primarily off-chain; historical Web3 collectibles may exist",
+          "technicalState": "Historical mainnet",
+          "classification": "Historical Mainnet Analysis",
+          "queue": "Mainnet Analysis Queue",
+          "summary": "StudioNX introduced Gorecats as Web3 digital collectibles before developing the survival roguelite.",
+          "finding": "Do not count the current playable game as on-chain; only authenticated historical NFT collections enter analysis.",
+          "outstandingAnalysis": [
+            "Authenticate collections and chain",
+            "Measure mint count, holders, transfers, sales and concentration",
+            "Separate players/downloads from NFT holders; determine utility"
+          ],
+          "directoryStage": "Not Raising (Self Funded)",
+          "productStatus": "Public beta game",
+          "oneLine": "StudioNX introduced Gorecats as Web3 digital collectibles before developing the survival roguelite.",
+          "canonicalFinding": "Do not count the current playable game as on-chain; only authenticated historical NFT collections enter analysis.",
+          "whatItBuilds": "StudioNX introduced Gorecats as Web3 digital collectibles before developing the survival roguelite.",
+          "nextAction": "Authenticate collections and chain",
+          "analysisStatus": "Mainnet analysis required",
+          "productEvidence": "Public beta game",
+          "chainEvidence": "Analysis outstanding"
+        },
+        {
+          "founder": "Not verified",
+          "founderVerification": "Not verified",
+          "verifiedMetrics": [],
+          "projectReportedMetrics": [
+            {
+              "label": "Investors",
+              "value": "350,000+",
+              "qualifier": "Project-reported claim",
+              "sourceUrl": "https://legion.cc"
+            },
+            {
+              "label": "Reviewed projects accepted",
+              "value": "Top 2-3%",
+              "qualifier": "Project-reported approximation",
+              "sourceUrl": "https://legion.cc"
+            }
+          ],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "sources": [
+            "https://x.com/legiondotcc",
+            "https://legion.cc"
+          ],
+          "dataQualityNotes": [
+            "Directory handle is stale/founder-linked; preserve it and use @legiondotcc.",
+            "Reject unrelated LEGION tokens."
+          ],
+          "metrics": [],
+          "logo": null,
+          "logoSource": null,
+          "lastReviewed": "2026-09-02",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "id": "STUK-036",
+          "startup": "Legion",
+          "monogram": "LG",
+          "directoryXAccount": "@D0ITDIFFERENT",
+          "xAccount": "https://x.com/legiondotcc",
+          "website": "https://legion.cc",
+          "sector": "On-chain fundraising / token issuance",
+          "stage": "Seed Closed",
+          "observedStatus": "Live",
+          "technicalStatus": "MiCA-compliant token-sale and fundraising platform",
+          "technicalState": "Mainnet",
+          "classification": "Mainnet Analysis Queue",
+          "queue": "Mainnet Analysis Queue",
+          "summary": "Merit-based investor allocation for compliant Web3 fundraising/token sales.",
+          "finding": "Live, but derive metrics from authenticated contracts/sale records and avoid unrelated Legion tokens.",
+          "outstandingAnalysis": [
+            "Authenticate official contracts per chain",
+            "Classify completed/ongoing/cancelled sales",
+            "Measure deduplicated investors, committed/raised capital, allocations, claims, refunds and withdrawals"
+          ],
+          "directoryStage": "Seed Closed",
+          "productStatus": "Live",
+          "oneLine": "Merit-based investor allocation for compliant Web3 fundraising/token sales.",
+          "canonicalFinding": "Live, but derive metrics from authenticated contracts/sale records and avoid unrelated Legion tokens.",
+          "whatItBuilds": "Merit-based investor allocation for compliant Web3 fundraising/token sales.",
+          "nextAction": "Authenticate official contracts per chain",
+          "analysisStatus": "Mainnet analysis required",
+          "productEvidence": "Live",
+          "chainEvidence": "Analysis outstanding"
+        },
+        {
+          "founder": "Not verified",
+          "founderVerification": "Not verified",
+          "verifiedMetrics": [],
+          "projectReportedMetrics": [],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "sources": [
+            "https://www.refihub.io",
+            "https://app.refihub.io",
+            "https://refihub.gitbook.io/refi-hub",
+            "https://x.com/refihub"
+          ],
+          "dataQualityNotes": [
+            "Homepage placeholder zeros are not verified performance.",
+            "Advertised IRR is not independently calculated return."
+          ],
+          "metrics": [],
+          "logo": null,
+          "logoSource": null,
+          "lastReviewed": "2026-09-02",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "id": "STUK-037",
+          "startup": "ReFi Hub",
+          "monogram": "RH",
+          "directoryXAccount": "@REFIHUB_IO",
+          "xAccount": "https://x.com/refihub",
+          "website": "https://www.refihub.io",
+          "app": "https://app.refihub.io",
+          "docs": "https://refihub.gitbook.io/refi-hub",
+          "sector": "Regenerative finance / tokenised infrastructure",
+          "stage": "Raising Pre-Seed",
+          "observedStatus": "Live",
+          "technicalStatus": "Energy infrastructure investment with on-chain cash-flow distribution",
+          "technicalState": "Mainnet",
+          "classification": "Mainnet Analysis Queue",
+          "queue": "Mainnet Analysis Queue",
+          "summary": "Connects investors to operating clean-energy infrastructure and distributes revenue.",
+          "finding": "Contracts for ownership, investment and distribution require authentication.",
+          "outstandingAnalysis": [
+            "Authenticate asset tokens, investment contracts, treasury/distribution wallets",
+            "Measure investors, deposits, deployed capital and distributions",
+            "Separate reported IRR from calculated returns"
+          ],
+          "directoryStage": "Raising Pre-Seed",
+          "productStatus": "Live",
+          "oneLine": "Connects investors to operating clean-energy infrastructure and distributes revenue.",
+          "canonicalFinding": "Contracts for ownership, investment and distribution require authentication.",
+          "whatItBuilds": "Connects investors to operating clean-energy infrastructure and distributes revenue.",
+          "nextAction": "Authenticate asset tokens, investment contracts, treasury/distribution wallets",
+          "analysisStatus": "Mainnet analysis required",
+          "productEvidence": "Live",
+          "chainEvidence": "Analysis outstanding"
+        },
+        {
+          "founder": "Jason Rodrigues",
+          "founderVerification": "Not verified",
+          "verifiedMetrics": [],
+          "projectReportedMetrics": [],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "sources": [
+            "https://www.jasonr.org/",
+            "https://solana.com/es/podcasts/the-index/episodes/19028933-what-if-ai-agents-are-the-real-reason-blockchain-was-always-going-to-matter-yat-siu-of-animoca-brands-breaks-it-all-down"
+          ],
+          "dataQualityNotes": [
+            "Keep outside mainnet until deployment verified."
+          ],
+          "metrics": [],
+          "logo": null,
+          "logoSource": null,
+          "lastReviewed": "2026-09-02",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "id": "STUK-038",
+          "startup": "Cesto",
+          "monogram": "CE",
+          "website": "https://www.jasonr.org/",
+          "sector": "Personalised DeFi / financial baskets",
+          "stage": "Raising Pre-Seed",
+          "observedStatus": "Early-stage/incubation",
+          "technicalStatus": "Solana DeFi concept without verified production contracts",
+          "technicalState": "Pre-launch",
+          "classification": "Pre-launch",
+          "queue": "Non-Mainnet Research",
+          "summary": "Personalised financial/investment baskets on Solana.",
+          "finding": "Interviews/incubation verify founder/direction but not live mainnet.",
+          "outstandingAnalysis": [
+            "Verify official site/X",
+            "Determine rebrand to Baskets",
+            "Verify live product and program IDs"
+          ],
+          "directoryStage": "Raising Pre-Seed",
+          "productStatus": "Early-stage/incubation",
+          "oneLine": "Personalised financial/investment baskets on Solana.",
+          "canonicalFinding": "Interviews/incubation verify founder/direction but not live mainnet.",
+          "whatItBuilds": "Personalised financial/investment baskets on Solana.",
+          "nextAction": "Verify official site/X",
+          "analysisStatus": "Pre-launch",
+          "productEvidence": "Early-stage/incubation",
+          "chainEvidence": "Not publicly verifiable"
+        },
+        {
+          "founder": "Junaid Peer; Kobie McGlashan",
+          "founderVerification": "Not verified",
+          "verifiedMetrics": [],
+          "projectReportedMetrics": [],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "sources": [
+            "https://x.com/bulktrade",
+            "https://bulk.trade"
+          ],
+          "dataQualityNotes": [
+            "Never combine environments."
+          ],
+          "metrics": [],
+          "logo": null,
+          "logoSource": null,
+          "lastReviewed": "2026-09-02",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "id": "STUK-039",
+          "startup": "Bulk Trade",
+          "monogram": "BT",
+          "xAccount": "https://x.com/bulktrade",
+          "website": "https://bulk.trade",
+          "sector": "Perpetuals DEX / institutional trading",
+          "stage": "Seed Closed",
+          "observedStatus": "Alphanet/testnet",
+          "technicalStatus": "Solana order-book and perpetual futures infrastructure",
+          "technicalState": "Testnet",
+          "classification": "Testnet",
+          "queue": "Non-Mainnet Research",
+          "summary": "Deterministic Solana perpetuals engine for institutional/HFT.",
+          "finding": "Evidence is Alphanet/test only; no independently verified mainnet.",
+          "outstandingAnalysis": [
+            "Confirm launch and official testnet/mainnet IDs",
+            "Separate test metrics",
+            "If mainnet, measure traders/orders/fills/liquidations/OI/volume"
+          ],
+          "directoryStage": "Seed Closed",
+          "productStatus": "Alphanet/testnet",
+          "oneLine": "Deterministic Solana perpetuals engine for institutional/HFT.",
+          "canonicalFinding": "Evidence is Alphanet/test only; no independently verified mainnet.",
+          "whatItBuilds": "Deterministic Solana perpetuals engine for institutional/HFT.",
+          "nextAction": "Confirm launch and official testnet/mainnet IDs",
+          "analysisStatus": "Testnet",
+          "productEvidence": "Alphanet/testnet",
+          "chainEvidence": "Not publicly verifiable"
+        },
+        {
+          "founder": "Robin A.",
+          "founderVerification": "Not verified",
+          "verifiedMetrics": [],
+          "projectReportedMetrics": [],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "sources": [
+            "https://x.com/raiku_labs",
+            "https://raiku.com"
+          ],
+          "dataQualityNotes": [
+            "Never count every validator transaction as customer activity."
+          ],
+          "metrics": [],
+          "logo": null,
+          "logoSource": null,
+          "lastReviewed": "2026-09-02",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "id": "STUK-040",
+          "startup": "Raiku",
+          "monogram": "RK",
+          "xAccount": "https://x.com/raiku_labs",
+          "website": "https://raiku.com",
+          "sector": "Validator infrastructure / transaction execution",
+          "stage": "Seed Closed",
+          "observedStatus": "Active infrastructure",
+          "technicalStatus": "Solana validator client supporting compute reservations and MEV bundles",
+          "technicalState": "Mainnet infrastructure",
+          "classification": "Mainnet Analysis Queue",
+          "queue": "Mainnet Analysis Queue",
+          "summary": "Ahead-of-time reservations and just-in-time bundle execution.",
+          "finding": "Footprint is infrastructure, not normal consumer transactions.",
+          "outstandingAnalysis": [
+            "Authenticate validator identities, vote/stake accounts, programs/service addresses",
+            "Measure delegated stake, reservations/bundles",
+            "Estimate landing/failure rates"
+          ],
+          "directoryStage": "Seed Closed",
+          "productStatus": "Active infrastructure",
+          "oneLine": "Ahead-of-time reservations and just-in-time bundle execution.",
+          "canonicalFinding": "Footprint is infrastructure, not normal consumer transactions.",
+          "whatItBuilds": "Ahead-of-time reservations and just-in-time bundle execution.",
+          "nextAction": "Authenticate validator identities, vote/stake accounts, programs/service addresses",
+          "analysisStatus": "Mainnet analysis required",
+          "productEvidence": "Active infrastructure",
+          "chainEvidence": "Analysis outstanding"
+        },
+        {
+          "founder": "Not verified",
+          "founderVerification": "Not verified",
+          "verifiedMetrics": [],
+          "projectReportedMetrics": [],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "sources": [
+            "https://x.com/signedtrade",
+            "https://www.signed.trade/"
+          ],
+          "dataQualityNotes": [
+            "Waitlist is not a live product."
+          ],
+          "metrics": [],
+          "logo": null,
+          "logoSource": null,
+          "lastReviewed": "2026-09-02",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "id": "STUK-041",
+          "startup": "Signed Trade",
+          "monogram": "ST",
+          "xAccount": "https://x.com/signedtrade",
+          "website": "https://www.signed.trade/",
+          "sector": "Trading",
+          "stage": "Wound Down",
+          "observedStatus": "Waitlist/no verified live product",
+          "technicalStatus": "No production entry point",
+          "technicalState": "Inactive",
+          "classification": "Inactive/Wound Down",
+          "queue": "Non-Mainnet Research",
+          "summary": "Wound-down trading project with no verified live product.",
+          "finding": "Waitlist plus wound-down status, with no verified product/deployment.",
+          "outstandingAnalysis": [
+            "Establish last active date",
+            "Find archived docs/GitHub",
+            "Obtain founder confirmation of historical deployments"
+          ],
+          "directoryStage": "Wound Down",
+          "productStatus": "Waitlist/no verified live product",
+          "oneLine": "Wound-down trading project with no verified live product.",
+          "canonicalFinding": "Waitlist plus wound-down status, with no verified product/deployment.",
+          "whatItBuilds": "Wound-down trading project with no verified live product.",
+          "nextAction": "Establish last active date",
+          "analysisStatus": "Inactive/Wound Down",
+          "productEvidence": "Waitlist/no verified live product",
+          "chainEvidence": "Not publicly verifiable"
+        },
+        {
+          "founder": "Not verified",
+          "founderVerification": "Not verified",
+          "verifiedMetrics": [],
+          "projectReportedMetrics": [],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "sources": [],
+          "dataQualityNotes": [
+            "Do not invent identity, image, logo, source, metric or address."
+          ],
+          "metrics": [],
+          "logo": null,
+          "logoSource": null,
+          "lastReviewed": "2026-09-02",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "id": "STUK-042",
+          "startup": "Yauga",
+          "monogram": "YA",
+          "sector": "Not verified",
+          "stage": "Raising Pre-Seed",
+          "observedStatus": "Identity unresolved",
+          "technicalStatus": "No attributable deployment",
+          "technicalState": "Unverified",
+          "classification": "Identity Verification Required",
+          "queue": "Non-Mainnet Research",
+          "summary": "Public identity is unresolved.",
+          "finding": "Public searches cannot identify the intended directory startup.",
+          "outstandingAnalysis": [
+            "Obtain founder/site/X/product sentence from Superteam UK"
+          ],
+          "logoPath": null,
+          "directoryStage": "Raising Pre-Seed",
+          "productStatus": "Identity unresolved",
+          "oneLine": "Public identity is unresolved.",
+          "canonicalFinding": "Public searches cannot identify the intended directory startup.",
+          "whatItBuilds": "Public identity is unresolved.",
+          "nextAction": "Obtain founder/site/X/product sentence from Superteam UK",
+          "analysisStatus": "Identity Verification Required",
+          "productEvidence": "Identity unresolved",
+          "chainEvidence": "Not publicly verifiable"
+        },
+        {
+          "founder": "Ravi Shah; Abdulkarim Sulaiman; Meet Patel",
+          "founderVerification": "Not verified",
+          "verifiedMetrics": [],
+          "projectReportedMetrics": [],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "sources": [
+            "https://www.linkedin.com/company/otus-labs-inc",
+            "https://x.com/otus_finance"
+          ],
+          "dataQualityNotes": [
+            "Advertised yield is not realised yield."
+          ],
+          "metrics": [],
+          "logo": null,
+          "logoSource": null,
+          "lastReviewed": "2026-09-02",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "id": "STUK-043",
+          "startup": "Otus",
+          "monogram": "OT",
+          "xAccount": "https://x.com/otus_finance",
+          "sector": "Automated savings / on-chain finance",
+          "stage": "Raising Pre-Seed",
+          "observedStatus": "Live public product",
+          "technicalStatus": "Automated allocation across on-chain financial products",
+          "technicalState": "Mainnet",
+          "classification": "Mainnet Analysis Queue",
+          "queue": "Mainnet Analysis Queue",
+          "summary": "Automated savings account allocating funds to optimise yield.",
+          "finding": "Founder material says public, but chains/protocols/vaults/smart accounts require verification.",
+          "outstandingAnalysis": [
+            "Authenticate networks, protocols, vault/router/smart-account addresses",
+            "Measure deposits/withdrawals/savers/assets",
+            "Separate deposits from rebalancing"
+          ],
+          "directoryStage": "Raising Pre-Seed",
+          "productStatus": "Live public product",
+          "oneLine": "Automated savings account allocating funds to optimise yield.",
+          "canonicalFinding": "Founder material says public, but chains/protocols/vaults/smart accounts require verification.",
+          "whatItBuilds": "Automated savings account allocating funds to optimise yield.",
+          "nextAction": "Authenticate networks, protocols, vault/router/smart-account addresses",
+          "analysisStatus": "Mainnet analysis required",
+          "productEvidence": "Live public product",
+          "chainEvidence": "Analysis outstanding"
         }
       ],
       "source": {
