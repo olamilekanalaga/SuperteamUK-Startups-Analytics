@@ -14,14 +14,14 @@
       "rows": [
         {
           "directoryStartups": 66,
-          "researched": 8,
-          "nonMainnet": 5,
-          "mainnetQueue": 3,
-          "completionRate": 0.1212
+          "researched": 13,
+          "nonMainnet": 9,
+          "mainnetQueue": 4,
+          "completionRate": 0.19696969696969696
         }
       ],
       "source": {
-        "label": "Authenticated Superteam UK Startup Directory and the first five reviewed startup records",
+        "label": "Authenticated Superteam UK Startup Directory and thirteen completed canonical startup records",
         "tables": [
           "Startup Directory",
           "Research Archive"
@@ -61,32 +61,24 @@
     "technical_status": {
       "rows": [
         {
-          "category": "Solana devnet",
+          "category": "Devnet/testnet",
+          "startups": 3
+        },
+        {
+          "category": "Unverified",
           "startups": 2
         },
         {
-          "category": "Off-chain / insufficient evidence",
-          "startups": 1
+          "category": "Mainnet",
+          "startups": 4
         },
         {
-          "category": "Testnet + off-chain",
-          "startups": 1
+          "category": "Infrastructure",
+          "startups": 2
         },
         {
-          "category": "Mainnet + hybrid",
-          "startups": 1
-        },
-        {
-          "category": "Historical Solana mainnet + hybrid",
-          "startups": 1
-        },
-        {
-          "category": "Claimed Solana integration; mainnet unverified",
-          "startups": 1
-        },
-        {
-          "category": "Historical Solana mainnet",
-          "startups": 1
+          "category": "Off-chain",
+          "startups": 2
         }
       ],
       "source": {
@@ -109,11 +101,11 @@
       "rows": [
         {
           "stage": "Raising Pre-Seed",
-          "startups": 3
+          "startups": 5
         },
         {
           "stage": "Not Raising / Self-Funded",
-          "startups": 1
+          "startups": 3
         },
         {
           "stage": "Pre-Seed Closed",
@@ -126,6 +118,10 @@
         {
           "stage": "Early Development",
           "startups": 2
+        },
+        {
+          "stage": "Seed Closed",
+          "startups": 1
         }
       ],
       "source": {
@@ -168,6 +164,14 @@
           "network": "Historical Solana mainnet",
           "entryPoint": "39mBcnQ27QA9nNZmM6VrumE2vtqs5v3HD7t7RGv9kXUV",
           "nextAction": "Confirm the program attribution using an official source or founder response, retrieve its complete archival history, decode program instructions and calculate users, betting volume, payouts, retention and market-making concentration.",
+          "status": "Queued"
+        },
+        {
+          "startup": "AgriDex",
+          "currentBrand": "",
+          "network": "Claimed Solana mainnet settlement",
+          "entryPoint": "Not publicly documented",
+          "nextAction": "Obtain one officially attributable settlement transaction, program, treasury or operational wallet before calculating users, transactions, stablecoin volume or corridor activity.",
           "status": "Queued"
         }
       ],
@@ -237,7 +241,8 @@
           ],
           "technicalEntryPoints": [],
           "completedAnalysis": [],
-          "outstandingAnalysis": []
+          "outstandingAnalysis": [],
+          "technicalState": "Devnet/testnet"
         },
         {
           "id": "STUK-002",
@@ -287,7 +292,8 @@
           ],
           "technicalEntryPoints": [],
           "completedAnalysis": [],
-          "outstandingAnalysis": []
+          "outstandingAnalysis": [],
+          "technicalState": "Devnet/testnet"
         },
         {
           "id": "STUK-003",
@@ -316,7 +322,8 @@
           "metrics": [],
           "technicalEntryPoints": [],
           "completedAnalysis": [],
-          "outstandingAnalysis": []
+          "outstandingAnalysis": [],
+          "technicalState": "Unverified"
         },
         {
           "id": "STUK-004",
@@ -366,7 +373,8 @@
           ],
           "technicalEntryPoints": [],
           "completedAnalysis": [],
-          "outstandingAnalysis": []
+          "outstandingAnalysis": [],
+          "technicalState": "Devnet/testnet"
         },
         {
           "id": "STUK-005",
@@ -416,7 +424,9 @@
           ],
           "technicalEntryPoints": [],
           "completedAnalysis": [],
-          "outstandingAnalysis": []
+          "outstandingAnalysis": [],
+          "technicalState": "Mainnet",
+          "currentBrand": "WTF Games"
         },
         {
           "id": "STUK-006",
@@ -463,7 +473,8 @@
           "logoPath": "/brands/startups/fundl.png",
           "logoSourceUrl": "https://www.fundl.fun/",
           "logoSourceType": "Official project website",
-          "logoVerificationStatus": "Verified"
+          "logoVerificationStatus": "Verified",
+          "technicalState": "Mainnet"
         },
         {
           "id": "STUK-007",
@@ -523,7 +534,8 @@
           "logoPath": "/brands/startups/moon-boi-studios.png",
           "logoSourceUrl": "https://moonboi.io/wp-content/uploads/2024/08/726FA00B-AAF4-4D41-B017-A6D0C766F3F9-5.png",
           "logoSourceType": "Official project website",
-          "logoVerificationStatus": "Verified"
+          "logoVerificationStatus": "Verified",
+          "technicalState": "Unverified"
         },
         {
           "id": "STUK-008",
@@ -627,11 +639,276 @@
           "logoPath": "/brands/startups/purebet.png",
           "logoSourceUrl": "https://purebet.io/favicon.ico",
           "logoSourceType": "Official project website",
+          "logoVerificationStatus": "Verified",
+          "technicalState": "Mainnet"
+        },
+        {
+          "id": "STUK-009",
+          "startup": "AgriDex",
+          "monogram": "AD",
+          "founder": "Henry Duckworth",
+          "xAccount": "https://x.com/AgriDexPlatform",
+          "website": "https://agridex.com/",
+          "sector": "Agriculture / Trade settlement",
+          "stage": "Seed Closed",
+          "productStatus": "Live marketplace",
+          "technicalStatus": "Claimed Solana mainnet settlement",
+          "technicalState": "Mainnet",
+          "queue": "Mainnet queue",
+          "analysisStatus": "Awaiting attributable on-chain entry point",
+          "oneLine": "A live digital marketplace connecting agricultural producers and international buyers.",
+          "whatItBuilds": "AgriDex is a live digital marketplace connecting agricultural producers and international buyers.",
+          "finding": "Its official website reports 34 markets, 22 currencies and indicative settlement of two to four hours. It also reports throughput equivalent to 100,000 tonnes of wheat, 20 million litres of olive oil and 45,000 tonnes of sugar. These are project-reported figures.",
+          "evidenceBoundary": "Public materials indicate settlement may involve stablecoins and Solana, but no official program, settlement wallet, vault or transaction entry point has been verified.",
+          "nextAction": "Obtain one officially attributable settlement transaction, program, treasury or operational wallet before calculating users, transactions, stablecoin volume or corridor activity.",
+          "productEvidence": "Publicly observed",
+          "chainEvidence": "Project-documented",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Project-reported",
+          "revenueEvidence": "Not publicly verifiable",
+          "technicalEntryPoints": [],
+          "completedAnalysis": [
+            "Canonical project identity",
+            "Founder identification",
+            "Live marketplace verification",
+            "Official marketplace and settlement claims documented"
+          ],
+          "outstandingAnalysis": [
+            "Official Solana program address",
+            "Settlement wallet, vault or treasury",
+            "Officially attributable settlement transaction",
+            "Users, transactions, stablecoin volume and corridor activity"
+          ],
+          "metrics": [
+            {
+              "label": "Markets",
+              "value": "34",
+              "qualifier": "Official website claim"
+            },
+            {
+              "label": "Currencies",
+              "value": "22",
+              "qualifier": "Official website claim"
+            },
+            {
+              "label": "Indicative settlement",
+              "value": "2–4 hours",
+              "qualifier": "Official website claim; market-specific"
+            },
+            {
+              "label": "Wheat equivalent moved",
+              "value": "100,000 tonnes",
+              "qualifier": "Project-reported"
+            },
+            {
+              "label": "Olive oil equivalent moved",
+              "value": "20 million litres",
+              "qualifier": "Project-reported"
+            },
+            {
+              "label": "Sugar equivalent moved",
+              "value": "45,000 tonnes",
+              "qualifier": "Project-reported"
+            }
+          ],
+          "logoPath": "/brands/startups/agridex.png",
+          "logoSourceUrl": "https://agridex.com/favicon/apple-touch-icon.png",
+          "logoSourceType": "Official project website",
+          "logoVerificationStatus": "Verified"
+        },
+        {
+          "id": "STUK-010",
+          "startup": "Fidesium",
+          "monogram": "FI",
+          "founder": "Greg Bock and Abraham Polishchuk",
+          "xAccount": "https://x.com/FIDESIUMAPP",
+          "website": "https://www.fidesium.xyz/",
+          "sector": "Web3 security / Developer tooling",
+          "stage": "Not Raising / Self-Funded",
+          "productStatus": "Live security platform",
+          "technicalStatus": "Off-chain security and blockchain analytics",
+          "technicalState": "Infrastructure",
+          "queue": "Queue A",
+          "analysisStatus": "Canonical profile complete",
+          "oneLine": "Continuous Web3 security tooling combining automated analysis and expert-led smart-contract audits.",
+          "whatItBuilds": "Fidesium provides continuous Web3 security tooling combining automated analysis and expert-led smart-contract audits.",
+          "finding": "The official website identifies Greg Bock as co-founder and CEO and Abraham Polishchuk as co-founder and CTO. Fidesium analyzes blockchain systems, but no Fidesium-owned protocol program or operational wallet was found.",
+          "evidenceBoundary": "Analyzing blockchain data does not create an attributable Fidesium protocol footprint.",
+          "nextAction": "Track customer adoption, published audits and supported-chain coverage using off-chain or company-supplied metrics.",
+          "productEvidence": "Publicly observed",
+          "chainEvidence": "Not publicly verifiable",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "technicalEntryPoints": [],
+          "completedAnalysis": [
+            "Canonical project identity",
+            "Co-founder identification",
+            "Live security-platform verification",
+            "Infrastructure boundary documented"
+          ],
+          "outstandingAnalysis": [
+            "Verified customer adoption",
+            "Published audits",
+            "Supported-chain coverage",
+            "Customer retention"
+          ],
+          "metrics": [],
+          "logoSourceUrl": "https://www.fidesium.xyz/",
+          "logoSourceType": "Official project website reviewed",
+          "logoVerificationStatus": "Monogram fallback; authentic logo asset not independently verified"
+        },
+        {
+          "id": "STUK-011",
+          "startup": "IRLS",
+          "monogram": "IR",
+          "founder": "Blokculture Kelly (directory-listed; full identity requires confirmation)",
+          "xAccount": "https://x.com/IRLS_xyz",
+          "website": "https://www.irls.xyz/",
+          "sector": "Loyalty / NFC SaaS",
+          "stage": "Not Raising / Self-Funded",
+          "productStatus": "Live product",
+          "technicalStatus": "Off-chain NFC loyalty SaaS",
+          "technicalState": "Off-chain",
+          "queue": "Queue A",
+          "analysisStatus": "Canonical profile complete",
+          "oneLine": "A no-app loyalty system in which customers tap NFC cards, collect stamps and redeem rewards.",
+          "whatItBuilds": "IRLS is a no-app loyalty system in which customers tap NFC cards, collect stamps and redeem rewards.",
+          "finding": "The official website advertises plans from £5 per month, unlimited users, a live customer-activity dashboard and nine visible customer or partner names.",
+          "evidenceBoundary": "No official program, mint, wallet or other attributable on-chain entry point was found.",
+          "nextAction": "Request active merchant count, registered customers, NFC taps, redemptions and retention from the product team.",
+          "productEvidence": "Publicly observed",
+          "chainEvidence": "Not publicly verifiable",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "technicalEntryPoints": [],
+          "completedAnalysis": [
+            "Canonical project identity",
+            "Directory-listed founder recorded with qualification",
+            "Live product verification",
+            "Official pricing and visible customer or partner claims documented"
+          ],
+          "outstandingAnalysis": [
+            "Founder full-identity confirmation",
+            "Active merchants and registered customers",
+            "NFC taps and redemptions",
+            "Retention"
+          ],
+          "metrics": [
+            {
+              "label": "Entry plan",
+              "value": "£5/month",
+              "qualifier": "Official website claim"
+            },
+            {
+              "label": "Visible customers or partners",
+              "value": "9",
+              "qualifier": "Counted from official website"
+            }
+          ],
+          "logoPath": "/brands/startups/irls.png",
+          "logoSourceUrl": "https://www.irls.xyz/irllive/assets/logo.png",
+          "logoSourceType": "Official project website",
+          "logoVerificationStatus": "Verified"
+        },
+        {
+          "id": "STUK-012",
+          "startup": "Unruggable",
+          "monogram": "UR",
+          "founder": "Bill Papapostolou",
+          "xAccount": "https://x.com/UNRUGGABLE_IO",
+          "website": "https://www.unruggable.io/",
+          "sector": "Wallet infrastructure / Hardware",
+          "stage": "Raising Pre-Seed",
+          "productStatus": "Initial hardware run sold out and shipped",
+          "technicalStatus": "Solana-native wallet infrastructure; no project-specific protocol identified",
+          "technicalState": "Infrastructure",
+          "queue": "Queue A",
+          "analysisStatus": "Canonical infrastructure profile complete",
+          "oneLine": "An open-source Solana-native hardware wallet and companion application.",
+          "whatItBuilds": "Unruggable is an open-source Solana-native hardware wallet and companion application.",
+          "finding": "The official website reports that its initial run sold out and all orders shipped in Q2. Solana’s official account described it as an open-source Solana-native hardware wallet.",
+          "evidenceBoundary": "Transactions signed through the wallet must not automatically be attributed as Unruggable protocol activity.",
+          "nextAction": "Track devices sold, activated devices and application users. Add it to the mainnet queue only if an attributable Unruggable contract, program or operational address is published.",
+          "productEvidence": "Publicly observed",
+          "chainEvidence": "Project-documented",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "technicalEntryPoints": [],
+          "completedAnalysis": [
+            "Canonical project identity",
+            "Founder identification",
+            "Hardware and companion-app classification",
+            "Initial-run status documented"
+          ],
+          "outstandingAnalysis": [
+            "Devices sold and activated",
+            "Companion-application users",
+            "Project-specific program, contract or operational address"
+          ],
+          "metrics": [],
+          "logoPath": "/brands/startups/unruggable.png",
+          "logoSourceUrl": "https://www.unruggable.io/unruggable-icon-v2.png?v=20260517",
+          "logoSourceType": "Official project website",
+          "logoVerificationStatus": "Verified"
+        },
+        {
+          "id": "STUK-013",
+          "startup": "Kantis",
+          "monogram": "KA",
+          "founder": "Misha Kushka",
+          "website": "https://www.getkantis.com/",
+          "sector": "Compliance automation / B2B SaaS",
+          "stage": "Raising Pre-Seed",
+          "productStatus": "Live product",
+          "technicalStatus": "Off-chain compliance SaaS",
+          "technicalState": "Off-chain",
+          "queue": "Queue A",
+          "analysisStatus": "Canonical profile complete",
+          "oneLine": "Compliance automation for UK and EU startups pursuing ISO 27001, SOC 2, GDPR, the EU AI Act and ISO 42001.",
+          "whatItBuilds": "Kantis provides compliance automation for UK and EU startups pursuing ISO 27001, SOC 2, GDPR, the EU AI Act and ISO 42001.",
+          "finding": "The official website and terms identify We Make Tech Ltd as the company trading as Kantis. An official customer case reports ISO 27001 certification in six weeks with zero non-conformities. These are project-reported case-study results.",
+          "evidenceBoundary": "No blockchain product or attributable on-chain entry point was found.",
+          "nextAction": "Track verified customers, completed certifications, time to certification, integrations and retention using company-supplied off-chain records.",
+          "productEvidence": "Publicly observed",
+          "chainEvidence": "Not publicly verifiable",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "technicalEntryPoints": [],
+          "completedAnalysis": [
+            "Canonical project identity",
+            "Founder identification",
+            "Trading company identity documented",
+            "Live product and customer case-study verification"
+          ],
+          "outstandingAnalysis": [
+            "Verified customers and completed certifications",
+            "Time to certification",
+            "Integrations and retention"
+          ],
+          "metrics": [
+            {
+              "label": "ISO 27001 certification",
+              "value": "6 weeks",
+              "qualifier": "Project-reported customer case study"
+            },
+            {
+              "label": "Non-conformities",
+              "value": "0",
+              "qualifier": "Project-reported customer case study"
+            }
+          ],
+          "logoPath": "/brands/startups/kantis.png",
+          "logoSourceUrl": "https://www.getkantis.com/kantis-circle.png",
+          "logoSourceType": "Official project website",
           "logoVerificationStatus": "Verified"
         }
       ],
       "source": {
-        "label": "Working evidence archive for eight completed canonical startup records",
+        "label": "Working evidence archive for thirteen completed canonical startup records",
         "tables": [
           "Startup Directory",
           "Devnet reports",

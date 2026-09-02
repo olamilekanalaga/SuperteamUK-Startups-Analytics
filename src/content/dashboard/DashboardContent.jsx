@@ -19,6 +19,15 @@ const evidenceTone = {
 const startupSlug = (startup) => startup.startup.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 const startupPath = (startup) => `/startups/${startupSlug(startup)}`;
 const pathSlug = () => globalThis.location?.pathname.match(/^\/startups\/([^/]+)\/?$/)?.[1] ?? "";
+const normalizedStage = (stage) => ({
+  "Raising pre-seed": "Raising Pre-Seed",
+  "Self-funded": "Not Raising / Self-Funded",
+  "Pre-seed closed": "Pre-Seed Closed",
+}[stage] ?? stage);
+const distributionRows = (values, key) => Object.entries(values.reduce((counts, value) => {
+  counts[value] = (counts[value] ?? 0) + 1;
+  return counts;
+}, {})).map(([label, startups]) => ({ [key]: label, startups }));
 
 function BrandMark() {
   return <img className="brand-mark" src="/brands/superteam-uk-logo.jpeg" alt="Superteam UK" />;
@@ -98,6 +107,7 @@ function StartupDetail({ startup, onBack }) {
     </dl>
     <div className="detail-grid">
       <div><h3>What the evidence says</h3><p>{startup.finding}</p></div>
+      {startup.evidenceBoundary && <div><h3>Evidence boundary</h3><p>{startup.evidenceBoundary}</p></div>}
       <div><h3>Next analytical action</h3><p>{startup.nextAction}</p></div>
     </div>
     <TechnicalEntryPoints startup={startup} />
@@ -122,7 +132,7 @@ function InsightsView({ statusRows, stageRows, queueRows, chartProps, researched
       <DataComponent id="technical-status-chart" variant="card" queryId="technical_status" sourceRows={statusRows} title="Technical status of researched startups" kind="chart"><ChartRenderer spec={statusSpec} rows={statusRows} height={300} {...chartProps("technical-status-chart")} /></DataComponent>
       <DataComponent id="stage-chart" variant="card" queryId="researched_stages" sourceRows={stageRows} title="Funding stage in the current sample" kind="chart"><ChartRenderer spec={stageSpec} rows={stageRows} height={300} {...chartProps("stage-chart")} /></DataComponent>
     </section>
-    <section className="insight-banner"><div><span>Current finding</span><h2>Public presence does not equal measurable on-chain activity.</h2></div><p>Four of the first five startups can be documented primarily through off-chain or test activity. Fanplay/WTF Games remains in the mainnet queue until an operational wallet or verified transaction is discovered.</p></section>
+    <section className="insight-banner"><div><span>Current finding</span><h2>Public presence does not equal measurable on-chain activity.</h2></div><p>{researchedCount - queueRows.length} of {researchedCount} researched startups are currently classified outside the mainnet analysis queue. The remaining {queueRows.length} require address-led follow-up.</p></section>
     <DataComponent id="mainnet-queue-table" variant="card" queryId="mainnet_queue" sourceRows={queueRows} title="Mainnet analysis queue" kind="table"><DataTable rows={queueRows} columns={queueColumns} /></DataComponent>
     <div className="queue-split"><article><span className="queue-kicker">Queue A &middot; complete first</span><h3>Off-chain and Devnet</h3><p>Product &rarr; users &rarr; social &rarr; GitHub &rarr; test transactions &rarr; milestones &rarr; evidence grade &rarr; completed profile</p></article><article><span className="queue-kicker">Queue B &middot; deep analysis</span><h3>Mainnet and Hybrid</h3><p>Official entry point &rarr; wallet cluster &rarr; raw transactions &rarr; entity labels &rarr; users &rarr; volume &rarr; retention &rarr; fund flows</p></article></div>
   </section>;
@@ -144,9 +154,16 @@ export function DashboardContent() {
     completionRate: startups.length / summarySource.directoryStartups,
   }), [startups, summarySource.directoryStartups]);
   const selected = useMemo(() => startups.find((item) => item.id === selectedId) ?? null, [startups, selectedId]);
-  const statusRows = reviewedRows("technical_status");
-  const stageRows = reviewedRows("researched_stages");
-  const queueRows = reviewedRows("mainnet_queue");
+  const statusRows = useMemo(() => distributionRows(startups.map((item) => item.technicalState), "category"), [startups]);
+  const stageRows = useMemo(() => distributionRows(startups.map((item) => normalizedStage(item.stage)), "stage"), [startups]);
+  const queueRows = useMemo(() => startups.filter((item) => item.queue === "Mainnet queue").map((item) => ({
+    startup: item.startup,
+    currentBrand: item.currentBrand ?? "",
+    network: item.technicalStatus,
+    entryPoint: item.technicalEntryPoints?.[0]?.address ?? "Not publicly documented",
+    nextAction: item.nextAction,
+    status: "Queued",
+  })), [startups]);
 
   useEffect(() => {
     const syncFromLocation = () => {
@@ -192,12 +209,12 @@ export function DashboardContent() {
       {view === "overview" && <>
         <section className="metric-strip" aria-label="Research progress">
           <MetricCard id="directory-size" queryId="research_summary" sourceRows={[summary]} title="Directory universe" value={String(summary.directoryStartups)} description="Published startup records." />
-          <MetricCard id="researched" queryId="research_summary" sourceRows={[summary]} title="Researched" value={`${summary.researched} of ${summary.directoryStartups}`} description={`${(summary.completionRate * 100).toFixed(2)}% complete.`} />
+          <MetricCard id="researched" queryId="research_summary" sourceRows={[summary]} title="Researched" value={`${summary.researched} of ${summary.directoryStartups}`} description={`${Number((summary.completionRate * 100).toFixed(2))}% complete.`} />
           <MetricCard id="non-mainnet" queryId="research_summary" sourceRows={[summary]} title="Queue A" value={String(summary.nonMainnet)} description="Off-chain, devnet or testnet." />
           <MetricCard id="mainnet" queryId="research_summary" sourceRows={[summary]} title="Queue B" value={String(summary.mainnetQueue)} description="Mainnet analysis pending." />
         </section>
         <section className="insight-banner"><div><span>Current finding</span><h2>Public presence does not equal measurable on-chain activity.</h2></div>
-          <p>Four of the first five startups can be documented primarily through off-chain or test activity. Fanplay/WTF Games is routed to the mainnet queue because its operational wallet is not publicly documented.</p></section>
+          <p>{summary.nonMainnet} of {summary.researched} researched startups are currently classified as devnet/testnet, off-chain, infrastructure or unverified. {summary.mainnetQueue} are routed to address-led mainnet analysis.</p></section>
         <DataComponent id="mainnet-queue-table" variant="card" queryId="mainnet_queue" sourceRows={queueRows} title="Mainnet analysis queue" kind="table">
           <DataTable rows={queueRows} columns={queueColumns} /></DataComponent>
       </>}
