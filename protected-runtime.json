@@ -8,7 +8,7 @@
   "files": {
     ".openai/hosting.json": "ccb536e99ac2495e55d02530ebb303350ad91a0f91ca1dfdeac6b46110d3ab96",
     "AGENTS.md": "b03cd184dd9d8eebbd60bc873f9015abbaed01599e8dd4df50a31d31d677f293",
-    "index.html": "d2b3cb055d9c649924933d5275f8b494bd6ed4e8ace62f4f8c56f701f7504124",
+    "index.html": "5a64932948edd1247e4233e0eaad6c819029144a2aa6f145c1a7664752e8ebb7",
     "package-lock.json": "f41ec1999edc81f88e2ab14bb1d99e1eaccc4bd0554b1006f2c3c1c625637859",
     "package.json": "3922b668b09b9cd0b54002277a0112b6f9bc16112d9c24ba91e838b08e29dd82",
     "scripts/authorize-protected-change.mjs": "9b9f012d65c34a1f9ac4d107ba226f82aadabde72980c2d393c63e9d68eff6a3",

@@ -1,7 +1,6 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { ChartRenderer, DataComponent, DataTable, MetricCard, useDataApp } from "../../data-app-public.jsx";
-import superteamUkLogo from "../assets/superteam-uk-logo.jpg";
 
 const statusSpec = { type: "bar", x: "category", y: "startups", showXAxisLabel: false, showYAxisLabel: false };
 const stageSpec = { type: "rankedList", x: "stage", y: "startups", initialVisibleCount: 6 };
@@ -16,25 +15,41 @@ const evidenceTone = {
   "On-chain verified": "verified", "Founder-confirmed": "confirmed", "Publicly observed": "observed",
   "Project-reported": "reported", "Not publicly verifiable": "unverified",
 };
+const startupSlug = (startup) => startup.startup.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+const startupPath = (startup) => `/startups/${startupSlug(startup)}`;
+const pathSlug = () => globalThis.location?.pathname.match(/^\/startups\/([^/]+)\/?$/)?.[1] ?? "";
 
 function BrandMark() {
-  return <img className="brand-mark" src={superteamUkLogo} alt="Superteam UK" />;
+  return <img className="brand-mark" src="/brands/superteam-uk-logo.jpeg" alt="Superteam UK" />;
 }
 
 function StatusPill({ children, tone = "neutral" }) {
   return <span className={`status-pill status-pill--${tone}`}>{children}</span>;
 }
 
-function StartupCard({ startup, selected, onSelect }) {
+function ProjectLogo({ startup, profile = false }) {
+  const [failed, setFailed] = useState(false);
+  const showImage = startup.logoPath && !failed;
+  return <span className={`project-logo${profile ? " project-logo--profile" : ""}`} aria-label={showImage ? undefined : `${startup.startup} monogram`}>
+    {showImage
+      ? <img src={startup.logoPath} alt={`${startup.startup} logo`} onError={() => setFailed(true)} />
+      : <span aria-hidden="true">{startup.monogram}</span>}
+  </span>;
+}
+
+function StartupCard({ startup, onSelect }) {
   const tone = startup.queue === "Mainnet queue" ? "mainnet" : startup.productStatus === "Sunset" ? "sunset" : "research";
-  return <button type="button" className={`startup-card${selected ? " startup-card--selected" : ""}`}
-    onClick={() => onSelect(startup.id)}>
+  return <button type="button" className="startup-card" onClick={() => onSelect(startup)}>
     <div className="startup-card__top">
-      <span className="startup-monogram">{startup.monogram}</span>
-      <StatusPill tone={tone}>{startup.queue}</StatusPill>
+      <ProjectLogo startup={startup} />
+      <StatusPill tone={tone}>{startup.analysisStatus}</StatusPill>
     </div>
     <div><h3>{startup.startup}</h3><p>{startup.oneLine}</p></div>
-    <div className="startup-card__meta"><span>{startup.stage}</span><span>{startup.technicalStatus}</span></div>
+    <dl className="startup-card__facts">
+      <div><dt>Sector</dt><dd>{startup.sector}</dd></div>
+      <div><dt>Stage</dt><dd>{startup.stage}</dd></div>
+      <div><dt>Technical status</dt><dd>{startup.technicalStatus}</dd></div>
+    </dl>
   </button>;
 }
 
@@ -47,10 +62,12 @@ function EvidenceLedger({ startup }) {
   </div>;
 }
 
-function StartupDetail({ startup }) {
-  return <section className="startup-detail" aria-label={`${startup.startup} research record`}>
+function StartupDetail({ startup, onBack }) {
+  return <section className="startup-profile" aria-label={`${startup.startup} profile`}>
+    <button type="button" className="profile-back" onClick={onBack}>&larr; Back to startups</button>
     <header className="startup-detail__header">
-      <div><p className="eyebrow">Research record · {startup.id}</p><h2>{startup.startup}</h2><p>{startup.whatItBuilds}</p></div>
+      <ProjectLogo startup={startup} profile />
+      <div><p className="eyebrow">{startup.sector}</p><h2>{startup.startup}</h2><p>{startup.whatItBuilds}</p></div>
       <StatusPill tone={startup.queue === "Mainnet queue" ? "mainnet" : "research"}>{startup.analysisStatus}</StatusPill>
     </header>
     <dl className="fact-grid">
@@ -86,28 +103,57 @@ function InsightsView({ statusRows, stageRows, queueRows, chartProps }) {
 
 export function DashboardContent() {
   const { snapshot, reviewedRows, chartProps } = useDataApp();
-  const [view, setView] = useState("overview");
   const startups = reviewedRows("researched_startups");
+  const initialSlug = pathSlug();
+  const initialStartup = startups.find((item) => startupSlug(item) === initialSlug);
+  const [view, setView] = useState(initialStartup ? "archive" : "overview");
+  const [selectedId, setSelectedId] = useState(initialStartup?.id ?? null);
   const summary = reviewedRows("research_summary")[0];
-  const [selectedId, setSelectedId] = useState(startups[0]?.id);
-  const selected = useMemo(() => startups.find((item) => item.id === selectedId) ?? startups[0], [startups, selectedId]);
+  const selected = useMemo(() => startups.find((item) => item.id === selectedId) ?? null, [startups, selectedId]);
   const statusRows = reviewedRows("technical_status");
   const stageRows = reviewedRows("researched_stages");
   const queueRows = reviewedRows("mainnet_queue");
 
+  useEffect(() => {
+    const syncFromLocation = () => {
+      const slug = pathSlug();
+      const match = startups.find((item) => startupSlug(item) === slug);
+      setSelectedId(match?.id ?? null);
+      if (match || globalThis.location.pathname === "/startups" || globalThis.location.pathname === "/startups/") setView("archive");
+    };
+    globalThis.addEventListener("popstate", syncFromLocation);
+    return () => globalThis.removeEventListener("popstate", syncFromLocation);
+  }, [startups]);
+
+  const navigateView = (nextView) => {
+    setView(nextView);
+    setSelectedId(null);
+    const path = nextView === "archive" ? "/startups" : nextView === "insights" ? "/insights" : "/";
+    globalThis.history.pushState({}, "", path);
+  };
+  const openStartup = (startup) => {
+    setView("archive");
+    setSelectedId(startup.id);
+    globalThis.history.pushState({}, "", startupPath(startup));
+  };
+  const closeStartup = () => {
+    if (pathSlug()) globalThis.history.back();
+    else setSelectedId(null);
+  };
+
   return <article className="page startup-archive" aria-label="Superteam UK startup analytics"><div className="archive-frame">
-    <aside className="archive-rail" aria-label="Archive sections"><BrandMark />
-      <button className={view === "overview" ? "active" : ""} onClick={() => setView("overview")} aria-label="Overview">⌂</button>
-      <button className={view === "archive" ? "active" : ""} onClick={() => setView("archive")} aria-label="Startups">▦</button>
-      <button className={view === "insights" ? "active" : ""} onClick={() => setView("insights")} aria-label="Insights">↳</button>
+    <aside className="archive-rail" aria-label="Analytics sections"><BrandMark />
+      <button className={view === "overview" ? "active" : ""} onClick={() => navigateView("overview")} aria-label="Overview">&#8962;</button>
+      <button className={view === "archive" ? "active" : ""} onClick={() => navigateView("archive")} aria-label="Startups">&#9638;</button>
+      <button className={view === "insights" ? "active" : ""} onClick={() => navigateView("insights")} aria-label="Insights">&#8618;</button>
     </aside>
     <div className="archive-main">
       <header className="archive-header"><div><p className="eyebrow">Superteam UK Startup Analytics</p>
         <h1>Startup <em>analytics.</em></h1><p className="header-description">Products, evidence, users and activity across the Superteam UK startup ecosystem.</p></div>
         <div className="header-actions" role="tablist" aria-label="Views">
-          <button className={view === "overview" ? "active" : ""} onClick={() => setView("overview")}>Overview</button>
-          <button className={view === "archive" ? "active" : ""} onClick={() => setView("archive")}>Startups</button>
-          <button className={view === "insights" ? "active" : ""} onClick={() => setView("insights")}>Insights</button>
+          <button className={view === "overview" ? "active" : ""} onClick={() => navigateView("overview")}>Overview</button>
+          <button className={view === "archive" ? "active" : ""} onClick={() => navigateView("archive")}>Startups</button>
+          <button className={view === "insights" ? "active" : ""} onClick={() => navigateView("insights")}>Insights</button>
         </div></header>
       {view === "overview" && <>
         <section className="metric-strip" aria-label="Research progress">
@@ -121,12 +167,14 @@ export function DashboardContent() {
         <DataComponent id="mainnet-queue-table" variant="card" queryId="mainnet_queue" sourceRows={queueRows} title="Mainnet analysis queue" kind="table">
           <DataTable rows={queueRows} columns={queueColumns} /></DataComponent>
       </>}
-      {view === "archive" && <section className="archive-browser"><div className="startup-list">
-        {startups.map((startup) => <StartupCard key={startup.id} startup={startup} selected={startup.id === selected?.id} onSelect={setSelectedId} />)}
-      </div>{selected && <StartupDetail startup={selected} />}</section>}
+      {view === "archive" && (selected
+        ? <StartupDetail startup={selected} onBack={closeStartup} />
+        : <section className="startup-directory" aria-label="Startup directory"><div className="startup-list">
+          {startups.map((startup) => <StartupCard key={startup.id} startup={startup} onSelect={openStartup} />)}
+        </div></section>)}
       {view === "insights" && <InsightsView statusRows={statusRows} stageRows={stageRows} queueRows={queueRows} chartProps={chartProps} />}
       <footer className="archive-footer"><span>Evidence-led research by Olamilekan Alaga</span>
-        <span>Data cutoff · {snapshot.report?.asOf ?? "2026-09-02"}</span></footer>
+        <span>Data cutoff &middot; {snapshot.report?.asOf ?? "2026-09-02"}</span></footer>
     </div>
   </div></article>;
 }
