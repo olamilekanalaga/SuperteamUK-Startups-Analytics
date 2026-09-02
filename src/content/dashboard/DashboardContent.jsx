@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 
-import { ChartRenderer, DataComponent, DataTable, MetricCard, useDataApp } from "../../data-app-public.jsx";
+import { ChartRenderer, DataComponent, MetricCard, useDataApp } from "../../data-app-public.jsx";
 
 const statusSpec = { type: "bar", x: "category", y: "startups", showXAxisLabel: false, showYAxisLabel: false };
 const stageSpec = { type: "rankedList", x: "stage", y: "startups", initialVisibleCount: 6 };
@@ -16,8 +16,11 @@ const evidenceTone = {
   "Project-reported": "reported", "Project-documented": "documented",
   "Analysis outstanding": "outstanding", "Partially on-chain verified": "partial", "Not publicly verifiable": "unverified",
 };
-const startupSlug = (startup) => startup.startup.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
-const startupPath = (startup) => `/startups/${startupSlug(startup)}`;
+const displayName = (startup) => startup.displayAlias ? startup.startup + " / " + startup.displayAlias : startup.currentBrand ? startup.startup + " / " + startup.currentBrand : startup.startup;
+const startupSlug = (startup) => displayName(startup).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+const startupPath = (startup) => "/startups/" + startupSlug(startup);
+const isMainnet = (startup) => startup.queue === "Mainnet Analysis Queue" || startup.queue === "Mainnet queue";
+const publicValue = (value) => value && String(value).trim() ? value : "Not verified";
 const pathSlug = () => globalThis.location?.pathname.match(/^\/startups\/([^/]+)\/?$/)?.[1] ?? "";
 const normalizedStage = (stage) => ({
   "Raising pre-seed": "Raising Pre-Seed",
@@ -48,16 +51,16 @@ function ProjectLogo({ startup, profile = false }) {
 }
 
 function StartupCard({ startup, onSelect }) {
-  const tone = startup.queue === "Mainnet queue" ? "mainnet" : startup.productStatus === "Sunset" ? "sunset" : "research";
+  const tone = isMainnet(startup) ? "mainnet" : startup.productStatus === "Sunset" ? "sunset" : "research";
   return <button type="button" className="startup-card" onClick={() => onSelect(startup)}>
     <div className="startup-card__top">
       <ProjectLogo startup={startup} />
       <StatusPill tone={tone}>{startup.analysisStatus}</StatusPill>
     </div>
-    <div><h3>{startup.startup}</h3><p>{startup.oneLine}</p></div>
+    <div><h3>{displayName(startup)}</h3><p>{startup.summary ?? startup.oneLine}</p></div>
     <dl className="startup-card__facts">
       <div><dt>Sector</dt><dd>{startup.sector}</dd></div>
-      <div><dt>Stage</dt><dd>{startup.stage}</dd></div>
+      <div><dt>Stage</dt><dd>{publicValue(startup.directoryStage ?? startup.stage)}</dd></div>
       <div><dt>Technical status</dt><dd>{startup.technicalStatus}</dd></div>
     </dl>
   </button>;
@@ -79,9 +82,9 @@ function TechnicalEntryPoints({ startup }) {
       ? <p className="empty-evidence">No publicly attributable on-chain entry point has been verified.</p>
       : <div className="entry-point-list">{entries.map((entry) => <article key={entry.address}>
         <div><strong>{entry.name}</strong><span>{entry.network} &middot; {entry.type}</span></div>
-        <a href={entry.explorerUrl} target="_blank" rel="noreferrer">{entry.address}</a>
+        <a href={entry.explorerUrl} target="_blank" rel="noopener noreferrer">{entry.address}</a>
         <p>{entry.attributionStatus}</p>
-        {entry.orbUrl && <a className="secondary-link" href={entry.orbUrl} target="_blank" rel="noreferrer">View Anchor IDL</a>}
+        {entry.orbUrl && <a className="secondary-link" href={entry.orbUrl} target="_blank" rel="noopener noreferrer">View Anchor IDL</a>}
       </article>)}</div>}
   </section>;
 }
@@ -93,20 +96,35 @@ function AnalysisChecklist({ title, items = [], completed = false }) {
   </section>;
 }
 
+function MetricSection({ title, metrics = [] }) {
+  return <section className="profile-section"><h3>{title}</h3>{metrics.length
+    ? <div className="reported-metrics">{metrics.map((metric) => <div key={metric.label + metric.value}><strong>{metric.value}</strong><span>{metric.label}</span><small>{metric.qualifier}</small>{metric.sourceUrl && <a href={metric.sourceUrl} target="_blank" rel="noopener noreferrer">Source</a>}</div>)}</div>
+    : <p className="empty-evidence">Not verified.</p>}</section>;
+}
+function TextList({ title, items = [] }) {
+  if (!items.length) return null;
+  return <section className="profile-section data-warnings"><h3>{title}</h3><ul>{items.map((item) => <li key={item}>{item}</li>)}</ul></section>;
+}
+function SourceLinks({ startup }) {
+  const links = [...new Set([startup.website, startup.xAccount, ...(startup.sources ?? [])].filter(Boolean))];
+  return <section className="profile-section"><h3>Sources</h3>{links.length
+    ? <ul className="source-links">{links.map((url) => <li key={url}><a href={url} target="_blank" rel="noopener noreferrer">{url}</a></li>)}</ul>
+    : <p className="empty-evidence">Not verified.</p>}</section>;
+}
 function StartupDetail({ startup, onBack }) {
-  return <section className="startup-profile" aria-label={`${startup.startup} profile`}>
+  return <section className="startup-profile" aria-label={displayName(startup) + " profile"}>
     <button type="button" className="profile-back" onClick={onBack}>&larr; Back to startups</button>
     <header className="startup-detail__header">
       <ProjectLogo startup={startup} profile />
-      <div><p className="eyebrow">{startup.sector}</p><h2>{startup.startup}</h2><p>{startup.whatItBuilds}</p></div>
-      <StatusPill tone={startup.queue === "Mainnet queue" ? "mainnet" : "research"}>{startup.analysisStatus}</StatusPill>
+      <div><p className="eyebrow">{startup.sector}</p><h2>{displayName(startup)}</h2><p>{startup.whatItBuilds ?? startup.summary}</p></div>
+      <StatusPill tone={isMainnet(startup) ? "mainnet" : "research"}>{startup.analysisStatus}</StatusPill>
     </header>
     <dl className="fact-grid">
-      <div><dt>Founder</dt><dd>{startup.founder}</dd></div><div><dt>Sector</dt><dd>{startup.sector}</dd></div>
-      <div><dt>Stage</dt><dd>{startup.stage}</dd></div><div><dt>Technical state</dt><dd>{startup.technicalStatus}</dd></div>
+      <div><dt>Founder</dt><dd>{publicValue(startup.founder ?? startup.directoryFounder)}</dd></div><div><dt>Sector</dt><dd>{publicValue(startup.sector)}</dd></div>
+      <div><dt>Directory stage</dt><dd>{publicValue(startup.directoryStage ?? startup.stage)}</dd></div><div><dt>Observed status</dt><dd>{publicValue(startup.observedStatus ?? startup.productStatus)}</dd></div><div><dt>Technical state</dt><dd>{publicValue(startup.technicalStatus)}</dd></div><div><dt>Classification</dt><dd>{publicValue(startup.classification)}</dd></div>
     </dl>
     <div className="detail-grid">
-      <div><h3>What the evidence says</h3><p>{startup.finding}</p></div>
+      <div><h3>Canonical finding</h3><p>{startup.canonicalFinding ?? startup.finding}</p></div>
       {startup.evidenceBoundary && <div><h3>Evidence boundary</h3><p>{startup.evidenceBoundary}</p></div>}
       <div><h3>Next analytical action</h3><p>{startup.nextAction}</p></div>
     </div>
@@ -116,13 +134,19 @@ function StartupDetail({ startup, onBack }) {
       <AnalysisChecklist title="Outstanding analysis" items={startup.outstandingAnalysis} />
     </div>
     <section className="profile-section"><h3 className="ledger-title">Evidence confidence</h3><EvidenceLedger startup={startup} /></section>
-    {startup.metrics.length > 0 && <div className="reported-metrics">{startup.metrics.map((metric) => <div key={metric.label}>
-      <strong>{metric.value}</strong><span>{metric.label}</span><small>{metric.qualifier}</small></div>)}</div>}
+    <MetricSection title="Verified metrics" metrics={startup.verifiedMetrics?.length ? startup.verifiedMetrics : (startup.metrics ?? []).filter((metric) => !/reported|claim/i.test(metric.qualifier ?? ""))} />
+    <MetricSection title="Project-reported metrics" metrics={[...(startup.projectReportedMetrics ?? []), ...(startup.metrics ?? []).filter((metric) => /reported|claim/i.test(metric.qualifier ?? ""))]} />
+    <TextList title="Data-quality warnings" items={startup.dataQualityNotes ?? []} />
+    <SourceLinks startup={startup} />
+    <p className="last-reviewed">Last reviewed Â· {publicValue(startup.lastReviewed)}</p>
   </section>;
 }
 
 const internalResearchPipeline = ["Directory intake", "Identity verification", "Product research", "Technical classification", "Evidence collection", "Queue assignment", "Publication"];
 
+function QueueList({ rows }) {
+  return <section className="mainnet-queue" aria-label="Mainnet analysis queue"><h2>Mainnet analysis queue</h2><div>{rows.map((row) => <article key={row.profilePath}><div><h3>{row.startup}</h3><p>{row.network}</p></div><StatusPill tone={row.entryPoint.startsWith("Missing") || row.entryPoint.startsWith("Historical") ? "outstanding" : "verified"}>{row.entryPoint}</StatusPill><p>{row.nextAction}</p><a href={row.profilePath}>Open startup profile</a></article>)}</div></section>;
+}
 function InsightsView({ statusRows, stageRows, queueRows, chartProps, researchedCount }) {
   void internalResearchPipeline;
   return <section className="insights-view">
@@ -133,7 +157,7 @@ function InsightsView({ statusRows, stageRows, queueRows, chartProps, researched
       <DataComponent id="stage-chart" variant="card" queryId="researched_stages" sourceRows={stageRows} title="Funding stage in the current sample" kind="chart"><ChartRenderer spec={stageSpec} rows={stageRows} height={300} {...chartProps("stage-chart")} /></DataComponent>
     </section>
     <section className="insight-banner"><div><span>Current finding</span><h2>Public presence does not equal measurable on-chain activity.</h2></div><p>{researchedCount - queueRows.length} of {researchedCount} researched startups are currently classified outside the mainnet analysis queue. The remaining {queueRows.length} require address-led follow-up.</p></section>
-    <DataComponent id="mainnet-queue-table" variant="card" queryId="mainnet_queue" sourceRows={queueRows} title="Mainnet analysis queue" kind="table"><DataTable rows={queueRows} columns={queueColumns} /></DataComponent>
+    <QueueList rows={queueRows} />
     <div className="queue-split"><article><span className="queue-kicker">Queue A &middot; complete first</span><h3>Off-chain and Devnet</h3><p>Product &rarr; users &rarr; social &rarr; GitHub &rarr; test transactions &rarr; milestones &rarr; evidence grade &rarr; completed profile</p></article><article><span className="queue-kicker">Queue B &middot; deep analysis</span><h3>Mainnet and Hybrid</h3><p>Official entry point &rarr; wallet cluster &rarr; raw transactions &rarr; entity labels &rarr; users &rarr; volume &rarr; retention &rarr; fund flows</p></article></div>
   </section>;
 }
@@ -149,20 +173,21 @@ export function DashboardContent() {
   const summary = useMemo(() => ({
     directoryStartups: summarySource.directoryStartups,
     researched: startups.length,
-    nonMainnet: startups.filter((item) => item.queue === "Queue A").length,
-    mainnetQueue: startups.filter((item) => item.queue === "Mainnet queue").length,
+    nonMainnet: startups.filter((item) => !isMainnet(item)).length,
+    mainnetQueue: startups.filter(isMainnet).length,
     completionRate: startups.length / summarySource.directoryStartups,
   }), [startups, summarySource.directoryStartups]);
   const selected = useMemo(() => startups.find((item) => item.id === selectedId) ?? null, [startups, selectedId]);
   const statusRows = useMemo(() => distributionRows(startups.map((item) => item.technicalState), "category"), [startups]);
-  const stageRows = useMemo(() => distributionRows(startups.map((item) => normalizedStage(item.stage)), "stage"), [startups]);
-  const queueRows = useMemo(() => startups.filter((item) => item.queue === "Mainnet queue").map((item) => ({
-    startup: item.startup,
+  const stageRows = useMemo(() => distributionRows(startups.map((item) => normalizedStage(item.directoryStage ?? item.stage)), "stage"), [startups]);
+  const queueRows = useMemo(() => startups.filter(isMainnet).map((item) => ({
+    startup: displayName(item),
     currentBrand: item.currentBrand ?? "",
     network: item.technicalStatus,
-    entryPoint: item.technicalEntryPoints?.[0]?.address ?? "Not publicly documented",
+    entryPoint: item.technicalEntryPoints?.[0]?.address ?? (item.classification?.includes("Historical") ? "Historical entry point missing" : "Missing â€” attribution required"),
     nextAction: item.nextAction,
     status: "Queued",
+    profilePath: startupPath(item),
   })), [startups]);
 
   useEffect(() => {
