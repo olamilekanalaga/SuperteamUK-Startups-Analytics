@@ -14,10 +14,10 @@
       "rows": [
         {
           "directoryStartups": 66,
-          "researched": 43,
-          "nonMainnet": 23,
-          "mainnetQueue": 20,
-          "completionRate": 0.6515151515151515
+          "researched": 53,
+          "nonMainnet": 27,
+          "mainnetQueue": 26,
+          "completionRate": 0.803030303030303
         }
       ],
       "source": {
@@ -66,11 +66,11 @@
         },
         {
           "category": "Unverified",
-          "startups": 7
+          "startups": 8
         },
         {
           "category": "Mainnet",
-          "startups": 18
+          "startups": 22
         },
         {
           "category": "Infrastructure",
@@ -78,15 +78,15 @@
         },
         {
           "category": "Off-chain",
-          "startups": 8
+          "startups": 10
         },
         {
           "category": "Historical mainnet",
-          "startups": 1
+          "startups": 2
         },
         {
           "category": "Pre-launch",
-          "startups": 1
+          "startups": 2
         },
         {
           "category": "Testnet",
@@ -94,7 +94,7 @@
         },
         {
           "category": "Mainnet infrastructure",
-          "startups": 1
+          "startups": 2
         },
         {
           "category": "Inactive",
@@ -162,6 +162,14 @@
         {
           "stage": "Raising Seed",
           "startups": 3
+        },
+        {
+          "stage": "Not publicly verified",
+          "startups": 9
+        },
+        {
+          "stage": "Acquired",
+          "startups": 1
         }
       ],
       "source": {
@@ -183,7 +191,7 @@
     "mainnet_queue": {
       "rows": [
         {
-          "startup": "Fanplay",
+          "startup": "Fanplay / WTF Games",
           "network": "Mainnet + hybrid",
           "entryPoint": "Missing - attribution required",
           "nextAction": "Identify one legitimate deposit, withdrawal or bet transaction, verify the receiving entity and expand it into an operational-wallet cluster.",
@@ -199,7 +207,7 @@
         {
           "startup": "Purebet",
           "network": "Historical Solana mainnet",
-          "entryPoint": "Missing - attribution required",
+          "entryPoint": "39mBcnQ27QA9nNZmM6VrumE2vtqs5v3HD7t7RGv9kXUV",
           "nextAction": "Confirm the program attribution using an official source or founder response, retrieve its complete archival history, decode program instructions and calculate users, betting volume, payouts, retention and market-making concentration.",
           "status": "Queued"
         },
@@ -260,7 +268,7 @@
           "status": "Queued"
         },
         {
-          "startup": "dWallet Labs",
+          "startup": "dWallet Labs / Ika",
           "network": "Ika beta on Sui; Solana described as pre-alpha",
           "entryPoint": "Missing - attribution required",
           "nextAction": "Verify official package IDs, contracts and network addresses",
@@ -320,6 +328,48 @@
           "network": "Automated allocation across on-chain financial products",
           "entryPoint": "Missing - attribution required",
           "nextAction": "Authenticate networks, protocols, vault/router/smart-account addresses",
+          "status": "Queued"
+        },
+        {
+          "startup": "cherry.fun",
+          "network": "Live Solana wallet-based messaging and social application",
+          "entryPoint": "Missing - attribution required",
+          "nextAction": "Identify verified operational programs, wallets or transaction entry points before calculating activity.",
+          "status": "Queued"
+        },
+        {
+          "startup": "Vanish",
+          "network": "Live private-trading infrastructure and API using disposable Solana trading accounts and Jito-related execution",
+          "entryPoint": "Missing - attribution required",
+          "nextAction": "Verify its program, operational wallets or identifiable transaction pattern before counting activity.",
+          "status": "Queued"
+        },
+        {
+          "startup": "Darklake",
+          "network": "Historical Solana mainnet trading and zero-knowledge liquidity infrastructure",
+          "entryPoint": "Historical entry point missing",
+          "nextAction": "Separate pre-acquisition Darklake activity from any later operator activity.",
+          "status": "Queued"
+        },
+        {
+          "startup": "FairScale",
+          "network": "Mainnet and token-related evidence exists for a reputation and scoring API",
+          "entryPoint": "Missing - attribution required",
+          "nextAction": "Verify the official mint, program or operational wallet before market/on-chain analysis.",
+          "status": "Queued"
+        },
+        {
+          "startup": "Xeno Money",
+          "network": "Live contactless stablecoin payment product with mainnet-facing settlement rails",
+          "entryPoint": "Missing - attribution required",
+          "nextAction": "Identify supported stablecoin rails and verified operational transaction entry points.",
+          "status": "Queued"
+        },
+        {
+          "startup": "Altify",
+          "network": "Live regulated custodial digital-asset brokerage and investment platform",
+          "entryPoint": "Missing - attribution required",
+          "nextAction": "Request or identify attributable operational wallets before measuring flows.",
           "status": "Queued"
         }
       ],
@@ -3059,6 +3109,608 @@
           ],
           "logoSourceUrl": null,
           "logoSourceType": "monogram-no-downloadable-asset"
+        },
+        {
+          "founder": "Not publicly verified",
+          "founderVerification": "Not publicly verified",
+          "verifiedMetrics": [],
+          "projectReportedMetrics": [],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "sources": [
+            "https://cherry.fun/",
+            "https://chat.cherry.fun/",
+            "https://x.com/cherrydotfun",
+            "https://play.google.com/store/apps/details?id=fun.cherry"
+          ],
+          "dataQualityNotes": [
+            "The directory founder account and current product account may differ; the current product account is @cherrydotfun, while the directory-linked account is not publicly verified.",
+            "Project-reported usage claims on the website are not independently verified metrics."
+          ],
+          "metrics": [],
+          "logo": "/brands/startups/cherry-fun.ico",
+          "logoSource": "https://cherry.fun/assets/icon-CBA2Y6kN.ico",
+          "lastReviewed": "2026-09-02",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "id": "STUK-044",
+          "startup": "cherry.fun",
+          "monogram": "CH",
+          "website": "https://cherry.fun/",
+          "xAccount": "https://x.com/cherrydotfun",
+          "directoryXAccount": "Not publicly verified",
+          "sector": "Wallet messaging / social",
+          "stage": "Not publicly verified",
+          "observedStatus": "Live mainnet product",
+          "technicalStatus": "Live Solana wallet-based messaging and social application",
+          "technicalState": "Mainnet",
+          "classification": "Mainnet",
+          "queue": "Mainnet Analysis Queue",
+          "summary": "Solana wallet-based messaging and social application.",
+          "finding": "The live product is publicly verified, but operational programs, wallets and transaction entry points are not yet attributable.",
+          "nextAction": "Identify verified operational programs, wallets or transaction entry points before calculating activity.",
+          "analysisStatus": "Mainnet analysis required",
+          "logoPath": "/brands/startups/cherry-fun.ico",
+          "logoVerificationStatus": "authenticated-favicon",
+          "logoAuditCategory": "authenticated-favicon",
+          "logoAuditSources": [
+            "official website favicon"
+          ],
+          "logoSourceUrl": "https://cherry.fun/assets/icon-CBA2Y6kN.ico",
+          "logoSourceType": "authenticated-favicon",
+          "directoryStage": "Not publicly verified",
+          "productStatus": "Live mainnet product",
+          "oneLine": "Solana wallet-based messaging and social application.",
+          "canonicalFinding": "The live product is publicly verified, but operational programs, wallets and transaction entry points are not yet attributable.",
+          "whatItBuilds": "Solana wallet-based messaging and social application.",
+          "productEvidence": "Live mainnet product",
+          "chainEvidence": "Analysis outstanding",
+          "outstandingAnalysis": [
+            "Identify verified operational programs, wallets or transaction entry points before calculating activity."
+          ]
+        },
+        {
+          "founder": "Not publicly verified",
+          "founderVerification": "Not publicly verified",
+          "verifiedMetrics": [],
+          "projectReportedMetrics": [
+            {
+              "label": "Artists",
+              "value": "12M+",
+              "qualifier": "Project-reported claim",
+              "sourceUrl": "https://www.lissen.com/"
+            },
+            {
+              "label": "Songs",
+              "value": "80M+",
+              "qualifier": "Project-reported claim",
+              "sourceUrl": "https://www.lissen.com/"
+            },
+            {
+              "label": "Exclusives",
+              "value": "15K+",
+              "qualifier": "Project-reported claim",
+              "sourceUrl": "https://www.lissen.com/"
+            }
+          ],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "sources": [
+            "https://www.lissen.com/"
+          ],
+          "dataQualityNotes": [
+            "Catalogue and exclusive-release totals are project-reported figures, not independently verified user metrics."
+          ],
+          "metrics": [],
+          "logo": "/brands/startups/lissen.svg",
+          "logoSource": "https://www.lissen.com/images/logo.svg",
+          "lastReviewed": "2026-09-02",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "id": "STUK-045",
+          "startup": "Lissen",
+          "monogram": "LI",
+          "website": "https://www.lissen.com/",
+          "xAccount": "https://x.com/BenLissen",
+          "sector": "Music streaming / artist discovery",
+          "stage": "Not publicly verified",
+          "observedStatus": "Live off-chain product",
+          "technicalStatus": "Live music streaming and artist-discovery application",
+          "technicalState": "Off-chain",
+          "classification": "Off-chain",
+          "queue": "Non-Mainnet Research",
+          "summary": "Music streaming and artist-discovery application built around fan-centric artist payments.",
+          "finding": "The product is live, but catalogue totals are project-reported and are not independently verified user or usage metrics.",
+          "nextAction": "Request first-party product analytics only if required.",
+          "analysisStatus": "Off-chain product",
+          "logoPath": "/brands/startups/lissen.svg",
+          "logoVerificationStatus": "authenticated-logo",
+          "logoAuditCategory": "authenticated-logo",
+          "logoAuditSources": [
+            "official website header logo"
+          ],
+          "logoSourceUrl": "https://www.lissen.com/images/logo.svg",
+          "logoSourceType": "authenticated-logo",
+          "directoryStage": "Not publicly verified",
+          "productStatus": "Live off-chain product",
+          "oneLine": "Music streaming and artist-discovery application built around fan-centric artist payments.",
+          "canonicalFinding": "The product is live, but catalogue totals are project-reported and are not independently verified user or usage metrics.",
+          "whatItBuilds": "Music streaming and artist-discovery application built around fan-centric artist payments.",
+          "productEvidence": "Live off-chain product",
+          "chainEvidence": "Not publicly verifiable",
+          "outstandingAnalysis": [
+            "Request first-party product analytics only if required."
+          ]
+        },
+        {
+          "founder": "Not publicly verified",
+          "founderVerification": "Not publicly verified",
+          "verifiedMetrics": [],
+          "projectReportedMetrics": [],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "sources": [
+            "https://www.vanish.trade/"
+          ],
+          "dataQualityNotes": [
+            "Do not count routed or Jito-related transactions without a verified Vanish attribution pattern."
+          ],
+          "metrics": [],
+          "logo": null,
+          "logoSource": null,
+          "lastReviewed": "2026-09-02",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "id": "STUK-046",
+          "startup": "Vanish",
+          "monogram": "VA",
+          "website": "https://www.vanish.trade/",
+          "sector": "Private trading infrastructure / API",
+          "stage": "Not publicly verified",
+          "observedStatus": "Live mainnet infrastructure",
+          "technicalStatus": "Live private-trading infrastructure and API using disposable Solana trading accounts and Jito-related execution",
+          "technicalState": "Mainnet infrastructure",
+          "classification": "Mainnet",
+          "queue": "Mainnet Analysis Queue",
+          "summary": "Private-trading infrastructure and API for shielded Solana execution.",
+          "finding": "The live infrastructure is public, but no verified program, operational wallet or attributable transaction pattern has been established.",
+          "nextAction": "Verify its program, operational wallets or identifiable transaction pattern before counting activity.",
+          "analysisStatus": "Mainnet analysis required",
+          "logoPath": null,
+          "logoVerificationStatus": "monogram-no-downloadable-asset",
+          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoAuditSources": [
+            "official website; OG image incorrectly points to localhost and was rejected"
+          ],
+          "logoSourceUrl": null,
+          "logoSourceType": "monogram-no-downloadable-asset",
+          "directoryStage": "Not publicly verified",
+          "productStatus": "Live mainnet infrastructure",
+          "oneLine": "Private-trading infrastructure and API for shielded Solana execution.",
+          "canonicalFinding": "The live infrastructure is public, but no verified program, operational wallet or attributable transaction pattern has been established.",
+          "whatItBuilds": "Private-trading infrastructure and API for shielded Solana execution.",
+          "productEvidence": "Live mainnet infrastructure",
+          "chainEvidence": "Analysis outstanding",
+          "outstandingAnalysis": [
+            "Verify its program, operational wallets or identifiable transaction pattern before counting activity."
+          ]
+        },
+        {
+          "founder": "Not publicly verified",
+          "founderVerification": "Not publicly verified",
+          "verifiedMetrics": [],
+          "projectReportedMetrics": [],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "sources": [
+            "https://alphafc.xyz/",
+            "https://x.com/alphafcxyz",
+            "https://alfretontownfootballclub.com/alpha-fc/"
+          ],
+          "dataQualityNotes": [
+            "Do not merge this project with unrelated Alpha FC football or futsal organisations."
+          ],
+          "metrics": [],
+          "logo": "/brands/startups/alpha-fc.ico",
+          "logoSource": "https://alphafc.xyz/favicon.ico",
+          "lastReviewed": "2026-09-02",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "id": "STUK-047",
+          "startup": "Alpha FC",
+          "monogram": "AF",
+          "website": "https://alphafc.xyz/",
+          "xAccount": "https://x.com/alphafcxyz",
+          "sector": "Fan governance / football",
+          "stage": "Not publicly verified",
+          "observedStatus": "Pre-launch/off-chain",
+          "technicalStatus": "Pre-launch fan-governance football product without a verified public on-chain entry point",
+          "technicalState": "Pre-launch",
+          "classification": "Pre-launch",
+          "queue": "Non-Mainnet Research",
+          "summary": "Fan-governance football product intended to give supporters a role in club decisions.",
+          "finding": "The public proposition is documented, but launch and on-chain deployment are not publicly verified.",
+          "nextAction": "Monitor for public launch, program address or transaction entry point.",
+          "analysisStatus": "Pre-launch",
+          "logoPath": "/brands/startups/alpha-fc.ico",
+          "logoVerificationStatus": "authenticated-favicon",
+          "logoAuditCategory": "authenticated-favicon",
+          "logoAuditSources": [
+            "official website favicon"
+          ],
+          "logoSourceUrl": "https://alphafc.xyz/favicon.ico",
+          "logoSourceType": "authenticated-favicon",
+          "directoryStage": "Not publicly verified",
+          "productStatus": "Pre-launch/off-chain",
+          "oneLine": "Fan-governance football product intended to give supporters a role in club decisions.",
+          "canonicalFinding": "The public proposition is documented, but launch and on-chain deployment are not publicly verified.",
+          "whatItBuilds": "Fan-governance football product intended to give supporters a role in club decisions.",
+          "productEvidence": "Pre-launch/off-chain",
+          "chainEvidence": "Not publicly verifiable",
+          "outstandingAnalysis": [
+            "Monitor for public launch, program address or transaction entry point."
+          ]
+        },
+        {
+          "founder": "Not publicly verified",
+          "founderVerification": "Not publicly verified",
+          "verifiedMetrics": [],
+          "projectReportedMetrics": [
+            {
+              "label": "Acquisition consideration",
+              "value": "USD $1.2 million",
+              "qualifier": "Reported by acquirer",
+              "sourceUrl": "https://solstrategies.io/press-releases/sol-strategies-acquires-darklake-labs-bringing-zero-knowledge-privacy-technology-and-research-team-to-its-solana-platform"
+            }
+          ],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "sources": [
+            "https://darklakelabs.com/",
+            "https://github.com/darklakefi",
+            "https://x.com/darklakefi",
+            "https://solstrategies.io/press-releases/sol-strategies-acquires-darklake-labs-bringing-zero-knowledge-privacy-technology-and-research-team-to-its-solana-platform",
+            "https://webfiles.thecse.com/solstrategies05062026-nr.pdf"
+          ],
+          "dataQualityNotes": [
+            "The acquisition amount is acquirer-reported.",
+            "Separate pre-acquisition Darklake activity from subsequent SOL Strategies activity."
+          ],
+          "metrics": [],
+          "logo": null,
+          "logoSource": null,
+          "lastReviewed": "2026-09-02",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "id": "STUK-048",
+          "startup": "Darklake",
+          "monogram": "DL",
+          "website": "https://darklakelabs.com/",
+          "xAccount": "https://x.com/darklakefi",
+          "sector": "Trading / liquidity infrastructure",
+          "stage": "Acquired",
+          "observedStatus": "Acquired in April 2026",
+          "technicalStatus": "Historical Solana mainnet trading and zero-knowledge liquidity infrastructure",
+          "technicalState": "Historical mainnet",
+          "classification": "Historical mainnet",
+          "queue": "Mainnet Analysis Queue",
+          "summary": "Historical Solana trading, liquidity and zero-knowledge privacy infrastructure.",
+          "finding": "SOL Strategies reported completing the Darklake asset acquisition in April 2026 for USD $1.2 million; historical Darklake activity must be separated from later operator activity.",
+          "nextAction": "Separate pre-acquisition Darklake activity from any later operator activity.",
+          "analysisStatus": "Historical mainnet analysis required",
+          "logoPath": null,
+          "logoVerificationStatus": "monogram-no-downloadable-asset",
+          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoAuditSources": [
+            "official Darklake website and GitHub checked; no downloadable project-controlled logo established"
+          ],
+          "logoSourceUrl": null,
+          "logoSourceType": "monogram-no-downloadable-asset",
+          "directoryStage": "Acquired",
+          "productStatus": "Acquired in April 2026",
+          "oneLine": "Historical Solana trading, liquidity and zero-knowledge privacy infrastructure.",
+          "canonicalFinding": "SOL Strategies reported completing the Darklake asset acquisition in April 2026 for USD $1.2 million; historical Darklake activity must be separated from later operator activity.",
+          "whatItBuilds": "Historical Solana trading, liquidity and zero-knowledge privacy infrastructure.",
+          "productEvidence": "Acquired in April 2026",
+          "chainEvidence": "Analysis outstanding",
+          "outstandingAnalysis": [
+            "Separate pre-acquisition Darklake activity from any later operator activity."
+          ]
+        },
+        {
+          "founder": "Not publicly verified",
+          "founderVerification": "Not publicly verified",
+          "verifiedMetrics": [],
+          "projectReportedMetrics": [],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "sources": [
+            "https://seer.run/",
+            "https://github.com/SeerApp",
+            "https://x.com/seerforsolana"
+          ],
+          "dataQualityNotes": [
+            "Do not count transactions inspected by Seer as transactions generated by Seer."
+          ],
+          "metrics": [],
+          "logo": "/brands/startups/seer.png",
+          "logoSource": "https://seer.run/images/logo.png",
+          "lastReviewed": "2026-09-02",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "id": "STUK-049",
+          "startup": "Seer",
+          "monogram": "SE",
+          "website": "https://seer.run/",
+          "xAccount": "https://x.com/seerforsolana",
+          "sector": "Developer tooling / transaction debugging",
+          "stage": "Not publicly verified",
+          "observedStatus": "Live off-chain tooling",
+          "technicalStatus": "Live Solana transaction debugger and developer tooling",
+          "technicalState": "Off-chain",
+          "classification": "Off-chain/tooling",
+          "queue": "Non-Mainnet Research",
+          "summary": "Solana transaction debugger providing traces, account changes and source-code context.",
+          "finding": "Seer inspects transactions through developer tooling; inspected transactions are not transactions generated by Seer.",
+          "nextAction": "Use product analytics or repository activity rather than protocol-volume metrics.",
+          "analysisStatus": "Off-chain tooling",
+          "logoPath": "/brands/startups/seer.png",
+          "logoVerificationStatus": "authenticated-logo",
+          "logoAuditCategory": "authenticated-logo",
+          "logoAuditSources": [
+            "official website header logo"
+          ],
+          "logoSourceUrl": "https://seer.run/images/logo.png",
+          "logoSourceType": "authenticated-logo",
+          "directoryStage": "Not publicly verified",
+          "productStatus": "Live off-chain tooling",
+          "oneLine": "Solana transaction debugger providing traces, account changes and source-code context.",
+          "canonicalFinding": "Seer inspects transactions through developer tooling; inspected transactions are not transactions generated by Seer.",
+          "whatItBuilds": "Solana transaction debugger providing traces, account changes and source-code context.",
+          "productEvidence": "Live off-chain tooling",
+          "chainEvidence": "Not publicly verifiable",
+          "outstandingAnalysis": [
+            "Use product analytics or repository activity rather than protocol-volume metrics."
+          ]
+        },
+        {
+          "founder": "Not publicly verified",
+          "founderVerification": "Not publicly verified",
+          "verifiedMetrics": [],
+          "projectReportedMetrics": [],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "sources": [
+            "https://fairscale.xyz/",
+            "https://app.fairscale.xyz/",
+            "https://swagger.api.fairscale.xyz/",
+            "https://x.com/fairscalexyz/",
+            "https://superteam.fun/earn/listing/fairscale-content-bounty-build-a-technical-idea-thread-with-fairscore"
+          ],
+          "dataQualityNotes": [
+            "Do not add or analyse a $FAIR mint until an official project-controlled source publishes and verifies it."
+          ],
+          "metrics": [],
+          "logo": "/brands/startups/fairscale.svg",
+          "logoSource": "https://fairscale.xyz/branding/FairScale-Icon-White.svg",
+          "lastReviewed": "2026-09-02",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "id": "STUK-050",
+          "startup": "FairScale",
+          "monogram": "FS",
+          "website": "https://fairscale.xyz/",
+          "xAccount": "https://x.com/fairscalexyz",
+          "app": "https://app.fairscale.xyz/",
+          "docs": "https://swagger.api.fairscale.xyz/",
+          "sector": "Reputation scoring / API",
+          "stage": "Not publicly verified",
+          "observedStatus": "Live API with token-related public references",
+          "technicalStatus": "Mainnet and token-related evidence exists for a reputation and scoring API",
+          "technicalState": "Mainnet",
+          "classification": "Mainnet",
+          "queue": "Mainnet Analysis Queue",
+          "summary": "Reputation and scoring API providing wallet, social and composite reputation signals.",
+          "finding": "A live reputation API and public $FAIR references exist, but no official mint, program or operational wallet is recorded.",
+          "nextAction": "Verify the official mint, program or operational wallet before market/on-chain analysis.",
+          "analysisStatus": "Mainnet analysis required",
+          "logoPath": "/brands/startups/fairscale.svg",
+          "logoVerificationStatus": "authenticated-app-icon",
+          "logoAuditCategory": "authenticated-app-icon",
+          "logoAuditSources": [
+            "official website favicon/apple-touch icon"
+          ],
+          "logoSourceUrl": "https://fairscale.xyz/branding/FairScale-Icon-White.svg",
+          "logoSourceType": "authenticated-app-icon",
+          "directoryStage": "Not publicly verified",
+          "productStatus": "Live API with token-related public references",
+          "oneLine": "Reputation and scoring API providing wallet, social and composite reputation signals.",
+          "canonicalFinding": "A live reputation API and public $FAIR references exist, but no official mint, program or operational wallet is recorded.",
+          "whatItBuilds": "Reputation and scoring API providing wallet, social and composite reputation signals.",
+          "productEvidence": "Live API with token-related public references",
+          "chainEvidence": "Analysis outstanding",
+          "outstandingAnalysis": [
+            "Verify the official mint, program or operational wallet before market/on-chain analysis."
+          ]
+        },
+        {
+          "founder": "Not publicly verified",
+          "founderVerification": "Not publicly verified",
+          "verifiedMetrics": [],
+          "projectReportedMetrics": [],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "sources": [
+            "https://xeno.money/",
+            "https://blog.xeno.money/",
+            "https://x.com/xeno_money",
+            "https://uk.linkedin.com/company/xeno-money",
+            "https://play.google.com/store/apps/details?id=money.xeno.xenoreader"
+          ],
+          "dataQualityNotes": [
+            "The project states there is no XENO token, presale or airdrop.",
+            "Do not associate unrelated same-name tokens or Xeno-branded projects with Xeno Money."
+          ],
+          "metrics": [],
+          "logo": "/brands/startups/xeno-money.svg",
+          "logoSource": "https://xeno.money/logo.svg",
+          "lastReviewed": "2026-09-02",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "id": "STUK-051",
+          "startup": "Xeno Money",
+          "monogram": "XM",
+          "website": "https://xeno.money/",
+          "xAccount": "https://x.com/xeno_money",
+          "sector": "Stablecoin payments / contactless payments",
+          "stage": "Not publicly verified",
+          "observedStatus": "Live mainnet product",
+          "technicalStatus": "Live contactless stablecoin payment product with mainnet-facing settlement rails",
+          "technicalState": "Mainnet",
+          "classification": "Mainnet",
+          "queue": "Mainnet Analysis Queue",
+          "summary": "Contactless stablecoin payment infrastructure for wallets, merchants and payment terminals.",
+          "finding": "The project explicitly states that it has no XENO token; supported rails and attributable operational transaction entry points still require verification.",
+          "nextAction": "Identify supported stablecoin rails and verified operational transaction entry points.",
+          "analysisStatus": "Mainnet analysis required",
+          "logoPath": "/brands/startups/xeno-money.svg",
+          "logoVerificationStatus": "authenticated-logo",
+          "logoAuditCategory": "authenticated-logo",
+          "logoAuditSources": [
+            "official website header logo"
+          ],
+          "logoSourceUrl": "https://xeno.money/logo.svg",
+          "logoSourceType": "authenticated-logo",
+          "directoryStage": "Not publicly verified",
+          "productStatus": "Live mainnet product",
+          "oneLine": "Contactless stablecoin payment infrastructure for wallets, merchants and payment terminals.",
+          "canonicalFinding": "The project explicitly states that it has no XENO token; supported rails and attributable operational transaction entry points still require verification.",
+          "whatItBuilds": "Contactless stablecoin payment infrastructure for wallets, merchants and payment terminals.",
+          "productEvidence": "Live mainnet product",
+          "chainEvidence": "Analysis outstanding",
+          "outstandingAnalysis": [
+            "Identify supported stablecoin rails and verified operational transaction entry points."
+          ]
+        },
+        {
+          "founder": "Not publicly verified",
+          "founderVerification": "Not publicly verified",
+          "verifiedMetrics": [],
+          "projectReportedMetrics": [],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "sources": [
+            "https://startups.superteamuk.org/"
+          ],
+          "dataQualityNotes": [
+            "Do not merge this record with any other Pangea-branded product without direct first-party evidence."
+          ],
+          "metrics": [],
+          "logo": null,
+          "logoSource": null,
+          "lastReviewed": "2026-09-02",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "id": "STUK-052",
+          "startup": "Pangea",
+          "monogram": "PA",
+          "sector": "Not publicly verified",
+          "stage": "Not publicly verified",
+          "observedStatus": "Identity unresolved",
+          "technicalStatus": "Unverified; no attributable deployment",
+          "technicalState": "Unverified",
+          "classification": "Unverified",
+          "queue": "Non-Mainnet Research",
+          "summary": "Product identity is unresolved because the directory and social trail is generic or ambiguous.",
+          "finding": "No canonical founder, website or official social account can be attributed without risking a namesake merge.",
+          "nextAction": "Resolve the canonical founder, website and official social account first.",
+          "analysisStatus": "Identity Verification Required",
+          "logoPath": null,
+          "logoVerificationStatus": "monogram-identity-unresolved",
+          "logoAuditCategory": "monogram-identity-unresolved",
+          "logoAuditSources": [
+            "Superteam UK directory identity trail checked; generic and ambiguous namesakes rejected"
+          ],
+          "logoSourceUrl": null,
+          "logoSourceType": "monogram-identity-unresolved",
+          "directoryStage": "Not publicly verified",
+          "productStatus": "Identity unresolved",
+          "oneLine": "Product identity is unresolved because the directory and social trail is generic or ambiguous.",
+          "canonicalFinding": "No canonical founder, website or official social account can be attributed without risking a namesake merge.",
+          "whatItBuilds": "Product identity is unresolved because the directory and social trail is generic or ambiguous.",
+          "productEvidence": "Identity unresolved",
+          "chainEvidence": "Not publicly verifiable",
+          "outstandingAnalysis": [
+            "Resolve the canonical founder, website and official social account first."
+          ]
+        },
+        {
+          "founder": "Not publicly verified",
+          "founderVerification": "Not publicly verified",
+          "verifiedMetrics": [],
+          "projectReportedMetrics": [],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "sources": [
+            "https://www.altify.app/",
+            "https://www.altify.app/about",
+            "https://www.altify.app/bitfund",
+            "https://cdn.altify.app/files/factsheets/Altify_DeFi_Crypto_Bundle_Factsheet.pdf",
+            "https://cdn.altify.app/files/Altify_Introductory_Brochure.pdf"
+          ],
+          "dataQualityNotes": [
+            "Do not claim customer activity is publicly attributable without verified operational wallets.",
+            "Fireblocks and exchange references establish infrastructure relationships, not public attribution of Altify customer flows."
+          ],
+          "metrics": [],
+          "logo": null,
+          "logoSource": null,
+          "lastReviewed": "2026-09-02",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "id": "STUK-053",
+          "startup": "Altify",
+          "monogram": "AL",
+          "website": "https://www.altify.app/",
+          "sector": "Custodial digital-asset brokerage / investment platform",
+          "stage": "Not publicly verified",
+          "observedStatus": "Live mainnet-facing custodial product",
+          "technicalStatus": "Live regulated custodial digital-asset brokerage and investment platform",
+          "technicalState": "Mainnet",
+          "classification": "Mainnet/custodial",
+          "queue": "Mainnet Analysis Queue",
+          "summary": "Regulated custodial brokerage and investment platform for digital and tokenised assets.",
+          "finding": "The product references Fireblocks, exchanges and tokenised assets, but customer activity is not publicly attributable without verified operational wallets.",
+          "nextAction": "Request or identify attributable operational wallets before measuring flows.",
+          "analysisStatus": "Mainnet operational-wallet analysis required",
+          "logoPath": null,
+          "logoVerificationStatus": "monogram-no-downloadable-asset",
+          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoAuditSources": [
+            "official website and documents checked; direct website asset access was denied and no authenticated downloadable logo was retained"
+          ],
+          "logoSourceUrl": null,
+          "logoSourceType": "monogram-no-downloadable-asset",
+          "directoryStage": "Not publicly verified",
+          "productStatus": "Live mainnet-facing custodial product",
+          "oneLine": "Regulated custodial brokerage and investment platform for digital and tokenised assets.",
+          "canonicalFinding": "The product references Fireblocks, exchanges and tokenised assets, but customer activity is not publicly attributable without verified operational wallets.",
+          "whatItBuilds": "Regulated custodial brokerage and investment platform for digital and tokenised assets.",
+          "productEvidence": "Live mainnet-facing custodial product",
+          "chainEvidence": "Analysis outstanding",
+          "outstandingAnalysis": [
+            "Request or identify attributable operational wallets before measuring flows."
+          ]
         }
       ],
       "source": {

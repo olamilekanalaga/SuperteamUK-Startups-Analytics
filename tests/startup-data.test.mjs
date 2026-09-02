@@ -14,23 +14,25 @@ const mainnet = startups.filter((row) => row.queue === "Mainnet Analysis Queue")
 const slug = (row) => (row.displayAlias ? `${row.startup}-${row.displayAlias}` : row.currentBrand ? `${row.startup}-${row.currentBrand}` : row.startup)
   .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 const logoKeys = new Set(["logo", "logoPath", "logoSource", "logoSourceUrl", "logoSourceType", "logoVerificationStatus", "logoAuditCategory", "logoAuditSources"]);
-const canonicalRows = startups.map((row) => Object.fromEntries(Object.entries(row).filter(([key]) => !logoKeys.has(key))));
+const canonicalRows = startups.slice(0, 43).map((row) => Object.fromEntries(Object.entries(row).filter(([key]) => !logoKeys.has(key))));
 
 // Fingerprint of every canonical field before this logo/UI correction.
-test("all 43 canonical research records remain byte-stable outside logo metadata", () => {
+test("existing STUK-001 through STUK-043 remain byte-stable outside logo metadata", () => {
   const fingerprint = createHash("sha256").update(JSON.stringify(canonicalRows)).digest("hex");
   assert.equal(fingerprint, "e46161e2bb28d899cc52002afdbceec58adacdf0ba4be59553173b2470fc6e81");
-  assert.deepEqual(startups.map((row) => row.id), Array.from({ length: 43 }, (_, i) => `STUK-${String(i + 1).padStart(3, "0")}`));
-  assert.equal(new Set(startups.map(slug)).size, 43);
+  assert.deepEqual(startups.map((row) => row.id), Array.from({ length: 53 }, (_, i) => `STUK-${String(i + 1).padStart(3, "0")}`));
+  assert.equal(new Set(startups.map(slug)).size, 53);
 });
 
-test("counters and classifications remain 43 researched, 20 mainnet, and 23 non-mainnet", () => {
+test("derived totals are 53 researched, 26 mainnet, 27 non-mainnet, 13 remaining and 80.3 percent", () => {
   const summary = snapshot.queries.research_summary.rows[0];
   assert.equal(summary.directoryStartups, 66);
-  assert.equal(startups.length, 43);
-  assert.equal(mainnet.length, 20);
-  assert.equal(startups.length - mainnet.length, 23);
-  assert.equal(Number(((startups.length / 66) * 100).toFixed(1)), 65.2);
+  assert.equal(startups.length, 53);
+  assert.equal(mainnet.length, 26);
+  assert.equal(startups.length - mainnet.length, 27);
+  assert.equal(66 - startups.length, 13);
+  assert.equal(Number(((startups.length / 66) * 100).toFixed(1)), 80.3);
+  assert.deepEqual(summary, { directoryStartups: 66, researched: 53, nonMainnet: 27, mainnetQueue: 26, completionRate: 53 / 66 });
 });
 
 test("pathname is the source of truth for overview, directory, insights, profiles, invalid slugs, and history", () => {
@@ -70,13 +72,13 @@ test("every verified logo is local and resolvable; every fallback is documented"
 });
 
 test("unresolved identities never receive unrelated images", () => {
-  for (const name of ["PrimeSkill", "Joyplay Ltd", "Quantum Street", "Yauga"]) {
+  for (const name of ["PrimeSkill", "Joyplay Ltd", "Quantum Street", "Yauga", "Pangea"]) {
     const startup = startups.find((row) => row.startup === name);
     assert.ok(startup, name);
     assert.equal(startup.logoPath, null, name);
     assert.equal(startup.logoAuditCategory, "monogram-identity-unresolved", name);
   }
-  for (const absentName of ["Pangea", "Nexus AI", "MeetSend", "Parasol"]) assert.equal(startups.some((row) => row.startup === absentName), false);
+  for (const absentName of ["Nexus AI", "MeetSend", "Parasol"]) assert.equal(startups.some((row) => row.startup === absentName), false);
 });
 
 test("the common logo component has meaningful alt text, lazy list loading, and finite monogram fallback", () => {
@@ -117,4 +119,49 @@ test("shared cards remain independent of all six theme implementations", async (
   assert.match(source, /useDataApp\(\)/u);
   assert.doesNotMatch(source, /data-app-theme|setAttribute\([^)]*theme/iu);
   assert.equal((await readFile(new URL("src/theme-presets.js", root), "utf8")).match(/\{ id:/gu)?.length, 6);
+});
+
+test("STUK-044 through STUK-053 use the existing schema with canonical classifications", () => {
+  const expected = [
+    ["STUK-044", "cherry.fun", "Mainnet", "Mainnet Analysis Queue"],
+    ["STUK-045", "Lissen", "Off-chain", "Non-Mainnet Research"],
+    ["STUK-046", "Vanish", "Mainnet", "Mainnet Analysis Queue"],
+    ["STUK-047", "Alpha FC", "Pre-launch", "Non-Mainnet Research"],
+    ["STUK-048", "Darklake", "Historical mainnet", "Mainnet Analysis Queue"],
+    ["STUK-049", "Seer", "Off-chain/tooling", "Non-Mainnet Research"],
+    ["STUK-050", "FairScale", "Mainnet", "Mainnet Analysis Queue"],
+    ["STUK-051", "Xeno Money", "Mainnet", "Mainnet Analysis Queue"],
+    ["STUK-052", "Pangea", "Unverified", "Non-Mainnet Research"],
+    ["STUK-053", "Altify", "Mainnet/custodial", "Mainnet Analysis Queue"],
+  ];
+  assert.deepEqual(startups.slice(43).map((row) => [row.id, row.startup, row.classification, row.queue]), expected);
+  for (const row of startups.slice(43)) {
+    assert.equal(row.lastReviewed, "2026-09-02");
+    assert.ok(row.sources.length > 0, row.id);
+    for (const key of ["technicalEntryPoints", "completedAnalysis", "outstandingAnalysis", "verifiedMetrics", "projectReportedMetrics", "dataQualityNotes", "sources"]) assert.ok(Array.isArray(row[key]), `${row.id} ${key}`);
+  }
+});
+
+test("only the six canonical additions enter the mainnet queue", () => {
+  assert.deepEqual(startups.slice(43).filter((row) => row.queue === "Mainnet Analysis Queue").map((row) => row.startup), ["cherry.fun", "Vanish", "Darklake", "FairScale", "Xeno Money", "Altify"]);
+});
+
+test("project claims, token cautions, and attribution boundaries remain explicit", () => {
+  const lissen = startups.find((row) => row.id === "STUK-045");
+  assert.deepEqual(lissen.projectReportedMetrics.map((metric) => metric.value), ["12M+", "80M+", "15K+"]);
+  lissen.projectReportedMetrics.forEach((metric) => { assert.match(metric.qualifier, /Project-reported/u); assert.match(metric.sourceUrl, /^https:\/\//u); });
+  const darklake = startups.find((row) => row.id === "STUK-048");
+  assert.equal(darklake.projectReportedMetrics[0].value, "USD $1.2 million");
+  assert.match(darklake.projectReportedMetrics[0].qualifier, /Reported by acquirer/u);
+  assert.match(startups.find((row) => row.id === "STUK-050").dataQualityNotes.join(" "), /Do not add.*\$FAIR mint/u);
+  assert.match(startups.find((row) => row.id === "STUK-051").dataQualityNotes.join(" "), /no XENO token/u);
+  assert.match(startups.find((row) => row.id === "STUK-049").dataQualityNotes.join(" "), /Do not count transactions inspected/u);
+  assert.match(startups.find((row) => row.id === "STUK-053").dataQualityNotes.join(" "), /Do not claim customer activity/u);
+});
+
+test("new records have unique names/slugs and route through the existing profile system", () => {
+  assert.equal(new Set(startups.map((row) => row.startup.toLowerCase())).size, 53);
+  assert.equal(new Set(startups.map(slug)).size, 53);
+  assert.deepEqual(startups.slice(43).map(slug), ["cherry-fun", "lissen", "vanish", "alpha-fc", "darklake", "seer", "fairscale", "xeno-money", "pangea", "altify"]);
+  assert.match(source, /startupPath = \(startup\) => "\/startups\/" \+ startupSlug\(startup\)/u);
 });
