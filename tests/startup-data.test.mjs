@@ -1,52 +1,120 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
+import { access, readFile } from "node:fs/promises";
 import test from "node:test";
-const snapshot=JSON.parse(await readFile(new URL("../src/data.json",import.meta.url),"utf8"));
-const source=await readFile(new URL("../src/content/dashboard/DashboardContent.jsx",import.meta.url),"utf8");
-const css=await readFile(new URL("../src/content/dashboard/dashboard.css",import.meta.url),"utf8");
-const awaitTheme=await readFile(new URL("../src/theme.css",import.meta.url),"utf8");
-const startups=snapshot.queries.researched_startups.rows,mainnet=startups.filter(r=>r.queue==="Mainnet Analysis Queue");
-const slug=r=>(r.displayAlias?r.startup+"-"+r.displayAlias:r.currentBrand?r.startup+"-"+r.currentBrand:r.startup).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"");
-test("canonical research contains STUK-001 through STUK-043",()=>assert.deepEqual(startups.map(r=>r.id),Array.from({length:43},(_,i)=>"STUK-"+String(i+1).padStart(3,"0"))));
-test("derived totals are 43 researched, 23 remaining, 65.2%, and 20/23 split",()=>{const q=snapshot.queries.research_summary.rows[0];assert.equal(q.directoryStartups,66);assert.equal(startups.length,43);assert.equal(66-startups.length,23);assert.equal(Number(((startups.length/66)*100).toFixed(1)),65.2);assert.equal(mainnet.length,20);assert.equal(startups.length-mainnet.length,23)});
-test("exact mainnet list is prior 14 plus six approved records and excludes Altify",()=>assert.deepEqual(mainnet.map(r=>r.startup),["Fanplay","Fundl","Purebet","AgriDex","Makina Finance","HawkFi","Zynta","Agant","BananaZone","Saga Monkes","Pyra","dWallet Labs","LivingIP","Poll.fun","Reflect","Rise of the Gorecats","Legion","ReFi Hub","Raiku","Otus"]));
-test("IDs and public profile slugs are unique",()=>{assert.equal(new Set(startups.map(r=>r.id)).size,43);assert.equal(new Set(startups.map(slug)).size,43)});
-test("all 43 records map cards to dedicated routes and complete profiles",()=>{for(const r of startups){assert.ok(r.monogram);assert.ok(slug(r));for(const k of ["technicalEntryPoints","completedAnalysis","outstandingAnalysis","verifiedMetrics","projectReportedMetrics","dataQualityNotes","sources"])assert.ok(Array.isArray(r[k]),r.id+" "+k)}assert.match(source,/startupPath = \(startup\) => "\/startups\/" \+ startupSlug\(startup\)/);assert.match(source,/onSelect=\{openStartup\}/)});
-test("list and selected profile are mutually exclusive",()=>assert.match(source,/selected\s*\?\s*<StartupDetail[\s\S]*?:\s*<section className="startup-directory"/));
-test("routes, safe links and fallback logos are implemented",()=>{assert.match(source,/history\.pushState/);assert.match(source,/addEventListener\("popstate"/);assert.match(source,/onError=\{\(\) => setFailed\(true\)\}/);assert.match(source,/target="_blank" rel="noopener noreferrer"/)});
-test("testnet is never classified as mainnet",()=>{for(const r of mainnet)assert.doesNotMatch(r.technicalState,/testnet|devnet/i);assert.equal(startups.find(r=>r.id==="STUK-039").queue,"Non-Mainnet Research")});
-test("project claims are labelled and unknowns are not encoded as zero",()=>{for(const r of startups)for(const m of r.projectReportedMetrics)assert.match(m.qualifier,/reported|claim/i,r.id);assert.equal(JSON.stringify(startups).includes('"value": 0'),false)});
-test("Yauga remains unresolved and has no logo asset",()=>{const y=startups.find(r=>r.id==="STUK-042");assert.equal(y.classification,"Identity Verification Required");assert.equal(y.logoPath,null);assert.equal(y.sources.length,0);assert.equal(y.founder,"Not verified")});
-test("six-theme infrastructure parity and mobile two-column metrics/startups are preserved",()=>{assert.match(source,/useDataApp\(\)/);assert.match(css,/\.metric-strip \{ grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/);assert.match(css,/\.startup-list \{ grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/);assert.doesNotMatch(source,/theme/i)});
-test("mobile layout contains overflow safeguards",()=>{assert.match(css,/min-width: 0/);assert.match(css,/overflow-wrap: anywhere/);assert.match(css,/@media \(max-width: 720px\)/)});
 
+const root = new URL("../", import.meta.url);
+const snapshot = JSON.parse(await readFile(new URL("src/data.json", root), "utf8"));
+const source = await readFile(new URL("src/content/dashboard/DashboardContent.jsx", root), "utf8");
+const css = await readFile(new URL("src/content/dashboard/dashboard.css", root), "utf8");
+const theme = await readFile(new URL("src/theme.css", root), "utf8");
+const vercel = JSON.parse(await readFile(new URL("vercel.json", root), "utf8"));
+const startups = snapshot.queries.researched_startups.rows;
+const mainnet = startups.filter((row) => row.queue === "Mainnet Analysis Queue");
+const slug = (row) => (row.displayAlias ? `${row.startup}-${row.displayAlias}` : row.currentBrand ? `${row.startup}-${row.currentBrand}` : row.startup)
+  .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+const logoKeys = new Set(["logo", "logoPath", "logoSource", "logoSourceUrl", "logoSourceType", "logoVerificationStatus", "logoAuditCategory", "logoAuditSources"]);
+const canonicalRows = startups.map((row) => Object.fromEntries(Object.entries(row).filter(([key]) => !logoKeys.has(key))));
 
-test("compact directory cards use one shared route-aware component", () => {
-  assert.match(source, /function StartupCard\(\{ startup, onSelect \}\)/);
-  assert.match(source, /href=\{startupPath\(startup\)\}/);
-  assert.match(source, /onKeyDown=\{handleKeyDown\}/);
-  assert.match(source, /startup-card__identity/);
-  assert.match(source, /startup-card__action/);
+// Fingerprint of every canonical field before this logo/UI correction.
+test("all 43 canonical research records remain byte-stable outside logo metadata", () => {
+  const fingerprint = createHash("sha256").update(JSON.stringify(canonicalRows)).digest("hex");
+  assert.equal(fingerprint, "e46161e2bb28d899cc52002afdbceec58adacdf0ba4be59553173b2470fc6e81");
+  assert.deepEqual(startups.map((row) => row.id), Array.from({ length: 43 }, (_, i) => `STUK-${String(i + 1).padStart(3, "0")}`));
+  assert.equal(new Set(startups.map(slug)).size, 43);
 });
 
-test("compact cards exclude long research content while profiles retain it", () => {
-  const cardBlock = source.slice(source.indexOf("function StartupCard"), source.indexOf("function EvidenceLedger"));
-  assert.doesNotMatch(cardBlock, /summary \?\?|oneLine|whatItBuilds|canonicalFinding|technicalStatus|directoryStage|founder/);
-  const profileBlock = source.slice(source.indexOf("function StartupDetail"), source.indexOf("const internalResearchPipeline"));
-  assert.match(profileBlock, /whatItBuilds/);
-  assert.match(profileBlock, /canonicalFinding/);
-  assert.doesNotMatch(cardBlock, /startup\.id|STUK-/);
+test("counters and classifications remain 43 researched, 20 mainnet, and 23 non-mainnet", () => {
+  const summary = snapshot.queries.research_summary.rows[0];
+  assert.equal(summary.directoryStartups, 66);
+  assert.equal(startups.length, 43);
+  assert.equal(mainnet.length, 20);
+  assert.equal(startups.length - mainnet.length, 23);
+  assert.equal(Number(((startups.length / 66) * 100).toFixed(1)), 65.2);
 });
 
-test("compact status mappings cover public classifications", () => {
-  for (const label of ["Mainnet","Historical","Devnet","Testnet","Off-chain","Infrastructure","Pre-launch","Wound down","Acquired","Unverified"]) {
-    assert.ok(source.includes('label: "' + label + '"'), label);
+test("pathname is the source of truth for overview, directory, insights, profiles, invalid slugs, and history", () => {
+  for (const route of ['pathname === "/"', 'pathname === "/startups"', 'pathname === "/insights"', "profileSlugFromPath(pathname)"]) assert.ok(source.includes(route), route);
+  assert.match(source, /useState\(currentPathname\)/u);
+  assert.match(source, /routeFromPathname\(pathname, startups\)/u);
+  assert.match(source, /addEventListener\("popstate"/u);
+  assert.match(source, /history\.pushState/u);
+  assert.match(source, /route\.notFound[\s\S]*Startup profile unavailable/u);
+  for (const startup of startups) assert.ok(slug(startup));
+});
+
+test("Vercel rewrites extensionless SPA routes while leaving asset paths alone", () => {
+  assert.deepEqual(vercel.rewrites, [
+    { source: "/_data/:path*", destination: "/index.html" },
+    { source: "/((?!.*\\.).*)", destination: "/index.html" },
+  ]);
+});
+
+test("every verified logo is local and resolvable; every fallback is documented", async () => {
+  const allowed = new Set(["authenticated-logo", "authenticated-app-icon", "authenticated-favicon", "monogram-identity-unresolved", "monogram-no-downloadable-asset"]);
+  for (const startup of startups) {
+    assert.ok(allowed.has(startup.logoAuditCategory), `${startup.id} category`);
+    assert.equal(startup.logoVerificationStatus, startup.logoAuditCategory);
+    assert.ok(Array.isArray(startup.logoAuditSources) && startup.logoAuditSources.length > 0, `${startup.id} audit sources`);
+    if (startup.logoPath) {
+      assert.match(startup.logoPath, /^\/brands\/startups\/[a-z0-9.-]+$/u);
+      assert.equal(startup.logo, startup.logoPath);
+      assert.match(startup.logoSource, /^https:\/\//u);
+      await access(new URL(`public${startup.logoPath}`, root));
+    } else {
+      assert.match(startup.logoAuditCategory, /^monogram-/u);
+      assert.equal(startup.logo, null);
+      assert.equal(startup.logoSource, null);
+    }
   }
 });
 
-test("cards use semantic theme tokens, square geometry and reduced-motion support", () => {
-  for (const token of ["--card-background","--card-border","--card-shadow","--card-shadow-hover","--card-text","--card-muted-text","--card-focus-ring"]) assert.ok(awaitTheme.includes(token), token);
-  assert.match(css, /\.startup-card[\s\S]*aspect-ratio: 1 \/ 1/);
-  assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
-  assert.match(css, /\.startup-card:focus-visible/);
+test("unresolved identities never receive unrelated images", () => {
+  for (const name of ["PrimeSkill", "Joyplay Ltd", "Quantum Street", "Yauga"]) {
+    const startup = startups.find((row) => row.startup === name);
+    assert.ok(startup, name);
+    assert.equal(startup.logoPath, null, name);
+    assert.equal(startup.logoAuditCategory, "monogram-identity-unresolved", name);
+  }
+  for (const absentName of ["Pangea", "Nexus AI", "MeetSend", "Parasol"]) assert.equal(startups.some((row) => row.startup === absentName), false);
+});
+
+test("the common logo component has meaningful alt text, lazy list loading, and finite monogram fallback", () => {
+  assert.match(source, /function ProjectLogo/u);
+  assert.match(source, /alt=\{`\$\{startup\.startup\} logo`\}/u);
+  assert.match(source, /loading=\{profile \? "eager" : "lazy"\}/u);
+  assert.match(source, /onError=\{\(\) => setFailed\(true\)\}/u);
+  assert.match(source, /showImage = startup\.logoPath && !failed/u);
+});
+
+test("directory cards are full-link horizontal cards with clamped summaries and contained tags", () => {
+  const card = source.slice(source.indexOf("function StartupCard"), source.indexOf("function EvidenceLedger"));
+  assert.match(card, /<a className=\{`startup-card/u);
+  assert.match(card, /href=\{startupPath\(startup\)\}/u);
+  assert.match(card, /startup-card__description/u);
+  assert.match(card, /startup-card__tags/u);
+  assert.doesNotMatch(card, /View profile|startup\.id|founder|canonicalFinding|technicalStatus|SourceLinks/u);
+  assert.doesNotMatch(css, /\.startup-card[^{}]*\{[^}]*aspect-ratio/su);
+  assert.match(css, /\.startup-card__description[\s\S]*-webkit-line-clamp:\s*3/u);
+  assert.match(css, /\.startup-card__tags\s*\{[^}]*flex-wrap:\s*wrap/su);
+  assert.match(css, /@media \(max-width: 720px\)[\s\S]*\.startup-list \{ grid-template-columns: minmax\(0, 1fr\)/u);
+});
+
+test("semantic startup-card tokens and classification strips cover every requested state", () => {
+  for (const token of ["--startup-card-background", "--startup-card-border", "--startup-card-shadow", "--startup-card-shadow-hover", "--startup-card-title", "--startup-card-description", "--startup-card-tag-background", "--startup-card-tag-border", "--startup-card-focus-ring"]) assert.ok(theme.includes(token), token);
+  for (const tone of ["mainnet", "historical", "devnet", "testnet", "offchain", "prelaunch", "sunset", "acquired", "unverified"]) assert.ok(css.includes(`startup-card--${tone}`), tone);
+  assert.match(css, /@media \(prefers-reduced-motion: reduce\)/u);
+});
+
+test("overview keeps its 2x2 mobile metric grid and Power BI elevation tokens", () => {
+  assert.match(css, /@media \(max-width: 720px\)[\s\S]*\.metric-strip \{ grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/u);
+  assert.match(css, /\.metric-strip > \*[^{}]*\{[^}]*box-shadow:\s*var\(--card-shadow\)/su);
+  assert.match(theme, /--card-shadow:/u);
+  assert.match(theme, /--card-shadow-hover:/u);
+});
+
+test("shared cards remain independent of all six theme implementations", async () => {
+  assert.match(source, /useDataApp\(\)/u);
+  assert.doesNotMatch(source, /data-app-theme|setAttribute\([^)]*theme/iu);
+  assert.equal((await readFile(new URL("src/theme-presets.js", root), "utf8")).match(/\{ id:/gu)?.length, 6);
 });

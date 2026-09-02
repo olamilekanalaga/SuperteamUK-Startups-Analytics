@@ -21,7 +21,19 @@ const startupSlug = (startup) => displayName(startup).toLowerCase().replace(/[^a
 const startupPath = (startup) => "/startups/" + startupSlug(startup);
 const isMainnet = (startup) => startup.queue === "Mainnet Analysis Queue" || startup.queue === "Mainnet queue";
 const publicValue = (value) => value && String(value).trim() ? value : "Not verified";
-const pathSlug = () => globalThis.location?.pathname.match(/^\/startups\/([^/]+)\/?$/)?.[1] ?? "";
+const currentPathname = () => globalThis.location?.pathname ?? "/";
+const profileSlugFromPath = (pathname) => pathname.match(/^\/startups\/([^/]+)\/?$/)?.[1] ?? "";
+const routeFromPathname = (pathname, startups) => {
+  if (pathname === "/" || pathname === "") return { view: "overview", startup: null, notFound: false };
+  if (pathname === "/startups" || pathname === "/startups/") return { view: "archive", startup: null, notFound: false };
+  if (pathname === "/insights" || pathname === "/insights/") return { view: "insights", startup: null, notFound: false };
+  const slug = profileSlugFromPath(pathname);
+  if (slug) {
+    const startup = startups.find((item) => startupSlug(item) === slug) ?? null;
+    return { view: "archive", startup, notFound: !startup };
+  }
+  return { view: "not-found", startup: null, notFound: true };
+};
 const normalizedStage = (stage) => ({
   "Raising pre-seed": "Raising Pre-Seed",
   "Self-funded": "Not Raising / Self-Funded",
@@ -45,7 +57,7 @@ function ProjectLogo({ startup, profile = false }) {
   const showImage = startup.logoPath && !failed;
   return <span className={`project-logo${profile ? " project-logo--profile" : ""}`} aria-label={showImage ? undefined : `${startup.startup} monogram`}>
     {showImage
-      ? <img src={startup.logoPath} alt={`${startup.startup} logo`} onError={() => setFailed(true)} />
+      ? <img src={startup.logoPath} alt={`${startup.startup} logo`} loading={profile ? "eager" : "lazy"} onError={() => setFailed(true)} />
       : <span aria-hidden="true">{startup.monogram}</span>}
   </span>;
 }
@@ -65,25 +77,28 @@ const compactStatus = (startup) => {
   return { label: isMainnet(startup) ? "Mainnet" : "Reviewed", tone: isMainnet(startup) ? "mainnet" : "research" };
 };
 
-function StartupCard({ startup, onSelect }) {
+const sectorTags = (startup) => String(startup.sector ?? "").split(/\s*(?:\/|;|,)\s*/u).filter(Boolean);
+
+function StartupCard({ startup, onNavigate }) {
   const status = compactStatus(startup);
   const openProfile = (event) => {
-    event.preventDefault();
-    onSelect(startup);
-  };
-  const handleKeyDown = (event) => {
-    if (event.key === " ") {
+    if (!event.defaultPrevented && event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
       event.preventDefault();
-      onSelect(startup);
+      onNavigate(startupPath(startup));
     }
   };
-  return <a className="startup-card" href={startupPath(startup)} onClick={openProfile} onKeyDown={handleKeyDown} aria-label={"View " + displayName(startup) + " profile"}>
-    <div className="startup-card__top">
+  const sectors = sectorTags(startup);
+  return <a className={`startup-card startup-card--${status.tone}`} href={startupPath(startup)} onClick={openProfile} aria-label={"View " + displayName(startup) + " profile"}>
+    <div className="startup-card__identity">
       <ProjectLogo startup={startup} />
-      <StatusPill tone={status.tone}>{status.label}</StatusPill>
+      <h3>{displayName(startup)}</h3>
     </div>
-    <div className="startup-card__identity"><h3>{displayName(startup)}</h3><p>{publicValue(startup.sector)}</p></div>
-    <div className="startup-card__action"><span>View profile</span><span aria-hidden="true">&rarr;</span></div>
+    <p className="startup-card__description">{startup.oneLine ?? startup.summary ?? startup.whatItBuilds}</p>
+    <div className="startup-card__tags" aria-label="Startup attributes">
+      <span>{normalizedStage(startup.directoryStage ?? startup.stage)}</span>
+      {sectors.slice(0, 2).map((sector) => <span key={sector}>{sector}</span>)}
+      {sectors.length > 2 && <span>+{sectors.length - 2} more</span>}
+    </div>
   </a>;
 }
 function EvidenceLedger({ startup }) {
@@ -185,11 +200,10 @@ function InsightsView({ statusRows, stageRows, queueRows, chartProps, researched
 export function DashboardContent() {
   const { snapshot, reviewedRows, chartProps } = useDataApp();
   const startups = reviewedRows("researched_startups");
-  const initialSlug = pathSlug();
-  const initialStartup = startups.find((item) => startupSlug(item) === initialSlug);
-  const initialArchive = Boolean(initialStartup) || globalThis.location.pathname === "/startups" || globalThis.location.pathname === "/startups/";
-  const [view, setView] = useState(initialArchive ? "archive" : "overview");
-  const [selectedId, setSelectedId] = useState(initialStartup?.id ?? null);
+  const [pathname, setPathname] = useState(currentPathname);
+  const route = useMemo(() => routeFromPathname(pathname, startups), [pathname, startups]);
+  const view = route.view;
+  const selected = route.startup;
   const summarySource = reviewedRows("research_summary")[0];
   const summary = useMemo(() => ({
     directoryStartups: summarySource.directoryStartups,
@@ -198,7 +212,7 @@ export function DashboardContent() {
     mainnetQueue: startups.filter(isMainnet).length,
     completionRate: startups.length / summarySource.directoryStartups,
   }), [startups, summarySource.directoryStartups]);
-  const selected = useMemo(() => startups.find((item) => item.id === selectedId) ?? null, [startups, selectedId]);
+
   const statusRows = useMemo(() => distributionRows(startups.map((item) => item.technicalState), "category"), [startups]);
   const stageRows = useMemo(() => distributionRows(startups.map((item) => normalizedStage(item.directoryStage ?? item.stage)), "stage"), [startups]);
   const queueRows = useMemo(() => startups.filter(isMainnet).map((item) => ({
@@ -212,31 +226,18 @@ export function DashboardContent() {
   })), [startups]);
 
   useEffect(() => {
-    const syncFromLocation = () => {
-      const slug = pathSlug();
-      const match = startups.find((item) => startupSlug(item) === slug);
-      setSelectedId(match?.id ?? null);
-      if (match || globalThis.location.pathname === "/startups" || globalThis.location.pathname === "/startups/") setView("archive");
-    };
+    const syncFromLocation = () => setPathname(currentPathname());
     globalThis.addEventListener("popstate", syncFromLocation);
     return () => globalThis.removeEventListener("popstate", syncFromLocation);
-  }, [startups]);
+  }, []);
 
-  const navigateView = (nextView) => {
-    setView(nextView);
-    setSelectedId(null);
-    const path = nextView === "archive" ? "/startups" : nextView === "insights" ? "/insights" : "/";
-    globalThis.history.pushState({}, "", path);
+  const navigateTo = (nextPath) => {
+    const url = new URL(globalThis.location.href);
+    url.pathname = nextPath;
+    globalThis.history.pushState({}, "", url);
+    setPathname(url.pathname);
   };
-  const openStartup = (startup) => {
-    setView("archive");
-    setSelectedId(startup.id);
-    globalThis.history.pushState({}, "", startupPath(startup));
-  };
-  const closeStartup = () => {
-    if (pathSlug()) globalThis.history.back();
-    else setSelectedId(null);
-  };
+  const navigateView = (nextView) => navigateTo(nextView === "archive" ? "/startups" : nextView === "insights" ? "/insights" : "/");
 
   return <article className="page startup-archive" aria-label="Superteam UK startup analytics"><div className="archive-frame">
     <aside className="archive-rail" aria-label="Analytics sections"><BrandMark />
@@ -264,12 +265,13 @@ export function DashboardContent() {
         <DataComponent id="mainnet-queue-table" variant="card" queryId="mainnet_queue" sourceRows={queueRows} title="Mainnet analysis queue" kind="table">
           <DataTable rows={queueRows} columns={queueColumns} /></DataComponent>
       </>}
-      {view === "archive" && (selected
-        ? <StartupDetail startup={selected} onBack={closeStartup} />
+      {view === "archive" && !route.notFound && (selected
+        ? <StartupDetail startup={selected} onBack={() => navigateTo("/startups")} />
         : <section className="startup-directory" aria-label="Startup directory"><div className="startup-list">
-          {startups.map((startup) => <StartupCard key={startup.id} startup={startup} onSelect={openStartup} />)}
+          {startups.map((startup) => <StartupCard key={startup.id} startup={startup} onNavigate={navigateTo} />)}
         </div></section>)}
       {view === "insights" && <InsightsView statusRows={statusRows} stageRows={stageRows} queueRows={queueRows} chartProps={chartProps} researchedCount={summary.researched} />}
+      {route.notFound && <section className="route-not-found" role="status"><p className="eyebrow">Not found</p><h2>Startup profile unavailable.</h2><p>The URL does not match a verified startup profile.</p><button type="button" onClick={() => navigateTo("/startups")}>Return to startups</button></section>}
       <footer className="archive-footer"><span>Evidence-led research by Olamilekan Alaga</span>
         <span>Data cutoff &middot; {snapshot.report?.asOf ?? "2026-09-02"}</span></footer>
     </div>

@@ -345,10 +345,10 @@
           "id": "STUK-001",
           "startup": "PrimeSkill",
           "monogram": "PS",
-          "logoPath": "/brands/startups/primeskill.jpg",
-          "logoSourceUrl": "https://playtoearn.com/it/blockchaingame/primeskill-frontstrike",
-          "logoSourceType": "Verified ecosystem profile",
-          "logoVerificationStatus": "Verified",
+          "logoPath": null,
+          "logoSourceUrl": null,
+          "logoSourceType": "monogram-identity-unresolved",
+          "logoVerificationStatus": "monogram-identity-unresolved",
           "founder": "No directory-linked founder found",
           "sector": "Gaming",
           "stage": "Raising pre-seed",
@@ -402,8 +402,12 @@
           "founderVerification": "Not verified",
           "projectReportedMetrics": [],
           "classification": "Devnet/testnet",
-          "logo": "/brands/startups/primeskill.jpg",
-          "logoSource": "https://playtoearn.com/it/blockchaingame/primeskill-frontstrike"
+          "logo": null,
+          "logoSource": null,
+          "logoAuditCategory": "monogram-identity-unresolved",
+          "logoAuditSources": [
+            "existing local asset rejected: third-party PlayToEarn source; no official project-controlled source in record"
+          ]
         },
         {
           "id": "STUK-002",
@@ -411,8 +415,8 @@
           "monogram": "EC",
           "logoPath": "/brands/startups/end-corp.png",
           "logoSourceUrl": "https://endco.in/endcorp.png",
-          "logoSourceType": "Official project website",
-          "logoVerificationStatus": "Verified",
+          "logoSourceType": "authenticated-logo",
+          "logoVerificationStatus": "authenticated-logo",
           "founder": "Andrew Robinson",
           "sector": "Climate data / DePIN",
           "stage": "Raising pre-seed",
@@ -467,7 +471,12 @@
           "projectReportedMetrics": [],
           "classification": "Devnet/testnet",
           "logo": "/brands/startups/end-corp.png",
-          "logoSource": "https://endco.in/endcorp.png"
+          "logoSource": "https://endco.in/endcorp.png",
+          "logoAuditCategory": "authenticated-logo",
+          "logoAuditSources": [
+            "existing asset",
+            "official website asset"
+          ]
         },
         {
           "id": "STUK-003",
@@ -475,8 +484,8 @@
           "monogram": "HH",
           "logoPath": "/brands/startups/home-harvest.jpg",
           "logoSourceUrl": "https://x.com/HomeHarvestHQ",
-          "logoSourceType": "Official X profile",
-          "logoVerificationStatus": "Verified",
+          "logoSourceType": "authenticated-logo",
+          "logoVerificationStatus": "authenticated-logo",
           "founder": "No directory-linked founder found",
           "sector": "DePIN / Consumer",
           "stage": "Raising pre-seed",
@@ -510,7 +519,12 @@
           "projectReportedMetrics": [],
           "classification": "Unverified",
           "logo": "/brands/startups/home-harvest.jpg",
-          "logoSource": "https://x.com/HomeHarvestHQ"
+          "logoSource": "https://x.com/HomeHarvestHQ",
+          "logoAuditCategory": "authenticated-logo",
+          "logoAuditSources": [
+            "existing asset",
+            "official product X"
+          ]
         },
         {
           "id": "STUK-004",
@@ -518,8 +532,8 @@
           "monogram": "SC",
           "logoPath": "/brands/startups/scrolly.jpg",
           "logoSourceUrl": "https://x.com/Scrollyfeed",
-          "logoSourceType": "Official X profile",
-          "logoVerificationStatus": "Verified",
+          "logoSourceType": "authenticated-logo",
+          "logoVerificationStatus": "authenticated-logo",
           "founder": "Dean Ball",
           "sector": "Gaming",
           "stage": "Self-funded",
@@ -574,7 +588,12 @@
           "projectReportedMetrics": [],
           "classification": "Devnet/testnet",
           "logo": "/brands/startups/scrolly.jpg",
-          "logoSource": "https://x.com/Scrollyfeed"
+          "logoSource": "https://x.com/Scrollyfeed",
+          "logoAuditCategory": "authenticated-logo",
+          "logoAuditSources": [
+            "existing asset",
+            "official product X"
+          ]
         },
         {
           "id": "STUK-005",
@@ -582,8 +601,8 @@
           "monogram": "FP",
           "logoPath": "/brands/startups/fanplay-wtf-games.png",
           "logoSourceUrl": "https://wtf.games",
-          "logoSourceType": "Official project website",
-          "logoVerificationStatus": "Verified",
+          "logoSourceType": "authenticated-logo",
+          "logoVerificationStatus": "authenticated-logo",
           "founder": "Gregor Cooney",
           "sector": "Gaming / Crypto casino",
           "stage": "Pre-seed closed",
@@ -639,7 +658,12 @@
           "projectReportedMetrics": [],
           "classification": "Mainnet",
           "logo": "/brands/startups/fanplay-wtf-games.png",
-          "logoSource": "https://wtf.games"
+          "logoSource": "https://wtf.games",
+          "logoAuditCategory": "authenticated-logo",
+          "logoAuditSources": [
+            "existing asset",
+            "official website"
+          ]
         },
         {
           "id": "STUK-006",
@@ -685,8 +709,8 @@
           "metrics": [],
           "logoPath": "/brands/startups/fundl.png",
           "logoSourceUrl": "https://www.fundl.fun/",
-          "logoSourceType": "Official project website",
-          "logoVerificationStatus": "Verified",
+          "logoSourceType": "authenticated-logo",
+          "logoVerificationStatus": "authenticated-logo",
           "technicalState": "Mainnet",
           "summary": "A Solana crowdfunding platform for narrative, entertainment and startup projects that has since wound down.",
           "directoryStage": "Wound Down",
@@ -700,7 +724,13 @@
           "projectReportedMetrics": [],
           "classification": "Mainnet",
           "logo": "/brands/startups/fundl.png",
-          "logoSource": "https://www.fundl.fun/"
+          "logoSource": "https://www.fundl.fun/",
+          "logoAuditCategory": "authenticated-logo",
+          "logoAuditSources": [
+            "existing asset",
+            "official website",
+            "official product X"
+          ]
         },
         {
           "id": "STUK-007",
@@ -759,8 +789,8 @@
           "metrics": [],
           "logoPath": "/brands/startups/moon-boi-studios.png",
           "logoSourceUrl": "https://moonboi.io/wp-content/uploads/2024/08/726FA00B-AAF4-4D41-B017-A6D0C766F3F9-5.png",
-          "logoSourceType": "Official project website",
-          "logoVerificationStatus": "Verified",
+          "logoSourceType": "authenticated-logo",
+          "logoVerificationStatus": "authenticated-logo",
           "technicalState": "Unverified",
           "summary": "Moon Boi Studios is developing Moon Boi Universe, a playable cyber-fantasy RPG with claimed Solana and Seeker integration.",
           "directoryStage": "Early Development",
@@ -774,7 +804,12 @@
           "projectReportedMetrics": [],
           "classification": "Unverified",
           "logo": "/brands/startups/moon-boi-studios.png",
-          "logoSource": "https://moonboi.io/wp-content/uploads/2024/08/726FA00B-AAF4-4D41-B017-A6D0C766F3F9-5.png"
+          "logoSource": "https://moonboi.io/wp-content/uploads/2024/08/726FA00B-AAF4-4D41-B017-A6D0C766F3F9-5.png",
+          "logoAuditCategory": "authenticated-logo",
+          "logoAuditSources": [
+            "existing asset",
+            "official website header asset"
+          ]
         },
         {
           "id": "STUK-008",
@@ -877,8 +912,8 @@
           ],
           "logoPath": "/brands/startups/purebet.png",
           "logoSourceUrl": "https://purebet.io/favicon.ico",
-          "logoSourceType": "Official project website",
-          "logoVerificationStatus": "Verified",
+          "logoSourceType": "authenticated-favicon",
+          "logoVerificationStatus": "authenticated-favicon",
           "technicalState": "Mainnet",
           "summary": "A non-custodial on-chain sports-betting aggregator whose website currently reports that the platform is hibernating.",
           "directoryStage": "Early Development",
@@ -892,7 +927,13 @@
           "projectReportedMetrics": [],
           "classification": "Mainnet",
           "logo": "/brands/startups/purebet.png",
-          "logoSource": "https://purebet.io/favicon.ico"
+          "logoSource": "https://purebet.io/favicon.ico",
+          "logoAuditCategory": "authenticated-favicon",
+          "logoAuditSources": [
+            "existing asset",
+            "official website favicon",
+            "official product X"
+          ]
         },
         {
           "id": "STUK-009",
@@ -965,8 +1006,8 @@
           ],
           "logoPath": "/brands/startups/agridex.png",
           "logoSourceUrl": "https://agridex.com/favicon/apple-touch-icon.png",
-          "logoSourceType": "Official project website",
-          "logoVerificationStatus": "Verified",
+          "logoSourceType": "authenticated-app-icon",
+          "logoVerificationStatus": "authenticated-app-icon",
           "summary": "A live digital marketplace connecting agricultural producers and international buyers.",
           "directoryStage": "Seed Closed",
           "verifiedMetrics": [],
@@ -979,7 +1020,13 @@
           "projectReportedMetrics": [],
           "classification": "Mainnet",
           "logo": "/brands/startups/agridex.png",
-          "logoSource": "https://agridex.com/favicon/apple-touch-icon.png"
+          "logoSource": "https://agridex.com/favicon/apple-touch-icon.png",
+          "logoAuditCategory": "authenticated-app-icon",
+          "logoAuditSources": [
+            "existing asset",
+            "official website apple-touch icon",
+            "official product X"
+          ]
         },
         {
           "id": "STUK-010",
@@ -1019,9 +1066,9 @@
             "Customer retention"
           ],
           "metrics": [],
-          "logoSourceUrl": "https://www.fidesium.xyz/",
-          "logoSourceType": "Official project website reviewed",
-          "logoVerificationStatus": "Monogram fallback; authentic logo asset not independently verified",
+          "logoSourceUrl": null,
+          "logoSourceType": "monogram-no-downloadable-asset",
+          "logoVerificationStatus": "monogram-no-downloadable-asset",
           "summary": "Continuous Web3 security tooling combining automated analysis and expert-led smart-contract audits.",
           "directoryStage": "Not Raising / Self-Funded",
           "verifiedMetrics": [],
@@ -1034,7 +1081,13 @@
           "projectReportedMetrics": [],
           "classification": "Infrastructure",
           "logo": null,
-          "logoSource": "https://www.fidesium.xyz/"
+          "logoSource": null,
+          "logoPath": null,
+          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoAuditSources": [
+            "official website (SSL unavailable)",
+            "official product X"
+          ]
         },
         {
           "id": "STUK-011",
@@ -1087,8 +1140,8 @@
           ],
           "logoPath": "/brands/startups/irls.png",
           "logoSourceUrl": "https://www.irls.xyz/irllive/assets/logo.png",
-          "logoSourceType": "Official project website",
-          "logoVerificationStatus": "Verified",
+          "logoSourceType": "authenticated-logo",
+          "logoVerificationStatus": "authenticated-logo",
           "summary": "A no-app loyalty system in which customers tap NFC cards, collect stamps and redeem rewards.",
           "directoryStage": "Not Raising / Self-Funded",
           "verifiedMetrics": [],
@@ -1101,7 +1154,13 @@
           "projectReportedMetrics": [],
           "classification": "Off-chain",
           "logo": "/brands/startups/irls.png",
-          "logoSource": "https://www.irls.xyz/irllive/assets/logo.png"
+          "logoSource": "https://www.irls.xyz/irllive/assets/logo.png",
+          "logoAuditCategory": "authenticated-logo",
+          "logoAuditSources": [
+            "existing asset",
+            "official website header logo",
+            "official product X"
+          ]
         },
         {
           "id": "STUK-012",
@@ -1142,8 +1201,8 @@
           "metrics": [],
           "logoPath": "/brands/startups/unruggable.png",
           "logoSourceUrl": "https://www.unruggable.io/unruggable-icon-v2.png?v=20260517",
-          "logoSourceType": "Official project website",
-          "logoVerificationStatus": "Verified",
+          "logoSourceType": "authenticated-app-icon",
+          "logoVerificationStatus": "authenticated-app-icon",
           "summary": "An open-source Solana-native hardware wallet and companion application.",
           "directoryStage": "Raising Pre-Seed",
           "verifiedMetrics": [],
@@ -1156,7 +1215,13 @@
           "projectReportedMetrics": [],
           "classification": "Infrastructure",
           "logo": "/brands/startups/unruggable.png",
-          "logoSource": "https://www.unruggable.io/unruggable-icon-v2.png?v=20260517"
+          "logoSource": "https://www.unruggable.io/unruggable-icon-v2.png?v=20260517",
+          "logoAuditCategory": "authenticated-app-icon",
+          "logoAuditSources": [
+            "existing asset",
+            "official website apple-touch/OG image",
+            "official product X"
+          ]
         },
         {
           "id": "STUK-013",
@@ -1207,8 +1272,8 @@
           ],
           "logoPath": "/brands/startups/kantis.png",
           "logoSourceUrl": "https://www.getkantis.com/kantis-circle.png",
-          "logoSourceType": "Official project website",
-          "logoVerificationStatus": "Verified",
+          "logoSourceType": "authenticated-logo",
+          "logoVerificationStatus": "authenticated-logo",
           "summary": "Compliance automation for UK and EU startups pursuing ISO 27001, SOC 2, GDPR, the EU AI Act and ISO 42001.",
           "directoryStage": "Raising Pre-Seed",
           "verifiedMetrics": [],
@@ -1221,7 +1286,12 @@
           "projectReportedMetrics": [],
           "classification": "Off-chain",
           "logo": "/brands/startups/kantis.png",
-          "logoSource": "https://www.getkantis.com/kantis-circle.png"
+          "logoSource": "https://www.getkantis.com/kantis-circle.png",
+          "logoAuditCategory": "authenticated-logo",
+          "logoAuditSources": [
+            "existing asset",
+            "official website asset"
+          ]
         },
         {
           "id": "STUK-014",
@@ -1264,8 +1334,17 @@
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
-          "logo": null,
-          "logoSource": null
+          "logo": "/brands/startups/wysdom.png",
+          "logoSource": "https://www.wysdom.xyz/images/logo/wys_logo.png",
+          "logoPath": "/brands/startups/wysdom.png",
+          "logoVerificationStatus": "authenticated-logo",
+          "logoAuditCategory": "authenticated-logo",
+          "logoAuditSources": [
+            "official website favicon/logo",
+            "official product X"
+          ],
+          "logoSourceUrl": "https://www.wysdom.xyz/images/logo/wys_logo.png",
+          "logoSourceType": "authenticated-logo"
         },
         {
           "id": "STUK-015",
@@ -1306,8 +1385,16 @@
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
-          "logo": null,
-          "logoSource": null
+          "logo": "/brands/startups/the-grid.png",
+          "logoSource": "https://framerusercontent.com/images/hxJq2dY0SsC2qJr1nbbHJtGC4Mo.png",
+          "logoPath": "/brands/startups/the-grid.png",
+          "logoVerificationStatus": "authenticated-app-icon",
+          "logoAuditCategory": "authenticated-app-icon",
+          "logoAuditSources": [
+            "official website apple-touch icon"
+          ],
+          "logoSourceUrl": "https://framerusercontent.com/images/hxJq2dY0SsC2qJr1nbbHJtGC4Mo.png",
+          "logoSourceType": "authenticated-app-icon"
         },
         {
           "id": "STUK-016",
@@ -1350,8 +1437,16 @@
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
-          "logo": null,
-          "logoSource": null
+          "logo": "/brands/startups/lilypad.png",
+          "logoSource": "https://www.lilypad.co.in/apple-touch-icon.png",
+          "logoPath": "/brands/startups/lilypad.png",
+          "logoVerificationStatus": "authenticated-app-icon",
+          "logoAuditCategory": "authenticated-app-icon",
+          "logoAuditSources": [
+            "official website apple-touch icon"
+          ],
+          "logoSourceUrl": "https://www.lilypad.co.in/apple-touch-icon.png",
+          "logoSourceType": "authenticated-app-icon"
         },
         {
           "id": "STUK-017",
@@ -1402,8 +1497,17 @@
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
-          "logo": null,
-          "logoSource": null
+          "logo": "/brands/startups/makina-finance.png",
+          "logoSource": "https://makina.finance/icon.png",
+          "logoPath": "/brands/startups/makina-finance.png",
+          "logoVerificationStatus": "authenticated-app-icon",
+          "logoAuditCategory": "authenticated-app-icon",
+          "logoAuditSources": [
+            "official website application icon",
+            "official product X"
+          ],
+          "logoSourceUrl": "https://makina.finance/icon.png",
+          "logoSourceType": "authenticated-app-icon"
         },
         {
           "id": "STUK-018",
@@ -1444,8 +1548,16 @@
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
-          "logo": null,
-          "logoSource": null
+          "logo": "/brands/startups/jurnyon.png",
+          "logoSource": "https://www.jurnyon.com/icon.png",
+          "logoPath": "/brands/startups/jurnyon.png",
+          "logoVerificationStatus": "authenticated-app-icon",
+          "logoAuditCategory": "authenticated-app-icon",
+          "logoAuditSources": [
+            "official website application icon"
+          ],
+          "logoSourceUrl": "https://www.jurnyon.com/icon.png",
+          "logoSourceType": "authenticated-app-icon"
         },
         {
           "id": "STUK-019",
@@ -1493,7 +1605,15 @@
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
           "logo": null,
-          "logoSource": null
+          "logoSource": null,
+          "logoPath": null,
+          "logoVerificationStatus": "monogram-no-downloadable-asset",
+          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoAuditSources": [
+            "official product X"
+          ],
+          "logoSourceUrl": null,
+          "logoSourceType": "monogram-no-downloadable-asset"
         },
         {
           "id": "STUK-020",
@@ -1549,8 +1669,17 @@
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
-          "logo": null,
-          "logoSource": null
+          "logo": "/brands/startups/zynta.png",
+          "logoSource": "https://zynta.com/wp-content/uploads/2025/06/icon.png",
+          "logoPath": "/brands/startups/zynta.png",
+          "logoVerificationStatus": "authenticated-app-icon",
+          "logoAuditCategory": "authenticated-app-icon",
+          "logoAuditSources": [
+            "official website icon and logo",
+            "official product X"
+          ],
+          "logoSourceUrl": "https://zynta.com/wp-content/uploads/2025/06/icon.png",
+          "logoSourceType": "authenticated-app-icon"
         },
         {
           "id": "STUK-021",
@@ -1597,8 +1726,17 @@
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
-          "logo": null,
-          "logoSource": null
+          "logo": "/brands/startups/agant.ico",
+          "logoSource": "https://www.agant.io/favicon.ico",
+          "logoPath": "/brands/startups/agant.ico",
+          "logoVerificationStatus": "authenticated-favicon",
+          "logoAuditCategory": "authenticated-favicon",
+          "logoAuditSources": [
+            "official website favicon",
+            "official product X"
+          ],
+          "logoSourceUrl": "https://www.agant.io/favicon.ico",
+          "logoSourceType": "authenticated-favicon"
         },
         {
           "id": "STUK-022",
@@ -1643,7 +1781,15 @@
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
           "logo": null,
-          "logoSource": null
+          "logoSource": null,
+          "logoPath": null,
+          "logoVerificationStatus": "monogram-no-downloadable-asset",
+          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoAuditSources": [
+            "official product X"
+          ],
+          "logoSourceUrl": null,
+          "logoSourceType": "monogram-no-downloadable-asset"
         },
         {
           "id": "STUK-023",
@@ -1691,7 +1837,16 @@
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
           "logo": null,
-          "logoSource": null
+          "logoSource": null,
+          "logoPath": null,
+          "logoVerificationStatus": "monogram-no-downloadable-asset",
+          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoAuditSources": [
+            "official website header/assets",
+            "official product X"
+          ],
+          "logoSourceUrl": null,
+          "logoSourceType": "monogram-no-downloadable-asset"
         },
         {
           "id": "STUK-024",
@@ -1746,8 +1901,16 @@
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
-          "logo": null,
-          "logoSource": null
+          "logo": "/brands/startups/pyra.png",
+          "logoSource": "https://www.pyra.fi/favicon/favicon-32x32.png",
+          "logoPath": "/brands/startups/pyra.png",
+          "logoVerificationStatus": "authenticated-favicon",
+          "logoAuditCategory": "authenticated-favicon",
+          "logoAuditSources": [
+            "official website favicon"
+          ],
+          "logoSourceUrl": "https://www.pyra.fi/favicon/favicon-32x32.png",
+          "logoSourceType": "authenticated-favicon"
         },
         {
           "id": "STUK-025",
@@ -1794,7 +1957,15 @@
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
           "logo": null,
-          "logoSource": null
+          "logoSource": null,
+          "logoPath": null,
+          "logoVerificationStatus": "monogram-identity-unresolved",
+          "logoAuditCategory": "monogram-identity-unresolved",
+          "logoAuditSources": [
+            "no attributable official website or product account in record"
+          ],
+          "logoSourceUrl": null,
+          "logoSourceType": "monogram-identity-unresolved"
         },
         {
           "id": "STUK-026",
@@ -1845,8 +2016,17 @@
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
-          "logo": null,
-          "logoSource": null
+          "logo": "/brands/startups/rulespark.png",
+          "logoSource": "https://rulespark.com/favicon.png",
+          "logoPath": "/brands/startups/rulespark.png",
+          "logoVerificationStatus": "authenticated-favicon",
+          "logoAuditCategory": "authenticated-favicon",
+          "logoAuditSources": [
+            "official website favicon",
+            "official product X"
+          ],
+          "logoSourceUrl": "https://rulespark.com/favicon.png",
+          "logoSourceType": "authenticated-favicon"
         },
         {
           "id": "STUK-027",
@@ -1899,7 +2079,16 @@
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
           "logo": null,
-          "logoSource": null
+          "logoSource": null,
+          "logoPath": null,
+          "logoVerificationStatus": "monogram-no-downloadable-asset",
+          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoAuditSources": [
+            "official website (access denied)",
+            "official product X"
+          ],
+          "logoSourceUrl": null,
+          "logoSourceType": "monogram-no-downloadable-asset"
         },
         {
           "id": "STUK-028",
@@ -1948,8 +2137,17 @@
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
-          "logo": null,
-          "logoSource": null
+          "logo": "/brands/startups/solistic-technologies.svg",
+          "logoSource": "https://www.solistic.finance/assets/favicon.svg",
+          "logoPath": "/brands/startups/solistic-technologies.svg",
+          "logoVerificationStatus": "authenticated-favicon",
+          "logoAuditCategory": "authenticated-favicon",
+          "logoAuditSources": [
+            "official website favicon",
+            "official product X"
+          ],
+          "logoSourceUrl": "https://www.solistic.finance/assets/favicon.svg",
+          "logoSourceType": "authenticated-favicon"
         },
         {
           "id": "STUK-029",
@@ -1998,7 +2196,15 @@
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
           "logo": null,
-          "logoSource": null
+          "logoSource": null,
+          "logoPath": null,
+          "logoVerificationStatus": "monogram-no-downloadable-asset",
+          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoAuditSources": [
+            "official product X"
+          ],
+          "logoSourceUrl": null,
+          "logoSourceType": "monogram-no-downloadable-asset"
         },
         {
           "id": "STUK-030",
@@ -2056,8 +2262,16 @@
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
-          "logo": null,
-          "logoSource": null
+          "logo": "/brands/startups/publiwrite.ico",
+          "logoSource": "https://publiwrite.com/favicon-light.ico",
+          "logoPath": "/brands/startups/publiwrite.ico",
+          "logoVerificationStatus": "authenticated-favicon",
+          "logoAuditCategory": "authenticated-favicon",
+          "logoAuditSources": [
+            "official website favicon"
+          ],
+          "logoSourceUrl": "https://publiwrite.com/favicon-light.ico",
+          "logoSourceType": "authenticated-favicon"
         },
         {
           "id": "STUK-031",
@@ -2104,7 +2318,15 @@
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
           "logo": null,
-          "logoSource": null
+          "logoSource": null,
+          "logoPath": null,
+          "logoVerificationStatus": "monogram-identity-unresolved",
+          "logoAuditCategory": "monogram-identity-unresolved",
+          "logoAuditSources": [
+            "no attributable official website or product account in record"
+          ],
+          "logoSourceUrl": null,
+          "logoSourceType": "monogram-identity-unresolved"
         },
         {
           "id": "STUK-032",
@@ -2154,8 +2376,17 @@
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
-          "logo": null,
-          "logoSource": null
+          "logo": "/brands/startups/poll-fun.png",
+          "logoSource": "https://app.poll.fun/apple-touch-icon.png",
+          "logoPath": "/brands/startups/poll-fun.png",
+          "logoVerificationStatus": "authenticated-app-icon",
+          "logoAuditCategory": "authenticated-app-icon",
+          "logoAuditSources": [
+            "official application apple-touch icon",
+            "official product X"
+          ],
+          "logoSourceUrl": "https://app.poll.fun/apple-touch-icon.png",
+          "logoSourceType": "authenticated-app-icon"
         },
         {
           "id": "STUK-033",
@@ -2209,7 +2440,16 @@
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
           "logo": null,
-          "logoSource": null
+          "logoSource": null,
+          "logoPath": null,
+          "logoVerificationStatus": "monogram-no-downloadable-asset",
+          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoAuditSources": [
+            "official website",
+            "official product X"
+          ],
+          "logoSourceUrl": null,
+          "logoSourceType": "monogram-no-downloadable-asset"
         },
         {
           "founder": "Not verified",
@@ -2233,8 +2473,8 @@
             "Never report advertised APY as realised yield."
           ],
           "metrics": [],
-          "logo": null,
-          "logoSource": null,
+          "logo": "/brands/startups/reflect.png",
+          "logoSource": "https://reflect.money/images/favicon.png",
           "lastReviewed": "2026-09-02",
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
@@ -2267,7 +2507,16 @@
           "nextAction": "Verify mint/program IDs/vaults/treasuries/strategy accounts",
           "analysisStatus": "Mainnet analysis required",
           "productEvidence": "Live",
-          "chainEvidence": "Analysis outstanding"
+          "chainEvidence": "Analysis outstanding",
+          "logoPath": "/brands/startups/reflect.png",
+          "logoVerificationStatus": "authenticated-favicon",
+          "logoAuditCategory": "authenticated-favicon",
+          "logoAuditSources": [
+            "official website favicon",
+            "official product X"
+          ],
+          "logoSourceUrl": "https://reflect.money/images/favicon.png",
+          "logoSourceType": "authenticated-favicon"
         },
         {
           "founder": "Adam Jeffcoat",
@@ -2283,8 +2532,8 @@
           ],
           "dataQualityNotes": [],
           "metrics": [],
-          "logo": null,
-          "logoSource": null,
+          "logo": "/brands/startups/rise-of-the-gorecats.png",
+          "logoSource": "https://studionx.com/wp-content/uploads/2023/04/cat-logo2-1-907x1024.png",
           "lastReviewed": "2026-09-02",
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
@@ -2317,7 +2566,16 @@
           "nextAction": "Authenticate collections and chain",
           "analysisStatus": "Mainnet analysis required",
           "productEvidence": "Public beta game",
-          "chainEvidence": "Analysis outstanding"
+          "chainEvidence": "Analysis outstanding",
+          "logoPath": "/brands/startups/rise-of-the-gorecats.png",
+          "logoVerificationStatus": "authenticated-logo",
+          "logoAuditCategory": "authenticated-logo",
+          "logoAuditSources": [
+            "official studio portfolio project logo",
+            "official product X"
+          ],
+          "logoSourceUrl": "https://studionx.com/wp-content/uploads/2023/04/cat-logo2-1-907x1024.png",
+          "logoSourceType": "authenticated-logo"
         },
         {
           "founder": "Not verified",
@@ -2348,8 +2606,8 @@
             "Reject unrelated LEGION tokens."
           ],
           "metrics": [],
-          "logo": null,
-          "logoSource": null,
+          "logo": "/brands/startups/legion.png",
+          "logoSource": "https://framerusercontent.com/images/I5r4UPbD9nego57ygWFjiDmVcI.png",
           "lastReviewed": "2026-09-02",
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
@@ -2382,7 +2640,16 @@
           "nextAction": "Authenticate official contracts per chain",
           "analysisStatus": "Mainnet analysis required",
           "productEvidence": "Live",
-          "chainEvidence": "Analysis outstanding"
+          "chainEvidence": "Analysis outstanding",
+          "logoPath": "/brands/startups/legion.png",
+          "logoVerificationStatus": "authenticated-app-icon",
+          "logoAuditCategory": "authenticated-app-icon",
+          "logoAuditSources": [
+            "official website apple-touch icon",
+            "official product X"
+          ],
+          "logoSourceUrl": "https://framerusercontent.com/images/I5r4UPbD9nego57ygWFjiDmVcI.png",
+          "logoSourceType": "authenticated-app-icon"
         },
         {
           "founder": "Not verified",
@@ -2402,8 +2669,8 @@
             "Advertised IRR is not independently calculated return."
           ],
           "metrics": [],
-          "logo": null,
-          "logoSource": null,
+          "logo": "/brands/startups/refi-hub.svg",
+          "logoSource": "https://framerusercontent.com/images/uuaURrX3xnFMn36kpm42bE3t4lA.svg",
           "lastReviewed": "2026-09-02",
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
@@ -2438,7 +2705,16 @@
           "nextAction": "Authenticate asset tokens, investment contracts, treasury/distribution wallets",
           "analysisStatus": "Mainnet analysis required",
           "productEvidence": "Live",
-          "chainEvidence": "Analysis outstanding"
+          "chainEvidence": "Analysis outstanding",
+          "logoPath": "/brands/startups/refi-hub.svg",
+          "logoVerificationStatus": "authenticated-favicon",
+          "logoAuditCategory": "authenticated-favicon",
+          "logoAuditSources": [
+            "official website favicon",
+            "official product X"
+          ],
+          "logoSourceUrl": "https://framerusercontent.com/images/uuaURrX3xnFMn36kpm42bE3t4lA.svg",
+          "logoSourceType": "authenticated-favicon"
         },
         {
           "founder": "Jason Rodrigues",
@@ -2487,7 +2763,16 @@
           "nextAction": "Verify official site/X",
           "analysisStatus": "Pre-launch",
           "productEvidence": "Early-stage/incubation",
-          "chainEvidence": "Not publicly verifiable"
+          "chainEvidence": "Not publicly verifiable",
+          "logoPath": null,
+          "logoVerificationStatus": "monogram-no-downloadable-asset",
+          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoAuditSources": [
+            "founder website favicon rejected as personal identity",
+            "founder source material"
+          ],
+          "logoSourceUrl": null,
+          "logoSourceType": "monogram-no-downloadable-asset"
         },
         {
           "founder": "Junaid Peer; Kobie McGlashan",
@@ -2504,8 +2789,8 @@
             "Never combine environments."
           ],
           "metrics": [],
-          "logo": null,
-          "logoSource": null,
+          "logo": "/brands/startups/bulk-trade.png",
+          "logoSource": "https://framerusercontent.com/images/EwBmg6SClRT3lcs8QJSppefc.png",
           "lastReviewed": "2026-09-02",
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
@@ -2537,7 +2822,16 @@
           "nextAction": "Confirm launch and official testnet/mainnet IDs",
           "analysisStatus": "Testnet",
           "productEvidence": "Alphanet/testnet",
-          "chainEvidence": "Not publicly verifiable"
+          "chainEvidence": "Not publicly verifiable",
+          "logoPath": "/brands/startups/bulk-trade.png",
+          "logoVerificationStatus": "authenticated-app-icon",
+          "logoAuditCategory": "authenticated-app-icon",
+          "logoAuditSources": [
+            "official website apple-touch icon",
+            "official product X"
+          ],
+          "logoSourceUrl": "https://framerusercontent.com/images/EwBmg6SClRT3lcs8QJSppefc.png",
+          "logoSourceType": "authenticated-app-icon"
         },
         {
           "founder": "Robin A.",
@@ -2587,7 +2881,16 @@
           "nextAction": "Authenticate validator identities, vote/stake accounts, programs/service addresses",
           "analysisStatus": "Mainnet analysis required",
           "productEvidence": "Active infrastructure",
-          "chainEvidence": "Analysis outstanding"
+          "chainEvidence": "Analysis outstanding",
+          "logoPath": null,
+          "logoVerificationStatus": "monogram-no-downloadable-asset",
+          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoAuditSources": [
+            "official website (access denied)",
+            "official product X"
+          ],
+          "logoSourceUrl": null,
+          "logoSourceType": "monogram-no-downloadable-asset"
         },
         {
           "founder": "Not verified",
@@ -2604,8 +2907,8 @@
             "Waitlist is not a live product."
           ],
           "metrics": [],
-          "logo": null,
-          "logoSource": null,
+          "logo": "/brands/startups/signed-trade.png",
+          "logoSource": "https://www.signed.trade/favicon-96x96.png",
           "lastReviewed": "2026-09-02",
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
@@ -2637,7 +2940,16 @@
           "nextAction": "Establish last active date",
           "analysisStatus": "Inactive/Wound Down",
           "productEvidence": "Waitlist/no verified live product",
-          "chainEvidence": "Not publicly verifiable"
+          "chainEvidence": "Not publicly verifiable",
+          "logoPath": "/brands/startups/signed-trade.png",
+          "logoVerificationStatus": "authenticated-favicon",
+          "logoAuditCategory": "authenticated-favicon",
+          "logoAuditSources": [
+            "official website favicon",
+            "official product X"
+          ],
+          "logoSourceUrl": "https://www.signed.trade/favicon-96x96.png",
+          "logoSourceType": "authenticated-favicon"
         },
         {
           "founder": "Not verified",
@@ -2681,7 +2993,14 @@
           "nextAction": "Obtain founder/site/X/product sentence from Superteam UK",
           "analysisStatus": "Identity Verification Required",
           "productEvidence": "Identity unresolved",
-          "chainEvidence": "Not publicly verifiable"
+          "chainEvidence": "Not publicly verifiable",
+          "logoVerificationStatus": "monogram-identity-unresolved",
+          "logoAuditCategory": "monogram-identity-unresolved",
+          "logoAuditSources": [
+            "no attributable official website or product account in record"
+          ],
+          "logoSourceUrl": null,
+          "logoSourceType": "monogram-identity-unresolved"
         },
         {
           "founder": "Ravi Shah; Abdulkarim Sulaiman; Meet Patel",
@@ -2730,7 +3049,16 @@
           "nextAction": "Authenticate networks, protocols, vault/router/smart-account addresses",
           "analysisStatus": "Mainnet analysis required",
           "productEvidence": "Live public product",
-          "chainEvidence": "Analysis outstanding"
+          "chainEvidence": "Analysis outstanding",
+          "logoPath": null,
+          "logoVerificationStatus": "monogram-no-downloadable-asset",
+          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoAuditSources": [
+            "official product X",
+            "official LinkedIn company page"
+          ],
+          "logoSourceUrl": null,
+          "logoSourceType": "monogram-no-downloadable-asset"
         }
       ],
       "source": {

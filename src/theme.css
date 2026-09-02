@@ -43,6 +43,15 @@
   --card-text: var(--text);
   --card-muted-text: var(--secondary);
   --card-focus-ring: color-mix(in srgb, var(--accent) 78%, transparent);
+  --startup-card-background: var(--card-background);
+  --startup-card-border: var(--card-border);
+  --startup-card-shadow: var(--card-shadow);
+  --startup-card-shadow-hover: var(--card-shadow-hover);
+  --startup-card-title: var(--card-text);
+  --startup-card-description: var(--card-muted-text);
+  --startup-card-tag-background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+  --startup-card-tag-border: color-mix(in srgb, var(--accent) 14%, var(--border));
+  --startup-card-focus-ring: var(--card-focus-ring);
   --control-radius: 12px;
   --mark-radius: 8;
   --shadow: 0 8px 16px -4px rgb(0 0 0 / 12%);
