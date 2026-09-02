@@ -1157,9 +1157,9 @@
             "Customer retention"
           ],
           "metrics": [],
-          "logoSourceUrl": null,
-          "logoSourceType": "monogram-no-downloadable-asset",
-          "logoVerificationStatus": "monogram-no-downloadable-asset",
+          "logoSourceUrl": "https://www.fidesium.xyz/wp-content/uploads/2025/05/cropped-fidesium-avatar-192x192.png",
+          "logoSourceType": "Official website app icon",
+          "logoVerificationStatus": "authenticated-app-icon",
           "summary": "Continuous Web3 security tooling combining automated analysis and expert-led smart-contract audits.",
           "directoryStage": "Not Raising / Self-Funded",
           "verifiedMetrics": [],
@@ -1171,13 +1171,13 @@
           "founderVerification": "Not verified",
           "projectReportedMetrics": [],
           "classification": "Infrastructure",
-          "logo": null,
-          "logoSource": null,
-          "logoPath": null,
-          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logo": "/brands/startups/fidesium.png",
+          "logoSource": "https://www.fidesium.xyz/wp-content/uploads/2025/05/cropped-fidesium-avatar-192x192.png",
+          "logoPath": "/brands/startups/fidesium.png",
+          "logoAuditCategory": "authenticated-app-icon",
           "logoAuditSources": [
-            "official website (SSL unavailable)",
-            "official product X"
+            "https://www.fidesium.xyz/",
+            "https://www.fidesium.xyz/wp-content/uploads/2025/05/cropped-fidesium-avatar-192x192.png"
           ]
         },
         {
@@ -1695,16 +1695,17 @@
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
-          "logo": null,
-          "logoSource": null,
-          "logoPath": null,
-          "logoVerificationStatus": "monogram-no-downloadable-asset",
-          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logo": "/brands/startups/hawkfi.png",
+          "logoSource": "https://www.hawkfi.ag/assets/logo/hawkfi-logo-only.png",
+          "logoPath": "/brands/startups/hawkfi.png",
+          "logoVerificationStatus": "authenticated-logo",
+          "logoAuditCategory": "authenticated-logo",
           "logoAuditSources": [
-            "official product X"
+            "https://www.hawkfi.ag/",
+            "https://www.hawkfi.ag/assets/logo/hawkfi-logo-only.png"
           ],
-          "logoSourceUrl": null,
-          "logoSourceType": "monogram-no-downloadable-asset"
+          "logoSourceUrl": "https://www.hawkfi.ag/assets/logo/hawkfi-logo-only.png",
+          "logoSourceType": "Official website logo"
         },
         {
           "id": "STUK-020",
@@ -1871,16 +1872,17 @@
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
-          "logo": null,
-          "logoSource": null,
-          "logoPath": null,
-          "logoVerificationStatus": "monogram-no-downloadable-asset",
-          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logo": "/brands/startups/banana-zone.jpeg",
+          "logoSource": "https://ugc.production.linktr.ee/33540dfa-53c4-4a79-af7b-7284ca00f6ee_bz.jpeg?io=true&size=avatar-v3_0",
+          "logoPath": "/brands/startups/banana-zone.jpeg",
+          "logoVerificationStatus": "authenticated-logo",
+          "logoAuditCategory": "authenticated-logo",
           "logoAuditSources": [
-            "official product X"
+            "https://linktr.ee/bananazone",
+            "https://x.com/BananaZoneApp"
           ],
-          "logoSourceUrl": null,
-          "logoSourceType": "monogram-no-downloadable-asset"
+          "logoSourceUrl": "https://ugc.production.linktr.ee/33540dfa-53c4-4a79-af7b-7284ca00f6ee_bz.jpeg?io=true&size=avatar-v3_0",
+          "logoSourceType": "Official social landing-page avatar"
         },
         {
           "id": "STUK-023",
@@ -1927,17 +1929,17 @@
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
-          "logo": null,
-          "logoSource": null,
-          "logoPath": null,
-          "logoVerificationStatus": "monogram-no-downloadable-asset",
-          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logo": "/brands/startups/saga-monkes.png",
+          "logoSource": "https://sagamonkes.com/wp-content/uploads/2024/01/IMG_3270-9.png",
+          "logoPath": "/brands/startups/saga-monkes.png",
+          "logoVerificationStatus": "authenticated-logo",
+          "logoAuditCategory": "authenticated-logo",
           "logoAuditSources": [
-            "official website header/assets",
-            "official product X"
+            "https://sagamonkes.com/",
+            "https://sagamonkes.com/wp-content/uploads/2024/01/IMG_3270-9.png"
           ],
-          "logoSourceUrl": null,
-          "logoSourceType": "monogram-no-downloadable-asset"
+          "logoSourceUrl": "https://sagamonkes.com/wp-content/uploads/2024/01/IMG_3270-9.png",
+          "logoSourceType": "Official website logo"
         },
         {
           "id": "STUK-024",
@@ -2169,17 +2171,17 @@
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
-          "logo": null,
-          "logoSource": null,
-          "logoPath": null,
-          "logoVerificationStatus": "monogram-no-downloadable-asset",
-          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logo": "/brands/startups/dwallet-labs.png",
+          "logoSource": "https://cdn.prod.website-files.com/62fcbb7207590e18eb4ec42f/62fd1c4e52960ebce3fdd28b_dWallet-Labs-Icon-256px.png",
+          "logoPath": "/brands/startups/dwallet-labs.png",
+          "logoVerificationStatus": "authenticated-app-icon",
+          "logoAuditCategory": "authenticated-app-icon",
           "logoAuditSources": [
-            "official website (access denied)",
-            "official product X"
+            "https://dwalletlabs.com/",
+            "https://github.com/dwallet-labs/ika"
           ],
-          "logoSourceUrl": null,
-          "logoSourceType": "monogram-no-downloadable-asset"
+          "logoSourceUrl": "https://cdn.prod.website-files.com/62fcbb7207590e18eb4ec42f/62fd1c4e52960ebce3fdd28b_dWallet-Labs-Icon-256px.png",
+          "logoSourceType": "Official website app icon"
         },
         {
           "id": "STUK-028",
@@ -2939,8 +2941,8 @@
             "Never count every validator transaction as customer activity."
           ],
           "metrics": [],
-          "logo": null,
-          "logoSource": null,
+          "logo": "/brands/startups/raiku.webp",
+          "logoSource": "https://cdn.prod.website-files.com/689096a8b6a5de14a46b4082/68920eb72ea2b65ee2b140fe_3b1cd2c0c3bc1fef61263baf810097c5_Logo%20%2816%29.webp",
           "lastReviewed": "2026-09-02",
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
@@ -2973,15 +2975,15 @@
           "analysisStatus": "Mainnet analysis required",
           "productEvidence": "Active infrastructure",
           "chainEvidence": "Analysis outstanding",
-          "logoPath": null,
-          "logoVerificationStatus": "monogram-no-downloadable-asset",
-          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoPath": "/brands/startups/raiku.webp",
+          "logoVerificationStatus": "authenticated-logo",
+          "logoAuditCategory": "authenticated-logo",
           "logoAuditSources": [
-            "official website (access denied)",
-            "official product X"
+            "https://raiku.com/",
+            "https://raiku.com/brand-assets"
           ],
-          "logoSourceUrl": null,
-          "logoSourceType": "monogram-no-downloadable-asset"
+          "logoSourceUrl": "https://cdn.prod.website-files.com/689096a8b6a5de14a46b4082/68920eb72ea2b65ee2b140fe_3b1cd2c0c3bc1fef61263baf810097c5_Logo%20%2816%29.webp",
+          "logoSourceType": "Official website brand asset"
         },
         {
           "founder": "Not verified",
@@ -3108,8 +3110,8 @@
             "Advertised yield is not realised yield."
           ],
           "metrics": [],
-          "logo": null,
-          "logoSource": null,
+          "logo": "/brands/startups/otus.svg",
+          "logoSource": "https://www.otus.io/apple-touch-icon.svg",
           "lastReviewed": "2026-09-02",
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
@@ -3141,15 +3143,15 @@
           "analysisStatus": "Mainnet analysis required",
           "productEvidence": "Live public product",
           "chainEvidence": "Analysis outstanding",
-          "logoPath": null,
-          "logoVerificationStatus": "monogram-no-downloadable-asset",
-          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoPath": "/brands/startups/otus.svg",
+          "logoVerificationStatus": "authenticated-app-icon",
+          "logoAuditCategory": "authenticated-app-icon",
           "logoAuditSources": [
-            "official product X",
-            "official LinkedIn company page"
+            "https://www.otus.io/",
+            "https://www.otus.io/apple-touch-icon.svg"
           ],
-          "logoSourceUrl": null,
-          "logoSourceType": "monogram-no-downloadable-asset"
+          "logoSourceUrl": "https://www.otus.io/apple-touch-icon.svg",
+          "logoSourceType": "Official website app icon"
         },
         {
           "founder": "Not publicly verified",
@@ -3299,8 +3301,8 @@
             "Do not count routed or Jito-related transactions without a verified Vanish attribution pattern."
           ],
           "metrics": [],
-          "logo": null,
-          "logoSource": null,
+          "logo": "/brands/startups/vanish.svg",
+          "logoSource": "https://www.vanish.trade/_next/static/media/vanish_with_text_logo.25e191e3.svg",
           "lastReviewed": "2026-09-02",
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
@@ -3320,14 +3322,15 @@
           "finding": "The live infrastructure is public, but no verified program, operational wallet or attributable transaction pattern has been established.",
           "nextAction": "Verify its program, operational wallets or identifiable transaction pattern before counting activity.",
           "analysisStatus": "Mainnet analysis required",
-          "logoPath": null,
-          "logoVerificationStatus": "monogram-no-downloadable-asset",
-          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoPath": "/brands/startups/vanish.svg",
+          "logoVerificationStatus": "authenticated-logo",
+          "logoAuditCategory": "authenticated-logo",
           "logoAuditSources": [
-            "official website; OG image incorrectly points to localhost and was rejected"
+            "https://www.vanish.trade/",
+            "https://www.vanish.trade/_next/static/media/vanish_with_text_logo.25e191e3.svg"
           ],
-          "logoSourceUrl": null,
-          "logoSourceType": "monogram-no-downloadable-asset",
+          "logoSourceUrl": "https://www.vanish.trade/_next/static/media/vanish_with_text_logo.25e191e3.svg",
+          "logoSourceType": "Official website logo",
           "directoryStage": "Not publicly verified",
           "productStatus": "Live mainnet infrastructure",
           "oneLine": "Private-trading infrastructure and API for shielded Solana execution.",
@@ -3713,8 +3716,8 @@
             "Fireblocks and exchange references establish infrastructure relationships, not public attribution of Altify customer flows."
           ],
           "metrics": [],
-          "logo": null,
-          "logoSource": null,
+          "logo": "/brands/startups/altify.png",
+          "logoSource": "https://cdn.prod.website-files.com/675831c6d7660f2c8fe647e2/6780dad888eb9fc7c5a90e59_al-webclip.png",
           "lastReviewed": "2026-09-02",
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
@@ -3734,14 +3737,15 @@
           "finding": "The product references Fireblocks, exchanges and tokenised assets, but customer activity is not publicly attributable without verified operational wallets.",
           "nextAction": "Request or identify attributable operational wallets before measuring flows.",
           "analysisStatus": "Mainnet operational-wallet analysis required",
-          "logoPath": null,
-          "logoVerificationStatus": "monogram-no-downloadable-asset",
-          "logoAuditCategory": "monogram-no-downloadable-asset",
+          "logoPath": "/brands/startups/altify.png",
+          "logoVerificationStatus": "authenticated-app-icon",
+          "logoAuditCategory": "authenticated-app-icon",
           "logoAuditSources": [
-            "official website and documents checked; direct website asset access was denied and no authenticated downloadable logo was retained"
+            "https://www.altify.app/",
+            "https://cdn.prod.website-files.com/675831c6d7660f2c8fe647e2/6780dad888eb9fc7c5a90e59_al-webclip.png"
           ],
-          "logoSourceUrl": null,
-          "logoSourceType": "monogram-no-downloadable-asset",
+          "logoSourceUrl": "https://cdn.prod.website-files.com/675831c6d7660f2c8fe647e2/6780dad888eb9fc7c5a90e59_al-webclip.png",
+          "logoSourceType": "Official website app icon",
           "directoryStage": "Not publicly verified",
           "productStatus": "Live mainnet-facing custodial product",
           "oneLine": "Regulated custodial brokerage and investment platform for digital and tokenised assets.",
