@@ -13,7 +13,8 @@ const queueColumns = [
 ];
 const evidenceTone = {
   "On-chain verified": "verified", "Founder-confirmed": "confirmed", "Publicly observed": "observed",
-  "Project-reported": "reported", "Not publicly verifiable": "unverified",
+  "Project-reported": "reported", "Project-documented": "documented",
+  "Analysis outstanding": "outstanding", "Partially on-chain verified": "partial", "Not publicly verifiable": "unverified",
 };
 const startupSlug = (startup) => startup.startup.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 const startupPath = (startup) => `/startups/${startupSlug(startup)}`;
@@ -62,6 +63,27 @@ function EvidenceLedger({ startup }) {
   </div>;
 }
 
+function TechnicalEntryPoints({ startup }) {
+  const entries = startup.technicalEntryPoints ?? [];
+  return <section className="profile-section"><h3>Technical entry points</h3>
+    {entries.length === 0
+      ? <p className="empty-evidence">No publicly attributable on-chain entry point has been verified.</p>
+      : <div className="entry-point-list">{entries.map((entry) => <article key={entry.address}>
+        <div><strong>{entry.name}</strong><span>{entry.network} &middot; {entry.type}</span></div>
+        <a href={entry.explorerUrl} target="_blank" rel="noreferrer">{entry.address}</a>
+        <p>{entry.attributionStatus}</p>
+        {entry.orbUrl && <a className="secondary-link" href={entry.orbUrl} target="_blank" rel="noreferrer">View Anchor IDL</a>}
+      </article>)}</div>}
+  </section>;
+}
+
+function AnalysisChecklist({ title, items = [], completed = false }) {
+  return <section className="profile-section checklist-section"><h3>{title}</h3>
+    {items.length ? <ul>{items.map((item) => <li key={item}><span aria-hidden="true">{completed ? "\u2713" : "\u25CB"}</span>{item}</li>)}</ul>
+      : <p className="empty-evidence">Not recorded for this research pass.</p>}
+  </section>;
+}
+
 function StartupDetail({ startup, onBack }) {
   return <section className="startup-profile" aria-label={`${startup.startup} profile`}>
     <button type="button" className="profile-back" onClick={onBack}>&larr; Back to startups</button>
@@ -78,7 +100,12 @@ function StartupDetail({ startup, onBack }) {
       <div><h3>What the evidence says</h3><p>{startup.finding}</p></div>
       <div><h3>Next analytical action</h3><p>{startup.nextAction}</p></div>
     </div>
-    <h3 className="ledger-title">Evidence confidence</h3><EvidenceLedger startup={startup} />
+    <TechnicalEntryPoints startup={startup} />
+    <div className="analysis-checklists">
+      <AnalysisChecklist title="Completed analysis" items={startup.completedAnalysis} completed />
+      <AnalysisChecklist title="Outstanding analysis" items={startup.outstandingAnalysis} />
+    </div>
+    <section className="profile-section"><h3 className="ledger-title">Evidence confidence</h3><EvidenceLedger startup={startup} /></section>
     {startup.metrics.length > 0 && <div className="reported-metrics">{startup.metrics.map((metric) => <div key={metric.label}>
       <strong>{metric.value}</strong><span>{metric.label}</span><small>{metric.qualifier}</small></div>)}</div>}
   </section>;
@@ -86,11 +113,11 @@ function StartupDetail({ startup, onBack }) {
 
 const internalResearchPipeline = ["Directory intake", "Identity verification", "Product research", "Technical classification", "Evidence collection", "Queue assignment", "Publication"];
 
-function InsightsView({ statusRows, stageRows, queueRows, chartProps }) {
+function InsightsView({ statusRows, stageRows, queueRows, chartProps, researchedCount }) {
   void internalResearchPipeline;
   return <section className="insights-view">
     <header className="section-intro"><p className="eyebrow">Cross-startup findings</p><h2>What the current sample shows.</h2>
-      <p>Descriptive distributions and evidence-led findings from the five completed startup records.</p></header>
+      <p>Descriptive distributions and evidence-led findings from the {researchedCount} completed startup records.</p></header>
     <section className="overview-grid">
       <DataComponent id="technical-status-chart" variant="card" queryId="technical_status" sourceRows={statusRows} title="Technical status of researched startups" kind="chart"><ChartRenderer spec={statusSpec} rows={statusRows} height={300} {...chartProps("technical-status-chart")} /></DataComponent>
       <DataComponent id="stage-chart" variant="card" queryId="researched_stages" sourceRows={stageRows} title="Funding stage in the current sample" kind="chart"><ChartRenderer spec={stageSpec} rows={stageRows} height={300} {...chartProps("stage-chart")} /></DataComponent>
@@ -108,7 +135,14 @@ export function DashboardContent() {
   const initialStartup = startups.find((item) => startupSlug(item) === initialSlug);
   const [view, setView] = useState(initialStartup ? "archive" : "overview");
   const [selectedId, setSelectedId] = useState(initialStartup?.id ?? null);
-  const summary = reviewedRows("research_summary")[0];
+  const summarySource = reviewedRows("research_summary")[0];
+  const summary = useMemo(() => ({
+    directoryStartups: summarySource.directoryStartups,
+    researched: startups.length,
+    nonMainnet: startups.filter((item) => item.queue === "Queue A").length,
+    mainnetQueue: startups.filter((item) => item.queue === "Mainnet queue").length,
+    completionRate: startups.length / summarySource.directoryStartups,
+  }), [startups, summarySource.directoryStartups]);
   const selected = useMemo(() => startups.find((item) => item.id === selectedId) ?? null, [startups, selectedId]);
   const statusRows = reviewedRows("technical_status");
   const stageRows = reviewedRows("researched_stages");
@@ -157,8 +191,8 @@ export function DashboardContent() {
         </div></header>
       {view === "overview" && <>
         <section className="metric-strip" aria-label="Research progress">
-          <MetricCard id="directory-size" queryId="research_summary" sourceRows={[summary]} title="Directory universe" value="66" description="Published startup records." />
-          <MetricCard id="researched" queryId="research_summary" sourceRows={[summary]} title="Researched" value={String(summary.researched)} description="Profiles currently classified." />
+          <MetricCard id="directory-size" queryId="research_summary" sourceRows={[summary]} title="Directory universe" value={String(summary.directoryStartups)} description="Published startup records." />
+          <MetricCard id="researched" queryId="research_summary" sourceRows={[summary]} title="Researched" value={`${summary.researched} of ${summary.directoryStartups}`} description={`${(summary.completionRate * 100).toFixed(2)}% complete.`} />
           <MetricCard id="non-mainnet" queryId="research_summary" sourceRows={[summary]} title="Queue A" value={String(summary.nonMainnet)} description="Off-chain, devnet or testnet." />
           <MetricCard id="mainnet" queryId="research_summary" sourceRows={[summary]} title="Queue B" value={String(summary.mainnetQueue)} description="Mainnet analysis pending." />
         </section>
@@ -172,7 +206,7 @@ export function DashboardContent() {
         : <section className="startup-directory" aria-label="Startup directory"><div className="startup-list">
           {startups.map((startup) => <StartupCard key={startup.id} startup={startup} onSelect={openStartup} />)}
         </div></section>)}
-      {view === "insights" && <InsightsView statusRows={statusRows} stageRows={stageRows} queueRows={queueRows} chartProps={chartProps} />}
+      {view === "insights" && <InsightsView statusRows={statusRows} stageRows={stageRows} queueRows={queueRows} chartProps={chartProps} researchedCount={summary.researched} />}
       <footer className="archive-footer"><span>Evidence-led research by Olamilekan Alaga</span>
         <span>Data cutoff &middot; {snapshot.report?.asOf ?? "2026-09-02"}</span></footer>
     </div>

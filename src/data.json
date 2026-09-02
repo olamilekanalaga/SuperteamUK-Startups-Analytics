@@ -6,49 +6,141 @@
   "generatedAt": "2026-09-02T06:00:00Z",
   "status": "reviewed",
   "filters": [],
-  "report": { "asOf": "2026-09-02" },
+  "report": {
+    "asOf": "2026-09-02"
+  },
   "queries": {
     "research_summary": {
       "rows": [
-        { "directoryStartups": 66, "researched": 5, "nonMainnet": 4, "mainnetQueue": 1, "completionRate": 0.0758 }
+        {
+          "directoryStartups": 66,
+          "researched": 8,
+          "nonMainnet": 5,
+          "mainnetQueue": 3,
+          "completionRate": 0.1212
+        }
       ],
       "source": {
         "label": "Authenticated Superteam UK Startup Directory and the first five reviewed startup records",
-        "tables": ["Startup Directory", "Research Archive"],
+        "tables": [
+          "Startup Directory",
+          "Research Archive"
+        ],
         "metricDefinitions": [
-          { "label": "Directory universe", "definition": "Distinct startup cards visible in the authenticated Startup Directory.", "componentIds": ["directory-size"] },
-          { "label": "Researched", "definition": "Startups with a completed first-pass identity and technical classification.", "componentIds": ["researched"] },
-          { "label": "Queue A", "definition": "Reviewed startups classified as off-chain, devnet, testnet or sunset for first-pass completion.", "componentIds": ["non-mainnet"] },
-          { "label": "Queue B", "definition": "Reviewed startups with confirmed mainnet use that require address-led analysis.", "componentIds": ["mainnet"] }
+          {
+            "label": "Directory universe",
+            "definition": "Distinct startup cards visible in the authenticated Startup Directory.",
+            "componentIds": [
+              "directory-size"
+            ]
+          },
+          {
+            "label": "Researched",
+            "definition": "Startups with a completed first-pass identity and technical classification.",
+            "componentIds": [
+              "researched"
+            ]
+          },
+          {
+            "label": "Queue A",
+            "definition": "Reviewed startups classified as off-chain, devnet, testnet or sunset for first-pass completion.",
+            "componentIds": [
+              "non-mainnet"
+            ]
+          },
+          {
+            "label": "Queue B",
+            "definition": "Reviewed startups with confirmed mainnet use that require address-led analysis.",
+            "componentIds": [
+              "mainnet"
+            ]
+          }
         ]
       }
     },
     "technical_status": {
       "rows": [
-        { "category": "Devnet", "startups": 2 },
-        { "category": "Off-chain / unclear", "startups": 1 },
-        { "category": "Testnet + off-chain", "startups": 1 },
-        { "category": "Mainnet + hybrid", "startups": 1 }
+        {
+          "category": "Solana devnet",
+          "startups": 2
+        },
+        {
+          "category": "Off-chain / insufficient evidence",
+          "startups": 1
+        },
+        {
+          "category": "Testnet + off-chain",
+          "startups": 1
+        },
+        {
+          "category": "Mainnet + hybrid",
+          "startups": 1
+        },
+        {
+          "category": "Historical Solana mainnet + hybrid",
+          "startups": 1
+        },
+        {
+          "category": "Claimed Solana integration; mainnet unverified",
+          "startups": 1
+        },
+        {
+          "category": "Historical Solana mainnet",
+          "startups": 1
+        }
       ],
       "source": {
         "label": "Technical classification from official product material, public deployments and founder responses",
-        "tables": ["Research Archive"],
+        "tables": [
+          "Research Archive"
+        ],
         "metricDefinitions": [
-          { "label": "Technical status", "definition": "Primary technical classification assigned during the first research pass; it is not a quality ranking.", "componentIds": ["technical-status-chart"] }
+          {
+            "label": "Technical status",
+            "definition": "Primary technical classification assigned during the first research pass; it is not a quality ranking.",
+            "componentIds": [
+              "technical-status-chart"
+            ]
+          }
         ]
       }
     },
     "researched_stages": {
       "rows": [
-        { "stage": "Raising pre-seed", "startups": 3 },
-        { "stage": "Self-funded", "startups": 1 },
-        { "stage": "Pre-seed closed", "startups": 1 }
+        {
+          "stage": "Raising Pre-Seed",
+          "startups": 3
+        },
+        {
+          "stage": "Not Raising / Self-Funded",
+          "startups": 1
+        },
+        {
+          "stage": "Pre-Seed Closed",
+          "startups": 1
+        },
+        {
+          "stage": "Wound Down",
+          "startups": 1
+        },
+        {
+          "stage": "Early Development",
+          "startups": 2
+        }
       ],
       "source": {
         "label": "Stage labels displayed in the Superteam UK Startup Directory",
-        "tables": ["Startup Directory"],
+        "tables": [
+          "Startup Directory"
+        ],
         "metricDefinitions": [
-          { "label": "Funding stage", "definition": "Displayed directory stage for the five researched startups.", "componentIds": ["stage-chart"] }
+          {
+            "label": "Funding stage",
+            "definition": "Displayed directory stage for the five researched startups.",
+            "componentIds": [
+              "stage-chart"
+            ]
+          }
         ]
       }
     },
@@ -57,17 +149,41 @@
         {
           "startup": "Fanplay",
           "currentBrand": "WTF Games",
-          "network": "Arbitrum → Solana",
+          "network": "Mainnet + hybrid",
           "entryPoint": "Not publicly documented",
-          "nextAction": "Obtain or discover an operational wallet",
+          "nextAction": "Identify one legitimate deposit, withdrawal or bet transaction, verify the receiving entity and expand it into an operational-wallet cluster.",
+          "status": "Queued"
+        },
+        {
+          "startup": "Fundl",
+          "currentBrand": "",
+          "network": "Historical Solana mainnet + hybrid",
+          "entryPoint": "Not publicly documented",
+          "nextAction": "Discover or obtain a historical Fundl transaction, campaign wallet, treasury, vault or program address, confirm its attribution, and use it to reconstruct historical users, contributions and USDC/SOL volume.",
+          "status": "Queued"
+        },
+        {
+          "startup": "Purebet",
+          "currentBrand": "",
+          "network": "Historical Solana mainnet",
+          "entryPoint": "39mBcnQ27QA9nNZmM6VrumE2vtqs5v3HD7t7RGv9kXUV",
+          "nextAction": "Confirm the program attribution using an official source or founder response, retrieve its complete archival history, decode program instructions and calculate users, betting volume, payouts, retention and market-making concentration.",
           "status": "Queued"
         }
       ],
       "source": {
         "label": "Official migration announcements and public-address review",
-        "tables": ["Research Archive"],
+        "tables": [
+          "Research Archive"
+        ],
         "metricDefinitions": [
-          { "label": "Mainnet queue", "definition": "Confirmed mainnet or hybrid products awaiting an official contract, wallet or transaction entry point.", "componentIds": ["mainnet-queue-table"] }
+          {
+            "label": "Mainnet queue",
+            "definition": "Confirmed mainnet or hybrid products awaiting an official contract, wallet or transaction entry point.",
+            "componentIds": [
+              "mainnet-queue-table"
+            ]
+          }
         ]
       }
     },
@@ -98,11 +214,30 @@
           "transactionEvidence": "On-chain verified",
           "revenueEvidence": "Not publicly verifiable",
           "metrics": [
-            { "label": "Devnet signatures", "value": "443", "qualifier": "On-chain verified" },
-            { "label": "Success rate", "value": "91.87%", "qualifier": "On-chain verified" },
-            { "label": "Program accounts", "value": "440", "qualifier": "On-chain verified" },
-            { "label": "Player wallets", "value": "6", "qualifier": "Decoded estimate" }
-          ]
+            {
+              "label": "Devnet signatures",
+              "value": "443",
+              "qualifier": "On-chain verified"
+            },
+            {
+              "label": "Success rate",
+              "value": "91.87%",
+              "qualifier": "On-chain verified"
+            },
+            {
+              "label": "Program accounts",
+              "value": "440",
+              "qualifier": "On-chain verified"
+            },
+            {
+              "label": "Player wallets",
+              "value": "6",
+              "qualifier": "Decoded estimate"
+            }
+          ],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "outstandingAnalysis": []
         },
         {
           "id": "STUK-002",
@@ -129,11 +264,30 @@
           "transactionEvidence": "On-chain verified",
           "revenueEvidence": "Not publicly verifiable",
           "metrics": [
-            { "label": "Historical signatures", "value": "565", "qualifier": "Devnet verified" },
-            { "label": "Historical success", "value": "92.92%", "qualifier": "Devnet verified" },
-            { "label": "Dashboard rows", "value": "16,435", "qualifier": "Publicly observed" },
-            { "label": "Test-token mints", "value": "3", "qualifier": "Devnet verified" }
-          ]
+            {
+              "label": "Historical signatures",
+              "value": "565",
+              "qualifier": "Devnet verified"
+            },
+            {
+              "label": "Historical success",
+              "value": "92.92%",
+              "qualifier": "Devnet verified"
+            },
+            {
+              "label": "Dashboard rows",
+              "value": "16,435",
+              "qualifier": "Publicly observed"
+            },
+            {
+              "label": "Test-token mints",
+              "value": "3",
+              "qualifier": "Devnet verified"
+            }
+          ],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "outstandingAnalysis": []
         },
         {
           "id": "STUK-003",
@@ -159,7 +313,10 @@
           "userEvidence": "Not publicly verifiable",
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
-          "metrics": []
+          "metrics": [],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "outstandingAnalysis": []
         },
         {
           "id": "STUK-004",
@@ -186,11 +343,30 @@
           "transactionEvidence": "Not publicly verifiable",
           "revenueEvidence": "Not publicly verifiable",
           "metrics": [
-            { "label": "Submissions", "value": "300", "qualifier": "Project-reported" },
-            { "label": "Named games", "value": "27", "qualifier": "Public census" },
-            { "label": "Named developers", "value": "25", "qualifier": "Public census" },
-            { "label": "Winners", "value": "10", "qualifier": "Official announcement" }
-          ]
+            {
+              "label": "Submissions",
+              "value": "300",
+              "qualifier": "Project-reported"
+            },
+            {
+              "label": "Named games",
+              "value": "27",
+              "qualifier": "Public census"
+            },
+            {
+              "label": "Named developers",
+              "value": "25",
+              "qualifier": "Public census"
+            },
+            {
+              "label": "Winners",
+              "value": "10",
+              "qualifier": "Official announcement"
+            }
+          ],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "outstandingAnalysis": []
         },
         {
           "id": "STUK-005",
@@ -217,18 +393,257 @@
           "transactionEvidence": "Project-reported",
           "revenueEvidence": "Not publicly verifiable",
           "metrics": [
-            { "label": "Wallets", "value": "10K", "qualifier": "Project-reported" },
-            { "label": "Transactions", "value": "10K", "qualifier": "Project-reported" },
-            { "label": "Site visits", "value": "100K", "qualifier": "Project-reported" },
-            { "label": "Social views", "value": "3M+", "qualifier": "Project-reported" }
-          ]
+            {
+              "label": "Wallets",
+              "value": "10K",
+              "qualifier": "Project-reported"
+            },
+            {
+              "label": "Transactions",
+              "value": "10K",
+              "qualifier": "Project-reported"
+            },
+            {
+              "label": "Site visits",
+              "value": "100K",
+              "qualifier": "Project-reported"
+            },
+            {
+              "label": "Social views",
+              "value": "3M+",
+              "qualifier": "Project-reported"
+            }
+          ],
+          "technicalEntryPoints": [],
+          "completedAnalysis": [],
+          "outstandingAnalysis": []
+        },
+        {
+          "id": "STUK-006",
+          "startup": "Fundl",
+          "monogram": "FU",
+          "founder": "Josip Volarević",
+          "xAccount": "https://x.com/FundlDotFun",
+          "sector": "Creator crowdfunding / Entertainment",
+          "stage": "Wound Down",
+          "productStatus": "Wound down",
+          "technicalStatus": "Historical Solana mainnet + hybrid",
+          "queue": "Mainnet queue",
+          "analysisStatus": "Awaiting operational entry point",
+          "oneLine": "A Solana crowdfunding platform for narrative, entertainment and startup projects that has since wound down.",
+          "whatItBuilds": "Fundl provided crowdfunding and crowd-investing infrastructure for creators developing stories, books, comics, games, animation and startups.",
+          "finding": "Fundl’s public terms and product material support the use of SOL and USDC transactions on Solana through wallet integrations including Privy, Phantom and Solflare. However, no publicly attributable custom program, campaign vault, treasury, operational wallet or verified Fundl transaction entry point was identified during the first pass. The directory classifies the project as wound down.",
+          "nextAction": "Discover or obtain a historical Fundl transaction, campaign wallet, treasury, vault or program address, confirm its attribution, and use it to reconstruct historical users, contributions and USDC/SOL volume.",
+          "productEvidence": "Publicly observed",
+          "chainEvidence": "Project-documented",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Project-documented",
+          "revenueEvidence": "Not publicly verifiable",
+          "technicalEntryPoints": [],
+          "completedAnalysis": [
+            "Canonical project identity",
+            "Founder identification",
+            "Product classification",
+            "Historical Solana usage documented",
+            "Current wound-down status documented"
+          ],
+          "outstandingAnalysis": [
+            "Official Solana program address",
+            "Campaign vaults",
+            "Operational wallet or treasury",
+            "Historical contributor wallets",
+            "Successful contributions",
+            "SOL contribution volume",
+            "USDC contribution volume",
+            "Campaign-level activity",
+            "Refunds and payouts",
+            "First and final mainnet activity"
+          ],
+          "metrics": [],
+          "logoPath": "/brands/startups/fundl.png",
+          "logoSourceUrl": "https://www.fundl.fun/",
+          "logoSourceType": "Official project website",
+          "logoVerificationStatus": "Verified"
+        },
+        {
+          "id": "STUK-007",
+          "startup": "Moon Boi Studios / DD Gaming",
+          "monogram": "MB",
+          "founder": "Ems",
+          "relatedPeople": [
+            "Dean Ball — DD Gaming co-founder",
+            "Andre Peter Phillip — legal director of Moon Boi Studios Ltd"
+          ],
+          "xAccounts": [
+            "https://x.com/MoonBoiStudios",
+            "https://x.com/MoonBoiUniverse",
+            "https://x.com/DDGamingLabs"
+          ],
+          "website": "https://moonboi.io/",
+          "playableProduct": "https://moonboistudios.itch.io/moon-boi-universe",
+          "googlePlay": "https://play.google.com/store/apps/details?id=com.moonboistudios.MoonboiUniverse",
+          "companySource": "https://find-and-update.company-information.service.gov.uk/company/14095864",
+          "sector": "Gaming",
+          "stage": "Early Development",
+          "productStatus": "Playable / in development",
+          "technicalStatus": "Claimed Solana integration; mainnet unverified",
+          "queue": "Queue A",
+          "analysisStatus": "Technical entry point not verified",
+          "oneLine": "Moon Boi Studios is developing Moon Boi Universe, a playable cyber-fantasy RPG with claimed Solana and Seeker integration.",
+          "whatItBuilds": "Moon Boi Universe is a 2.5D story-driven cyber-fantasy RPG available through public prototype and application listings. The project has promoted Solana-powered ownership, NFT functionality and Solana Mobile/Seeker integration. DD Gaming is a related gaming venture involving Ems and Dean Ball, but it must not be treated as identical to Moon Boi Universe or Scrolly.",
+          "finding": "A playable product and continuing game-development activity were publicly observed. Moon Boi Studios Ltd is an active UK company incorporated in 2022. However, no official mainnet program, operational wallet, NFT collection address, marketplace address or token mint was verified. Product availability must not be presented as proof of mainnet activity.",
+          "nextAction": "Locate an officially attributable Moon Boi Universe mainnet transaction, program, NFT collection, marketplace or operational wallet. If none is publicly available, retain the project as playable with unverified Solana integration.",
+          "productEvidence": "Publicly observed",
+          "chainEvidence": "Not publicly verifiable",
+          "userEvidence": "Not publicly verifiable",
+          "transactionEvidence": "Not publicly verifiable",
+          "revenueEvidence": "Not publicly verifiable",
+          "technicalEntryPoints": [],
+          "completedAnalysis": [
+            "Canonical identity",
+            "Related-entity separation",
+            "Founder identification",
+            "Active UK company verification",
+            "Playable product verification",
+            "Solana and Seeker integration claims documented"
+          ],
+          "outstandingAnalysis": [
+            "Whether Solana integration is live on mainnet",
+            "Official program address",
+            "Operational wallet",
+            "NFT collection address",
+            "Marketplace address",
+            "Official token mint",
+            "Unique connected wallets",
+            "Game-related transactions",
+            "NFT holders and transfers",
+            "On-chain activity timeline"
+          ],
+          "metrics": [],
+          "logoPath": "/brands/startups/moon-boi-studios.png",
+          "logoSourceUrl": "https://moonboi.io/wp-content/uploads/2024/08/726FA00B-AAF4-4D41-B017-A6D0C766F3F9-5.png",
+          "logoSourceType": "Official project website",
+          "logoVerificationStatus": "Verified"
+        },
+        {
+          "id": "STUK-008",
+          "startup": "Purebet",
+          "monogram": "PB",
+          "founder": "No directory-linked founder verified",
+          "xAccount": "https://x.com/Purebet_io",
+          "website": "https://purebet.io/",
+          "sector": "Gaming / Sports betting",
+          "stage": "Early Development",
+          "productStatus": "Hibernating",
+          "technicalStatus": "Historical Solana mainnet",
+          "queue": "Mainnet queue",
+          "analysisStatus": "Program discovered; deep metrics outstanding",
+          "oneLine": "A non-custodial on-chain sports-betting aggregator whose website currently reports that the platform is hibernating.",
+          "whatItBuilds": "Purebet aggregated odds and liquidity from on-chain betting venues. Historical product material states that users placed bets using Solana-native USDC, with settlement and winnings processed through on-chain exchange architecture.",
+          "finding": "The current Purebet website states that the platform is hibernating. A mainnet executable program labelled publicly as the Purebet Program was discovered at 39mBcnQ27QA9nNZmM6VrumE2vtqs5v3HD7t7RGv9kXUV. Direct Solana RPC validation confirmed that it is executable and linked to program-data account 7Z3XMqoZfjom2CArncLmqSbhQVB5vKfApxdCt8qoyW4Q. The public RPC returned at least 3,000 program signatures before archival retrieval failed: 2,788 successful and 212 failed, producing a preliminary 92.93% success rate. The retrieved activity interval reached from 6 March 2024 to 8 January 2025. The 3,000 signatures are a lower bound, not a lifetime total.",
+          "nextAction": "Confirm the program attribution using an official source or founder response, retrieve its complete archival history, decode program instructions and calculate users, betting volume, payouts, retention and market-making concentration.",
+          "productEvidence": "Publicly observed",
+          "chainEvidence": "On-chain verified",
+          "userEvidence": "Analysis outstanding",
+          "transactionEvidence": "Partially on-chain verified",
+          "revenueEvidence": "Not publicly verifiable",
+          "technicalEntryPoints": [
+            {
+              "name": "Probable Purebet Program",
+              "network": "Solana Mainnet",
+              "address": "39mBcnQ27QA9nNZmM6VrumE2vtqs5v3HD7t7RGv9kXUV",
+              "type": "Executable program",
+              "attributionStatus": "Strong third-party attribution; not yet official/founder-confirmed",
+              "explorerUrl": "https://solscan.io/account/39mBcnQ27QA9nNZmM6VrumE2vtqs5v3HD7t7RGv9kXUV",
+              "orbUrl": "https://orbmarkets.io/address/39mBcnQ27QA9nNZmM6VrumE2vtqs5v3HD7t7RGv9kXUV/anchor-idl"
+            },
+            {
+              "name": "Purebet Program Data",
+              "network": "Solana Mainnet",
+              "address": "7Z3XMqoZfjom2CArncLmqSbhQVB5vKfApxdCt8qoyW4Q",
+              "type": "Upgradeable program-data account",
+              "attributionStatus": "On-chain linked to probable Purebet program",
+              "explorerUrl": "https://solscan.io/account/7Z3XMqoZfjom2CArncLmqSbhQVB5vKfApxdCt8qoyW4Q"
+            }
+          ],
+          "completedAnalysis": [
+            "Product status checked",
+            "Probable mainnet program discovered",
+            "Program executable status verified through Solana RPC",
+            "Program-data account identified",
+            "Preliminary signature history retrieved",
+            "Preliminary success and failure rates calculated",
+            "Earliest and latest dates reached in the retrieved sample"
+          ],
+          "outstandingAnalysis": [
+            "Official confirmation of program attribution",
+            "Complete lifetime transaction count",
+            "Decoded Purebet instruction types",
+            "Unique signing wallets",
+            "New and returning users",
+            "Daily, weekly and monthly active wallets",
+            "User retention",
+            "Total USDC betting volume",
+            "Total payouts",
+            "Average and median stake",
+            "Bets per wallet",
+            "Winning and losing wallets",
+            "Market-making wallets",
+            "Counterparty concentration",
+            "Largest users",
+            "Peak activity dates",
+            "Program upgrade history",
+            "Activity decline before hibernation",
+            "Related Monaco Protocol transactions",
+            "Any additional Purebet programs or operational wallets"
+          ],
+          "metrics": [
+            {
+              "label": "Retrieved signatures",
+              "value": "3,000+",
+              "qualifier": "Lower bound from public RPC; incomplete lifetime history"
+            },
+            {
+              "label": "Successful signatures",
+              "value": "2,788",
+              "qualifier": "Preliminary retrieved history"
+            },
+            {
+              "label": "Failed signatures",
+              "value": "212",
+              "qualifier": "Preliminary retrieved history"
+            },
+            {
+              "label": "Success rate",
+              "value": "92.93%",
+              "qualifier": "Preliminary retrieved history"
+            },
+            {
+              "label": "Activity reached",
+              "value": "6 Mar 2024 – 8 Jan 2025",
+              "qualifier": "Retrieved interval, not necessarily complete lifetime"
+            }
+          ],
+          "logoPath": "/brands/startups/purebet.png",
+          "logoSourceUrl": "https://purebet.io/favicon.ico",
+          "logoSourceType": "Official project website",
+          "logoVerificationStatus": "Verified"
         }
       ],
       "source": {
-        "label": "Working evidence archive for PrimeSkill, END Corp, Home Harvest, Scrolly and Fanplay",
-        "tables": ["Startup Directory", "Devnet reports", "Official product material", "Founder responses"],
+        "label": "Working evidence archive for eight completed canonical startup records",
+        "tables": [
+          "Startup Directory",
+          "Devnet reports",
+          "Official product material",
+          "Founder responses"
+        ],
         "metricDefinitions": [
-          { "label": "Evidence confidence", "definition": "Each field is separately labelled on-chain verified, founder-confirmed, publicly observed, project-reported or not publicly verifiable.", "componentIds": [] }
+          {
+            "label": "Evidence confidence",
+            "definition": "Each field is separately labelled on-chain verified, founder-confirmed, publicly observed, project-reported or not publicly verifiable.",
+            "componentIds": []
+          }
         ]
       }
     }
