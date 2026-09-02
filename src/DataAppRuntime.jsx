@@ -11,6 +11,8 @@ export function DataAppRuntime({
   ReportContent,
   hosted = globalThis.location?.hostname.endsWith(".chatgpt.site") ?? false,
 } = {}) {
+  const hostname = globalThis.location?.hostname ?? "";
+  const localAuthoring = !hostname || ["localhost", "127.0.0.1", "::1"].includes(hostname);
   const [snapshot, setSnapshot] = useState(hosted ? null : reviewedSnapshot);
   const [presentationRecord, setPresentationRecord] = useState({ presentation: {}, revision: 0 });
   const [error, setError] = useState(null);
@@ -35,7 +37,7 @@ export function DataAppRuntime({
       snapshot={snapshot}
       hosted={hosted}
       onSnapshotChange={setSnapshot}
-      canEdit={!hosted || presentationRecord.canEdit === true}
+      canEdit={hosted ? presentationRecord.canEdit === true : localAuthoring}
       initialPresentation={presentationRecord.presentation}
       initialRevision={presentationRecord.revision}
     >

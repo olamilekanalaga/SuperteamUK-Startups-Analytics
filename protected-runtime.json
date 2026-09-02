@@ -16,7 +16,7 @@
     "scripts/verify-protected-runtime.mjs": "9ffdabda90930b17f071dd35b25882332b75ed371e8cad1013da41e3d269d360",
     "src/App.jsx": "2f4b8f28c24ee9498c8de670a7f9c7fb79a584c67f67d88b782ec301838cc54b",
     "src/DataAppContext.jsx": "53995c990caa20c8a15d8fedd94f856f14eb0c4c9ed2f01844aad167d2299fd3",
-    "src/DataAppRuntime.jsx": "3adc08c1999d572b35480a84f6ad26f33b5e86f3db30473f367c5d9f47f7c677",
+    "src/DataAppRuntime.jsx": "69c3f0feeb9f0e9dd77b4f61bb9f8dd662370963ac5033a25dceddaf7cfbf1ee",
     "src/DataAppShell.jsx": "09a0aba53fe9acaa403417f42aac6693e5757e01e9cb8eeca95aafb7e40bb279",
     "src/block-layout.js": "385da9c5081f9a24ee3eb8948b87aa7a6c6b0f1b7b37d26c91ae07fb01a81c8b",
     "src/chart-image.js": "cd12ba790a1ca2c75598fcd7aeb2511bb0de79231ed5730afcb197a1c47a457a",
