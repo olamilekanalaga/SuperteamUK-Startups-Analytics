@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 
-import { ChartRenderer, DataComponent, DataTable, MetricCard, useDataApp } from "../../data-app-public.jsx";
+import { ChartRenderer, DataComponent, DataTable, MetricCard, RichNarrative, useDataApp } from "../../data-app-public.jsx";
 
 const statusSpec = { type: "bar", x: "category", y: "startups", showXAxisLabel: false, showYAxisLabel: false };
 const stageSpec = { type: "rankedList", x: "stage", y: "startups", initialVisibleCount: 6 };
@@ -27,6 +27,7 @@ const routeFromPathname = (pathname, startups) => {
   if (pathname === "/" || pathname === "") return { view: "overview", startup: null, notFound: false };
   if (pathname === "/startups" || pathname === "/startups/") return { view: "archive", startup: null, notFound: false };
   if (pathname === "/insights" || pathname === "/insights/") return { view: "insights", startup: null, notFound: false };
+  if (pathname === "/ask-dandy" || pathname === "/ask-dandy/") return { view: "ask-dandy", startup: null, notFound: false };
   const slug = profileSlugFromPath(pathname);
   if (slug) {
     const startup = startups.find((item) => startupSlug(item) === slug) ?? null;
@@ -78,43 +79,60 @@ const compactStatus = (startup) => {
 };
 
 const sectorTags = (startup) => String(startup.sector ?? "").split(/\s*(?:\/|;|,)\s*/u).filter(Boolean);
+const researchStatus = (startup) => {
+  const value = String(startup.researchStatus ?? startup.analysisStatus ?? "").toLowerCase();
+  if (value.includes("complete") || value.includes("shared")) return "Completed";
+  if (value.includes("founder") || value.includes("identity verification")) return "Awaiting founder";
+  if (value.includes("progress") || value.includes("outstanding") || value.includes("awaiting") || value.includes("required")) return "In progress";
+  return "Not started";
+};
+const technicalGroup = (startup) => {
+  const value = `${startup.technicalState ?? ""} ${startup.technicalStatus ?? ""} ${startup.classification ?? ""}`.toLowerCase();
+  if (value.includes("devnet") || value.includes("testnet")) return "Devnet/Testnet";
+  if (value.includes("mainnet")) return "Mainnet";
+  if (value.includes("identity") || value.includes("unverified")) return "Unverified";
+  return "Off-chain/Early";
+};
+const verifiedMetricsFor = (startup) => startup.verifiedMetrics?.length
+  ? startup.verifiedMetrics
+  : (startup.metrics ?? []).filter((metric) => !/reported|claim|preliminary/iu.test(metric.qualifier ?? ""));
+const projectMetricsFor = (startup) => [
+  ...(startup.projectReportedMetrics ?? []),
+  ...(startup.metrics ?? []).filter((metric) => /reported|claim/iu.test(metric.qualifier ?? "")),
+];
 
 function StartupCard({ startup, onNavigate }) {
   const status = compactStatus(startup);
+  const verifiedMetric = verifiedMetricsFor(startup)[0];
   const openProfile = (event) => {
     if (!event.defaultPrevented && event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
       event.preventDefault();
       onNavigate(startupPath(startup));
     }
   };
-  const sectors = sectorTags(startup);
   return <a className={`startup-card startup-card--${status.tone}`} href={startupPath(startup)} onClick={openProfile} aria-label={"View " + displayName(startup) + " profile"}>
-    <div className="startup-card__identity">
-      <ProjectLogo startup={startup} />
-      <h3>{displayName(startup)}</h3>
-    </div>
-    <p className="startup-card__description">{startup.oneLine ?? startup.summary ?? startup.whatItBuilds}</p>
-    <div className="startup-card__tags" aria-label="Startup attributes">
-      <span>{normalizedStage(startup.directoryStage ?? startup.stage)}</span>
-      {sectors.slice(0, 2).map((sector) => <span key={sector}>{sector}</span>)}
-      {sectors.length > 2 && <span>+{sectors.length - 2} more</span>}
-    </div>
+    <div className="startup-card__identity"><ProjectLogo startup={startup} /><div><h3>{displayName(startup)}</h3><p>{sectorTags(startup)[0] ?? "Sector not verified"}</p></div></div>
+    <div className="startup-card__badges"><StatusPill tone={status.tone}>{status.label}</StatusPill><StatusPill tone="research">{researchStatus(startup)}</StatusPill></div>
+    {verifiedMetric && <p className="startup-card__metric"><strong>{verifiedMetric.value}</strong> {verifiedMetric.label}</p>}
+    <p className="startup-card__description">{startup.canonicalFinding ?? startup.finding ?? startup.oneLine ?? startup.summary}</p>
+    {startup.lastReviewed && <p className="startup-card__cutoff">Data cutoff {startup.dataCutoff ?? startup.lastReviewed}</p>}
   </a>;
 }
+
 function EvidenceLedger({ startup }) {
   const rows = [["Product", startup.productEvidence], ["Chain", startup.chainEvidence], ["Users", startup.userEvidence],
     ["Transactions", startup.transactionEvidence], ["Revenue", startup.revenueEvidence]];
   return <div className="evidence-ledger">
     {rows.map(([label, value]) => <div key={label}><span>{label}</span>
-      <StatusPill tone={evidenceTone[value] ?? "neutral"}>{value}</StatusPill></div>)}
+      <StatusPill tone={evidenceTone[value] ?? "neutral"}>{publicValue(value)}</StatusPill></div>)}
   </div>;
 }
 
 function TechnicalEntryPoints({ startup }) {
   const entries = startup.technicalEntryPoints ?? [];
-  return <section className="profile-section"><h3>Technical entry points</h3>
+  return <section className="profile-section"><h3>On-chain evidence</h3>
     {entries.length === 0
-      ? <p className="empty-evidence">No publicly attributable on-chain entry point has been verified.</p>
+      ? <p className="empty-evidence">{technicalGroup(startup) === "Devnet/Testnet" ? "No attributable mainnet deployment was verified during this research period." : "No attributable on-chain deployment was verified during this research period."}</p>
       : <div className="entry-point-list">{entries.map((entry) => <article key={entry.address}>
         <div><strong>{entry.name}</strong><span>{entry.network} &middot; {entry.type}</span></div>
         <a href={entry.explorerUrl} target="_blank" rel="noopener noreferrer">{entry.address}</a>
@@ -125,58 +143,97 @@ function TechnicalEntryPoints({ startup }) {
 }
 
 function AnalysisChecklist({ title, items = [], completed = false }) {
+  if (!items.length) return null;
   return <section className="profile-section checklist-section"><h3>{title}</h3>
-    {items.length ? <ul>{items.map((item) => <li key={item}><span aria-hidden="true">{completed ? "\u2713" : "\u25CB"}</span>{item}</li>)}</ul>
-      : <p className="empty-evidence">Not recorded for this research pass.</p>}
+    <ul>{items.map((item) => <li key={item}><span aria-hidden="true">{completed ? "\u2713" : "\u25CB"}</span>{item}</li>)}</ul>
   </section>;
 }
 
-function MetricSection({ title, metrics = [] }) {
-  return <section className="profile-section"><h3>{title}</h3>{metrics.length
-    ? <div className="reported-metrics">{metrics.map((metric) => <div key={metric.label + metric.value}><strong>{metric.value}</strong><span>{metric.label}</span><small>{metric.qualifier}</small>{metric.sourceUrl && <a href={metric.sourceUrl} target="_blank" rel="noopener noreferrer">Source</a>}</div>)}</div>
-    : <p className="empty-evidence">Not verified.</p>}</section>;
+function MetricSection({ title, metrics = [], reported = false }) {
+  if (!metrics.length) return null;
+  return <section className={`profile-section${reported ? " reported-evidence" : ""}`}><h3>{title}</h3>
+    <div className="reported-metrics">{metrics.map((metric) => <div key={metric.label + metric.value}><strong>{metric.value}</strong><span>{metric.label}</span><small>{metric.qualifier}</small>{metric.sourceUrl && <a href={metric.sourceUrl} target="_blank" rel="noopener noreferrer">Source</a>}</div>)}</div>
+  </section>;
 }
-function TextList({ title, items = [] }) {
+function TextList({ title, items = [], className = "" }) {
   if (!items.length) return null;
-  return <section className="profile-section data-warnings"><h3>{title}</h3><ul>{items.map((item) => <li key={item}>{item}</li>)}</ul></section>;
+  return <section className={`profile-section ${className}`}><h3>{title}</h3><ul>{items.map((item) => <li key={item}>{item}</li>)}</ul></section>;
 }
 function SourceLinks({ startup }) {
-  const links = [...new Set([startup.website, startup.xAccount, ...(startup.sources ?? [])].filter(Boolean))];
-  return <section className="profile-section"><h3>Sources</h3>{links.length
-    ? <ul className="source-links">{links.map((url) => <li key={url}><a href={url} target="_blank" rel="noopener noreferrer">{url}</a></li>)}</ul>
-    : <p className="empty-evidence">Not verified.</p>}</section>;
+  const links = [...new Map([startup.website, startup.xAccount, ...(startup.sources ?? [])].filter(Boolean).map((source) => {
+    const item = typeof source === "string" ? { url: source } : source;
+    return [item.url, item];
+  })).values()];
+  if (!links.length && !startup.methodologyNotes?.length) return null;
+  return <section className="profile-section"><h3>Sources and methodology</h3>
+    {links.length > 0 && <ul className="source-links">{links.map((source) => <li key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label ?? source.url}</a>{source.note && <span>{source.note}</span>}</li>)}</ul>}
+    {startup.methodologyNotes?.length > 0 && <ul className="methodology-notes">{startup.methodologyNotes.map((note) => <li key={note}>{note}</li>)}</ul>}
+  </section>;
 }
-function StartupDetail({ startup, onBack }) {
-  return <section className="startup-profile" aria-label={displayName(startup) + " profile"}>
+function ReportKpis({ startup }) {
+  const metrics = startup.headlineKpis ?? verifiedMetricsFor(startup).slice(0, 6);
+  if (!metrics.length) return null;
+  return <section id="metrics" className="report-section"><h3>KPI dashboard</h3><div className="report-kpi-grid">{metrics.map((metric, index) => <MetricCard key={metric.label} id={`${startupSlug(startup)}-kpi-${index}`} queryId="researched_startups" sourceRows={[startup]} title={metric.label} value={metric.value} description={metric.qualifier} />)}</div></section>;
+}
+function ReportChart({ startup, chart, chartProps }) {
+  return <DataComponent id={`${startupSlug(startup)}-${chart.id}`} variant="card" queryId="researched_startups" sourceRows={chart.rows} title={chart.title} kind="chart">
+    <p className="chart-summary">{chart.summary}</p><ChartRenderer spec={chart.spec} rows={chart.rows} height={chart.height ?? 310} {...chartProps(`${startupSlug(startup)}-${chart.id}`)} />
+  </DataComponent>;
+}
+function ReportCharts({ startup, chartProps }) {
+  if (!startup.reportCharts?.length) return null;
+  return <section className="report-section report-charts" aria-label="Main charts">{startup.reportCharts.map((chart) => <ReportChart key={chart.id} startup={startup} chart={chart} chartProps={chartProps} />)}</section>;
+}
+function ReportTables({ startup }) {
+  if (!startup.reportTables?.length) return null;
+  return <section className="report-section report-tables" aria-label="Supporting evidence tables">{startup.reportTables.map((table) => <DataComponent key={table.id} id={`${startupSlug(startup)}-${table.id}`} variant="card" queryId="researched_startups" sourceRows={table.rows} title={table.title} kind="table"><p className="chart-summary">{table.summary}</p><DataTable rows={table.rows} columns={table.columns} /></DataComponent>)}</section>;
+}
+
+function NarrativeSection({ startup, id, title, value }) {
+  if (!value) return null;
+  return <section className="report-section narrative-section"><RichNarrative id={`${startupSlug(startup)}-${id}`} value={`## ${title}\n\n${value}`} /></section>;
+}
+function ReportEvidence({ startup }) {
+  const verified = verifiedMetricsFor(startup);
+  const reported = projectMetricsFor(startup);
+  return <section id="evidence" className="report-section report-evidence"><h3>Evidence</h3>
+    <TechnicalEntryPoints startup={startup} />
+    <section className="profile-section"><h3>Off-chain evidence</h3><p>{startup.whatItBuilds ?? startup.summary ?? startup.oneLine}</p><EvidenceLedger startup={startup} /></section>
+    {startup.evidenceBoundary && <section className="profile-section"><h3>Evidence limitations</h3><p>{startup.evidenceBoundary}</p></section>}
+    {startup.nextAction && <section className="profile-section"><h3>Further research required</h3><p>{startup.nextAction}</p></section>}
+    <MetricSection title="Independently verified metrics" metrics={verified} />
+    <MetricSection title="Founder or project-reported metrics" metrics={reported} reported />
+    <div className="analysis-checklists"><AnalysisChecklist title="Completed research" items={startup.completedAnalysis} completed /><AnalysisChecklist title="Outstanding analysis" items={startup.outstandingAnalysis} /></div>
+  </section>;
+}
+function StartupDetail({ startup, onBack, chartProps }) {
+  const narrative = startup.reportNarrative ?? {};
+  const finding = startup.canonicalFinding ?? startup.finding;
+  return <section className={`startup-profile startup-profile--${technicalGroup(startup).toLowerCase().replace(/[^a-z]+/g, "-")}`} aria-label={displayName(startup) + " profile"}>
     <button type="button" className="profile-back" onClick={onBack}>&larr; Back to startups</button>
-    <header className="startup-detail__header">
+    <nav className="profile-anchors" aria-label="Report sections"><a href="#summary">Summary</a><a href="#metrics">Metrics</a><a href="#evidence">Evidence</a><a href="#sources">Sources</a></nav>
+    <header id="summary" className="startup-detail__header">
       <ProjectLogo startup={startup} profile />
       <div><p className="eyebrow">{startup.sector}</p><h2>{displayName(startup)}</h2><p>{startup.whatItBuilds ?? startup.summary}</p></div>
-      <StatusPill tone={isMainnet(startup) ? "mainnet" : "research"}>{startup.analysisStatus}</StatusPill>
+      <StatusPill tone={isMainnet(startup) ? "mainnet" : "research"}>{researchStatus(startup)}</StatusPill>
     </header>
     <dl className="fact-grid">
       <div><dt>Founder</dt><dd>{publicValue(startup.founder ?? startup.directoryFounder)}</dd></div><div><dt>Sector</dt><dd>{publicValue(startup.sector)}</dd></div>
-      <div><dt>Directory stage</dt><dd>{publicValue(startup.directoryStage ?? startup.stage)}</dd></div><div><dt>Observed status</dt><dd>{publicValue(startup.observedStatus ?? startup.productStatus)}</dd></div><div><dt>Technical state</dt><dd>{publicValue(startup.technicalStatus)}</dd></div><div><dt>Classification</dt><dd>{publicValue(startup.classification)}</dd></div>
+      <div><dt>Directory stage</dt><dd>{publicValue(startup.directoryStage ?? startup.stage)}</dd></div><div><dt>Observed status</dt><dd>{publicValue(startup.observedStatus ?? startup.productStatus)}</dd></div><div><dt>Technical stage</dt><dd>{technicalGroup(startup)}</dd></div><div><dt>Classification</dt><dd>{publicValue(startup.classification)}</dd></div>
     </dl>
-    <div className="detail-grid">
-      <div><h3>Canonical finding</h3><p>{startup.canonicalFinding ?? startup.finding}</p></div>
-      {startup.evidenceBoundary && <div><h3>Evidence boundary</h3><p>{startup.evidenceBoundary}</p></div>}
-      <div><h3>Next analytical action</h3><p>{startup.nextAction}</p></div>
-    </div>
-    <TechnicalEntryPoints startup={startup} />
-    <div className="analysis-checklists">
-      <AnalysisChecklist title="Completed analysis" items={startup.completedAnalysis} completed />
-      <AnalysisChecklist title="Outstanding analysis" items={startup.outstandingAnalysis} />
-    </div>
-    <section className="profile-section"><h3 className="ledger-title">Evidence confidence</h3><EvidenceLedger startup={startup} /></section>
-    <MetricSection title="Verified metrics" metrics={startup.verifiedMetrics?.length ? startup.verifiedMetrics : (startup.metrics ?? []).filter((metric) => !/reported|claim/i.test(metric.qualifier ?? ""))} />
-    <MetricSection title="Project-reported metrics" metrics={[...(startup.projectReportedMetrics ?? []), ...(startup.metrics ?? []).filter((metric) => /reported|claim/i.test(metric.qualifier ?? ""))]} />
-    <TextList title="Data-quality warnings" items={startup.dataQualityNotes ?? []} />
-    <SourceLinks startup={startup} />
-    <p className="last-reviewed">Last reviewed - {publicValue(startup.lastReviewed)}</p>
+    <section className="canonical-finding"><p className="eyebrow">Canonical finding</p><RichNarrative id={`${startupSlug(startup)}-canonical-finding`} value={finding} /></section>
+    <ReportKpis startup={startup} />
+    <ReportCharts startup={startup} chartProps={chartProps} />
+    <ReportTables startup={startup} />
+    <NarrativeSection startup={startup} id="what-happened" title="What happened" value={narrative.whatHappened} />
+    <NarrativeSection startup={startup} id="drivers" title="What drove it" value={narrative.whatDroveIt} />
+    <NarrativeSection startup={startup} id="implication" title="Superteam implication" value={narrative.superteamImplication} />
+    <ReportEvidence startup={startup} />
+    <TextList title="Evidence limitations" items={startup.limitations ?? startup.dataQualityNotes ?? []} className="data-warnings" />
+    <div id="sources"><SourceLinks startup={startup} /></div>
+    <p className="last-reviewed">Data cutoff - {publicValue(startup.dataCutoff ?? startup.lastReviewed)}</p>
   </section>;
 }
-
 const internalResearchPipeline = ["Directory intake", "Identity verification", "Product research", "Technical classification", "Evidence collection", "Queue assignment", "Publication"];
 
 function QueueList({ rows }) {
@@ -208,10 +265,28 @@ function InsightsView({ statusRows, stageRows, queueRows, chartProps, researched
   </section>;
 }
 
+function AskDandyView() {
+  return <section className="ask-dandy" aria-labelledby="ask-dandy-title"><p className="eyebrow">Ask Dandy</p><h2 id="ask-dandy-title">Research assistant coming soon.</h2><p>This placeholder reserves the approved Superteam research-assistant location. No chatbot backend or live answer generation is enabled yet.</p></section>;
+}
+function DirectoryControls({ search, setSearch, technical, setTechnical, research, setResearch, sector, setSector, sort, setSort, sectors }) {
+  return <section className="directory-controls" aria-label="Startup directory controls">
+    <label className="directory-search"><span>Search startups</span><input type="search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Name, founder, sector or address" /></label>
+    <label><span>Technical stage</span><select value={technical} onChange={(event) => setTechnical(event.target.value)}>{["All", "Mainnet", "Devnet/Testnet", "Off-chain/Early", "Unverified"].map((value) => <option key={value}>{value}</option>)}</select></label>
+    <label><span>Research status</span><select value={research} onChange={(event) => setResearch(event.target.value)}>{["All", "Completed", "In progress", "Awaiting founder", "Not started"].map((value) => <option key={value}>{value}</option>)}</select></label>
+    <label><span>Sector</span><select value={sector} onChange={(event) => setSector(event.target.value)}><option>All</option>{sectors.map((value) => <option key={value}>{value}</option>)}</select></label>
+    <label><span>Sort</span><select value={sort} onChange={(event) => setSort(event.target.value)}><option value="directory">Directory order</option><option value="name">Name A-Z</option><option value="technical">Technical stage</option><option value="research">Research status</option></select></label>
+  </section>;
+}
+
 export function DashboardContent() {
   const { snapshot, reviewedRows, chartProps } = useDataApp();
   const startups = reviewedRows("researched_startups");
   const [pathname, setPathname] = useState(currentPathname);
+  const [search, setSearch] = useState("");
+  const [technical, setTechnical] = useState("All");
+  const [research, setResearch] = useState("All");
+  const [sector, setSector] = useState("All");
+  const [sort, setSort] = useState("directory");
   const route = useMemo(() => routeFromPathname(pathname, startups), [pathname, startups]);
   const view = route.view;
   const selected = route.startup;
@@ -223,49 +298,56 @@ export function DashboardContent() {
     mainnetQueue: startups.filter(isMainnet).length,
     completionRate: startups.length / summarySource.directoryStartups,
   }), [startups, summarySource.directoryStartups]);
-
   const statusRows = useMemo(() => distributionRows(startups.map((item) => item.technicalState), "category"), [startups]);
   const stageRows = useMemo(() => distributionRows(startups.map((item) => normalizedStage(item.directoryStage ?? item.stage)), "stage"), [startups]);
   const queueRows = useMemo(() => startups.filter(isMainnet).map((item) => ({
-    startup: displayName(item),
-    currentBrand: item.currentBrand ?? "",
-    network: item.technicalStatus,
-    entryPoint: item.technicalEntryPoints?.[0]?.address ?? null,
-    entryPointUrl: item.technicalEntryPoints?.[0]?.explorerUrl,
-    addressStatus: addressStatus(item),
-    nextAction: item.nextAction,
-    status: "Queued",
-    profilePath: startupPath(item),
+    startup: displayName(item), currentBrand: item.currentBrand ?? "", network: item.technicalStatus,
+    entryPoint: item.technicalEntryPoints?.[0]?.address ?? null, entryPointUrl: item.technicalEntryPoints?.[0]?.explorerUrl,
+    addressStatus: addressStatus(item), nextAction: item.nextAction, status: "Queued", profilePath: startupPath(item),
   })), [startups]);
+  const sectors = useMemo(() => [...new Set(startups.flatMap(sectorTags))].sort((a, b) => a.localeCompare(b)), [startups]);
+  const visibleStartups = useMemo(() => {
+    const term = search.trim().toLowerCase();
+    const filtered = startups.filter((startup) => {
+      const searchable = [displayName(startup), startup.founder, startup.directoryFounder, startup.sector, startup.oneLine, startup.summary, startup.whatItBuilds, startup.canonicalFinding, startup.technicalStatus, ...(startup.technicalEntryPoints ?? []).map((entry) => entry.address)].filter(Boolean).join(" ").toLowerCase();
+      return (!term || searchable.includes(term))
+        && (technical === "All" || technicalGroup(startup) === technical)
+        && (research === "All" || researchStatus(startup) === research)
+        && (sector === "All" || sectorTags(startup).includes(sector));
+    });
+    return [...filtered].sort((a, b) => sort === "name" ? displayName(a).localeCompare(displayName(b))
+      : sort === "technical" ? technicalGroup(a).localeCompare(technicalGroup(b))
+        : sort === "research" ? researchStatus(a).localeCompare(researchStatus(b))
+          : startups.indexOf(a) - startups.indexOf(b));
+  }, [research, search, sector, sort, startups, technical]);
 
   useEffect(() => {
     const syncFromLocation = () => setPathname(currentPathname());
     globalThis.addEventListener("popstate", syncFromLocation);
     return () => globalThis.removeEventListener("popstate", syncFromLocation);
   }, []);
-
   const navigateTo = (nextPath) => {
     const url = new URL(globalThis.location.href);
     url.pathname = nextPath;
     globalThis.history.pushState({}, "", url);
     setPathname(url.pathname);
   };
-  const navigateView = (nextView) => navigateTo(nextView === "archive" ? "/startups" : nextView === "insights" ? "/insights" : "/");
+  const navClick = (path) => (event) => {
+    if (!event.defaultPrevented && event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+      event.preventDefault();
+      navigateTo(path);
+    }
+  };
+  const navItems = [
+    { view: "overview", path: "/", label: "Overview", icon: "\u2302" },
+    { view: "archive", path: "/startups", label: "Startups", icon: "\u25A6" },
+    { view: "ask-dandy", path: "/ask-dandy", label: "Ask Dandy", icon: "\u2726" },
+  ];
 
   return <article className="page startup-archive" aria-label="Superteam UK startup analytics"><div className="archive-frame">
-    <aside className="archive-rail" aria-label="Analytics sections"><BrandMark />
-      <button className={view === "overview" ? "active" : ""} onClick={() => navigateView("overview")} aria-label="Overview">&#8962;</button>
-      <button className={view === "archive" ? "active" : ""} onClick={() => navigateView("archive")} aria-label="Startups">&#9638;</button>
-      <button className={view === "insights" ? "active" : ""} onClick={() => navigateView("insights")} aria-label="Insights">&#8618;</button>
-    </aside>
+    <aside className="archive-rail" aria-label="Analytics sections"><BrandMark />{navItems.map((item) => <a key={item.path} className={view === item.view ? "active" : ""} href={item.path} onClick={navClick(item.path)} aria-label={item.label}><span aria-hidden="true">{item.icon}</span></a>)}</aside>
     <div className="archive-main">
-      <header className="archive-header"><div><p className="eyebrow">Superteam UK Startup Analytics</p>
-        <h1>Startup <em>analytics.</em></h1><p className="header-description">Products, evidence, users and activity across the Superteam UK startup ecosystem.</p></div>
-        <div className="header-actions" role="tablist" aria-label="Views">
-          <button className={view === "overview" ? "active" : ""} onClick={() => navigateView("overview")}>Overview</button>
-          <button className={view === "archive" ? "active" : ""} onClick={() => navigateView("archive")}>Startups</button>
-          <button className={view === "insights" ? "active" : ""} onClick={() => navigateView("insights")}>Insights</button>
-        </div></header>
+      <header className="archive-header"><div><p className="eyebrow">Superteam UK Startup Analytics</p><h1>Startup <em>analytics.</em></h1><p className="header-description">Products, evidence, users and activity across the Superteam UK startup ecosystem.</p></div><nav className="header-actions" aria-label="Primary views">{navItems.map((item) => <a key={item.path} className={view === item.view ? "active" : ""} href={item.path} onClick={navClick(item.path)}>{item.label}</a>)}</nav></header>
       {view === "overview" && <>
         <section className="metric-strip" aria-label="Research progress">
           <MetricCard id="directory-size" queryId="research_summary" sourceRows={[summary]} title="Directory universe" value={String(summary.directoryStartups)} description="Published startup records." />
@@ -273,20 +355,17 @@ export function DashboardContent() {
           <MetricCard id="non-mainnet" queryId="research_summary" sourceRows={[summary]} title="Queue A" value={String(summary.nonMainnet)} description="Off-chain, devnet or testnet." />
           <MetricCard id="mainnet" queryId="research_summary" sourceRows={[summary]} title="Queue B" value={String(summary.mainnetQueue)} description="Mainnet analysis pending." />
         </section>
-        <section className="insight-banner"><div><span>Current finding</span><h2>Public presence does not equal measurable on-chain activity.</h2></div>
-          <p>{summary.nonMainnet} of {summary.researched} researched startups are currently classified as devnet/testnet, off-chain, infrastructure or unverified. {summary.mainnetQueue} are routed to address-led mainnet analysis.</p></section>
-        <DataComponent id="mainnet-queue-table" variant="card" queryId="mainnet_queue" sourceRows={queueRows} title="Mainnet analysis queue" kind="table">
-          <DataTable rows={queueRows} columns={queueColumns} /></DataComponent>
+        <section className="insight-banner"><div><span>Current finding</span><h2>Public presence does not equal measurable on-chain activity.</h2></div><p>{summary.nonMainnet} of {summary.researched} researched startups are currently classified as devnet/testnet, off-chain, infrastructure or unverified. {summary.mainnetQueue} are routed to address-led mainnet analysis.</p></section>
+        <DataComponent id="mainnet-queue-table" variant="card" queryId="mainnet_queue" sourceRows={queueRows} title="Mainnet analysis queue" kind="table"><DataTable rows={queueRows} columns={queueColumns} /></DataComponent>
       </>}
       {view === "archive" && !route.notFound && (selected
-        ? <StartupDetail startup={selected} onBack={() => navigateTo("/startups")} />
-        : <section className="startup-directory" aria-label="Startup directory"><div className="startup-list">
-          {startups.map((startup) => <StartupCard key={startup.id} startup={startup} onNavigate={navigateTo} />)}
-        </div></section>)}
+        ? <StartupDetail startup={selected} onBack={() => navigateTo("/startups")} chartProps={chartProps} />
+        : <section className="startup-directory" aria-label="Startup directory"><DirectoryControls search={search} setSearch={setSearch} technical={technical} setTechnical={setTechnical} research={research} setResearch={setResearch} sector={sector} setSector={setSector} sort={sort} setSort={setSort} sectors={sectors} /><p className="directory-result-count" aria-live="polite">Showing {visibleStartups.length} of {startups.length} startups</p><div className="startup-list">{visibleStartups.map((startup) => <StartupCard key={startup.id} startup={startup} onNavigate={navigateTo} />)}</div></section>)}
       {view === "insights" && <InsightsView statusRows={statusRows} stageRows={stageRows} queueRows={queueRows} chartProps={chartProps} researchedCount={summary.researched} />}
+      {view === "ask-dandy" && <AskDandyView />}
       {route.notFound && <section className="route-not-found" role="status"><p className="eyebrow">Not found</p><h2>Startup profile unavailable.</h2><p>The URL does not match a verified startup profile.</p><button type="button" onClick={() => navigateTo("/startups")}>Return to startups</button></section>}
-      <footer className="archive-footer"><span>Evidence-led research by Olamilekan Alaga</span>
-        <span>Data cutoff &middot; {snapshot.report?.asOf ?? "2026-09-02"}</span></footer>
+      <footer className="archive-footer"><span>Evidence-led research by Olamilekan Alaga</span><span>Data cutoff &middot; {snapshot.report?.asOf ?? "2026-09-02"}</span></footer>
     </div>
+    <nav className="mobile-nav" aria-label="Primary views">{navItems.map((item) => <a key={item.path} className={view === item.view ? "active" : ""} href={item.path} onClick={navClick(item.path)}><span aria-hidden="true">{item.icon}</span>{item.label}</a>)}</nav>
   </div></article>;
 }

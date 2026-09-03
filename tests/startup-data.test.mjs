@@ -14,12 +14,12 @@ const mainnet = startups.filter((row) => row.queue === "Mainnet Analysis Queue")
 const slug = (row) => (row.displayAlias ? `${row.startup}-${row.displayAlias}` : row.currentBrand ? `${row.startup}-${row.currentBrand}` : row.startup)
   .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 const logoKeys = new Set(["logo", "logoPath", "logoSource", "logoSourceUrl", "logoSourceType", "logoVerificationStatus", "logoAuditCategory", "logoAuditSources"]);
-const canonicalRows = startups.slice(0, 43).map((row) => Object.fromEntries(Object.entries(row).filter(([key]) => !logoKeys.has(key))));
+const canonicalRows = startups.slice(0, 43).filter((row) => row.id !== "STUK-008").map((row) => Object.fromEntries(Object.entries(row).filter(([key]) => !logoKeys.has(key))));
 
 // Fingerprint of every canonical field before this logo/UI correction.
 test("existing STUK-001 through STUK-043 remain byte-stable outside logo metadata", () => {
   const fingerprint = createHash("sha256").update(JSON.stringify(canonicalRows)).digest("hex");
-  assert.equal(fingerprint, "e46161e2bb28d899cc52002afdbceec58adacdf0ba4be59553173b2470fc6e81");
+  assert.equal(fingerprint, "becb5e2ab24d39bb6528ea779e571d509254187724d316b6b53ad036e01efe53");
   assert.deepEqual(startups.map((row) => row.id), Array.from({ length: 66 }, (_, i) => `STUK-${String(i + 1).padStart(3, "0")}`));
   assert.equal(new Set(startups.map(slug)).size, 66);
 });
@@ -91,16 +91,17 @@ test("the common logo component has meaningful alt text, lazy list loading, and 
   assert.match(source, /showImage = startup\.logoPath && !failed/u);
 });
 
-test("directory cards are full-link horizontal cards with clamped summaries and contained tags", () => {
+test("directory cards expose evidence-led summaries while remaining full-link routes", () => {
   const card = source.slice(source.indexOf("function StartupCard"), source.indexOf("function EvidenceLedger"));
   assert.match(card, /<a className=\{`startup-card/u);
   assert.match(card, /href=\{startupPath\(startup\)\}/u);
-  assert.match(card, /startup-card__description/u);
-  assert.match(card, /startup-card__tags/u);
-  assert.doesNotMatch(card, /View profile|startup\.id|founder|canonicalFinding|technicalStatus|SourceLinks/u);
+  assert.match(card, /researchStatus\(startup\)/u);
+  assert.match(card, /verifiedMetricsFor\(startup\)\[0\]/u);
+  assert.match(card, /startup\.canonicalFinding/u);
+  assert.match(card, /Data cutoff/u);
+  assert.doesNotMatch(card, /View profile|startup\.id|SourceLinks/u);
   assert.doesNotMatch(css, /\.startup-card[^{}]*\{[^}]*aspect-ratio/su);
   assert.match(css, /\.startup-card__description[\s\S]*-webkit-line-clamp:\s*3/u);
-  assert.match(css, /\.startup-card__tags\s*\{[^}]*flex-wrap:\s*wrap/su);
   assert.match(css, /@media \(max-width: 720px\)[\s\S]*\.startup-list \{ grid-template-columns: minmax\(0, 1fr\)/u);
 });
 
@@ -234,18 +235,63 @@ test("address status labels derive from entry-point attribution and preserve the
   assert.match(source, /attributionStatus/);
   assert.doesNotMatch(source.slice(source.indexOf("function QueueList"), source.indexOf("function InsightsView")), /Ã|â‚¬|â€/u);
   const purebet = startups.find((row) => row.startup === "Purebet");
-  assert.equal(purebet.technicalEntryPoints[0].address, "39mBcnQ27QA9nNZmM6VrumE2vtqs5v3HD7t7RGv9kXUV");
-  assert.match(purebet.technicalEntryPoints[0].attributionStatus, /not yet official|third-party/i);
+  const legacyProgram = purebet.technicalEntryPoints.find((entry) => entry.address === "39mBcnQ27QA9nNZmM6VrumE2vtqs5v3HD7t7RGv9kXUV");
+  assert.ok(legacyProgram);
+  assert.match(legacyProgram.attributionStatus, /not yet official|third-party/i);
+  assert.ok(purebet.technicalEntryPoints.some((entry) => entry.address === "9bB3TADcwZEweUUcrp46FEpwMfLbwkEFQnc4patHPApp"));
   assert.match(source, /entryPoint: item\.technicalEntryPoints\?\.\[0\]\?\.address \?\? null/u);
   assert.doesNotMatch(source, /startup\s*===\s*["']Purebet/u);
 });
 
 test("image and status corrections preserve all research records and queue membership", () => {
   const fingerprint = createHash("sha256")
-    .update(JSON.stringify(startups.map((row) => Object.fromEntries(Object.entries(row).filter(([key]) => !logoKeys.has(key))))))
+    .update(JSON.stringify(startups.filter((row) => row.id !== "STUK-008").map((row) => Object.fromEntries(Object.entries(row).filter(([key]) => !logoKeys.has(key))))))
     .digest("hex");
-  assert.equal(fingerprint, "74e8a74caa0f1e56cbd6318316ddc1868578a1a7942afb45ea8efe6d20696820");
+  assert.equal(fingerprint, "d06de934893a99b88f523b56e5b32e9f2eaffa45ed10d9deb2ba1789542bbbe0");
   assert.equal(startups.length, 66);
   assert.equal(mainnet.length, 33);
   assert.equal(startups.length - mainnet.length, 33);
+});
+
+test("public navigation contains Overview, Startups and Ask Dandy while preserving the hidden Insights route", () => {
+  assert.match(source, /label: "Overview"/u);
+  assert.match(source, /label: "Startups"/u);
+  assert.match(source, /label: "Ask Dandy"/u);
+  assert.match(source, /pathname === "\/insights"/u);
+  assert.doesNotMatch(source, /label: "Insights"/u);
+  assert.match(source, /className="mobile-nav"/u);
+  assert.match(css, /@media \(max-width: 720px\)[\s\S]*\.archive-rail, \.header-actions \{ display: none;/u);
+});
+
+test("directory supports the requested search, filters and sorting without changing source records", () => {
+  for (const label of ["Search startups", "Technical stage", "Research status", "Sector", "Sort"]) assert.ok(source.includes(label), label);
+  for (const value of ["Mainnet", "Devnet/Testnet", "Off-chain/Early", "Unverified", "Completed", "In progress", "Awaiting founder", "Not started"]) assert.ok(source.includes(value), value);
+  assert.match(source, /technicalEntryPoints[\s\S]*entry\.address/u);
+  assert.match(source, /visibleStartups\.map/u);
+  assert.match(source, /Directory order/u);
+});
+
+test("Purebet report uses the supplied verified dashboard data and reusable report modules", () => {
+  const purebet = startups.find((row) => row.id === "STUK-008");
+  assert.equal(purebet.canonicalFinding, "Purebet demonstrated genuine economic activity, but usage remained small and depended heavily on a small group of high-value wallets.");
+  assert.equal(purebet.researchStatus, "Completed");
+  assert.equal(purebet.dataCutoff, "2026-03-02");
+  assert.deepEqual(purebet.headlineKpis.map((metric) => metric.value), ["49", "1,829", "$363,138.86", "63.27%", "79.95%", "3.17%"]);
+  const volume = purebet.reportCharts.find((chart) => chart.id === "monthly-usdc-volume").rows;
+  assert.equal(Number(volume.reduce((sum, row) => sum + row.usdcVolume, 0).toFixed(2)), 363138.86);
+  assert.deepEqual(volume.map((row) => row.month), ["2025-11", "2025-12", "2026-01", "2026-02", "2026-03"]);
+  assert.equal(purebet.reportTables.find((table) => table.id === "program-lifecycle").rows[1].totalTransactions, 8926);
+  assert.equal(purebet.reportTables.find((table) => table.id === "migration-summary").rows[0].observedOnBoth, 7);
+  assert.match(source, /function ReportKpis/u);
+  assert.match(source, /function ReportCharts/u);
+  assert.match(source, /function ReportTables/u);
+  assert.match(source, /function ReportEvidence/u);
+});
+
+test("END Corp verified evidence is preserved and empty filler is removed", () => {
+  const end = startups.find((row) => row.id === "STUK-002");
+  assert.equal(end.canonicalFinding, "The public climate dashboard is live and updated daily. All verified END Corp program and token addresses were on Solana devnet; no known mainnet address was found.");
+  assert.deepEqual(end.metrics.map((metric) => metric.value), ["565", "92.92%", "16,435", "3"]);
+  assert.doesNotMatch(source, /Not recorded for this research pass/u);
+  assert.match(source, /No attributable mainnet deployment was verified during this research period/u);
 });

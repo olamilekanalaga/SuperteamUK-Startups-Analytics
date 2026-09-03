@@ -915,7 +915,7 @@
           "productStatus": "Hibernating",
           "technicalStatus": "Historical Solana mainnet",
           "queue": "Mainnet Analysis Queue",
-          "analysisStatus": "Program discovered; deep metrics outstanding",
+          "analysisStatus": "Completed",
           "oneLine": "A non-custodial on-chain sports-betting aggregator whose website currently reports that the platform is hibernating.",
           "whatItBuilds": "Purebet aggregated odds and liquidity from on-chain betting venues. Historical product material states that users placed bets using Solana-native USDC, with settlement and winnings processed through on-chain exchange architecture.",
           "finding": "The current Purebet website states that the platform is hibernating. A mainnet executable program labelled publicly as the Purebet Program was discovered at 39mBcnQ27QA9nNZmM6VrumE2vtqs5v3HD7t7RGv9kXUV. Direct Solana RPC validation confirmed that it is executable and linked to program-data account 7Z3XMqoZfjom2CArncLmqSbhQVB5vKfApxdCt8qoyW4Q. The public RPC returned at least 3,000 program signatures before archival retrieval failed: 2,788 successful and 212 failed, producing a preliminary 92.93% success rate. The retrieved activity interval reached from 6 March 2024 to 8 January 2025. The 3,000 signatures are a lower bound, not a lifetime total.",
@@ -927,6 +927,13 @@
           "revenueEvidence": "Not publicly verifiable",
           "technicalEntryPoints": [
             {
+              "name": "Current Purebet Program",
+              "network": "Solana Mainnet",
+              "address": "9bB3TADcwZEweUUcrp46FEpwMfLbwkEFQnc4patHPApp",
+              "type": "Executable program",
+              "attributionStatus": "Research-identified current program; founder confirmation remains preferable",
+              "explorerUrl": "https://solscan.io/account/9bB3TADcwZEweUUcrp46FEpwMfLbwkEFQnc4patHPApp"
+            },            {
               "name": "Probable Purebet Program",
               "network": "Solana Mainnet",
               "address": "39mBcnQ27QA9nNZmM6VrumE2vtqs5v3HD7t7RGv9kXUV",
@@ -1002,7 +1009,198 @@
               "qualifier": "Retrieved interval, not necessarily complete lifetime"
             }
           ],
-          "logoPath": "/brands/startups/purebet.png",
+          "researchStatus": "Completed",
+          "dataCutoff": "2026-03-02",
+          "headlineKpis": [
+            { "label": "Current betting wallets", "value": "49", "qualifier": "Wallets with classified current-program betting activity" },
+            { "label": "Successful current bets", "value": "1,829", "qualifier": "Successful current-program PlaceBet instructions" },
+            { "label": "Decoded USDC betting volume", "value": "$363,138.86", "qualifier": "Decoded from successful current-program PlaceBet instructions" },
+            { "label": "Overall current repeat rate", "value": "63.27%", "qualifier": "Wallets returning on another active day" },
+            { "label": "Top-three current volume share", "value": "79.95%", "qualifier": "Share of decoded current-program USDC volume" },
+            { "label": "Legacy-wallet migration rate", "value": "3.17%", "qualifier": "Legacy betting wallets observed on both programs" }
+          ],
+          "reportCharts": [
+            {
+              "id": "monthly-successful-bets",
+              "title": "Monthly successful current-program bets",
+              "summary": "Classified successful PlaceBet instructions, November 2025 to March 2026.",
+              "spec": { "type": "bar", "x": "month", "y": "successfulBets", "showXAxisLabel": false, "showYAxisLabel": false },
+              "rows": [
+                { "month": "2025-11", "successfulBets": 103, "activeWallets": 15 },
+                { "month": "2025-12", "successfulBets": 407, "activeWallets": 22 },
+                { "month": "2026-01", "successfulBets": 978, "activeWallets": 27 },
+                { "month": "2026-02", "successfulBets": 340, "activeWallets": 25 },
+                { "month": "2026-03", "successfulBets": 1, "activeWallets": 1 }
+              ]
+            },
+            {
+              "id": "monthly-active-wallets",
+              "title": "Monthly active betting wallets",
+              "summary": "Unique wallets with classified successful current-program betting activity by month.",
+              "spec": { "type": "bar", "x": "month", "y": "activeWallets", "showXAxisLabel": false, "showYAxisLabel": false },
+              "rows": [
+                { "month": "2025-11", "successfulBets": 103, "activeWallets": 15 },
+                { "month": "2025-12", "successfulBets": 407, "activeWallets": 22 },
+                { "month": "2026-01", "successfulBets": 978, "activeWallets": 27 },
+                { "month": "2026-02", "successfulBets": 340, "activeWallets": 25 },
+                { "month": "2026-03", "successfulBets": 1, "activeWallets": 1 }
+              ]
+            },
+            {
+              "id": "monthly-usdc-volume",
+              "title": "Monthly decoded USDC betting volume",
+              "summary": "USDC amount decoded from successful current-program PlaceBet instructions; January represented about 66.9% of the observed total.",
+              "spec": { "type": "bar", "x": "month", "y": "usdcVolume", "showXAxisLabel": false, "showYAxisLabel": false },
+              "rows": [
+                { "month": "2025-11", "successfulBets": 103, "activeWallets": 15, "usdcVolume": 1460.03, "averageBet": 14.18, "medianBet": 5.04, "minimumBet": 1.00, "maximumBet": 222.00 },
+                { "month": "2025-12", "successfulBets": 407, "activeWallets": 22, "usdcVolume": 74141.02, "averageBet": 182.16, "medianBet": 99.77, "minimumBet": 0.30, "maximumBet": 1088.00 },
+                { "month": "2026-01", "successfulBets": 978, "activeWallets": 27, "usdcVolume": 242813.64, "averageBet": 248.28, "medianBet": 69.93, "minimumBet": 0.50, "maximumBet": 2931.00 },
+                { "month": "2026-02", "successfulBets": 340, "activeWallets": 25, "usdcVolume": 44658.67, "averageBet": 131.35, "medianBet": 32.09, "minimumBet": 0.23, "maximumBet": 2000.00 },
+                { "month": "2026-03", "successfulBets": 1, "activeWallets": 1, "usdcVolume": 65.50, "averageBet": 65.50, "medianBet": 65.50, "minimumBet": 65.50, "maximumBet": 65.50 }
+              ]
+            },
+            {
+              "id": "average-median-bet",
+              "title": "Average versus median bet size",
+              "summary": "USDC bet-size comparison by month; the gap shows how larger bets affected the average.",
+              "spec": { "type": "bar", "x": "month", "barFields": ["averageBet", "medianBet"], "showXAxisLabel": false, "showYAxisLabel": false },
+              "rows": [
+                { "month": "2025-11", "averageBet": 14.18, "medianBet": 5.04 },
+                { "month": "2025-12", "averageBet": 182.16, "medianBet": 99.77 },
+                { "month": "2026-01", "averageBet": 248.28, "medianBet": 69.93 },
+                { "month": "2026-02", "averageBet": 131.35, "medianBet": 32.09 },
+                { "month": "2026-03", "averageBet": 65.50, "medianBet": 65.50 }
+              ]
+            },
+            {
+              "id": "transaction-concentration",
+              "title": "Legacy versus current transaction concentration",
+              "summary": "Share of successful betting transactions attributed to ranked wallet groups; wallet ownership is not inferred.",
+              "spec": { "type": "bar", "x": "group", "barFields": ["legacyShare", "currentShare"], "showXAxisLabel": false, "showYAxisLabel": false },
+              "rows": [
+                { "group": "Largest wallet", "legacyShare": 65.83, "currentShare": 17.39 },
+                { "group": "Top five", "legacyShare": 75.71, "currentShare": 56.75 },
+                { "group": "Top ten", "legacyShare": 82.35, "currentShare": 76.05 }
+              ]
+            },
+            {
+              "id": "ranked-volume-concentration",
+              "title": "Leading current-program wallets by decoded volume",
+              "summary": "Top three wallets by decoded USDC volume; labels are shortened only in the chart and full addresses remain in the evidence table.",
+              "spec": { "type": "horizontalBar", "x": "walletLabel", "y": "usdcVolume", "showXAxisLabel": false, "showYAxisLabel": false },
+              "rows": [
+                { "walletLabel": "EyekeC9D…8hKh", "wallet": "EyekeC9DZpaW3K2XW77RBKWtADykz7xLXqsez8nA8hKh", "usdcVolume": 177808.28, "volumeShare": 48.96, "cumulativeShare": 48.96 },
+                { "walletLabel": "7WfN57sH…wBgA", "wallet": "7WfN57sHfqTvGbaZUqLHa5HAZLjknLRcmqxrJobJwBgA", "usdcVolume": 66075.00, "volumeShare": 18.20, "cumulativeShare": 67.16 },
+                { "walletLabel": "DmpaRc5X…bTyx", "wallet": "DmpaRc5XPJv7vcpJPwMHPr2CEufUbYX8KG2eU1YcbTyx", "usdcVolume": 46452.45, "volumeShare": 12.79, "cumulativeShare": 79.95 }
+              ]
+            },
+            {
+              "id": "cumulative-volume-share",
+              "title": "Cumulative current-program volume concentration",
+              "summary": "Cumulative share of decoded USDC volume; the remaining 39 wallets contributed 3.89%.",
+              "spec": { "type": "line", "x": "walletGroup", "y": "cumulativeShare", "showXAxisLabel": false, "showYAxisLabel": false },
+              "rows": [
+                { "walletGroup": "Top 1", "cumulativeShare": 48.96 },
+                { "walletGroup": "Top 3", "cumulativeShare": 79.95 },
+                { "walletGroup": "Top 5", "cumulativeShare": 87.50 },
+                { "walletGroup": "Top 10", "cumulativeShare": 96.11 },
+                { "walletGroup": "All 49", "cumulativeShare": 100.00 }
+              ]
+            },
+            {
+              "id": "program-migration",
+              "title": "Program wallet overlap",
+              "summary": "The overlap and current-only groups are components of the 49 current wallets, not sequential funnel stages.",
+              "spec": { "type": "bar", "x": "group", "y": "wallets", "showXAxisLabel": false, "showYAxisLabel": false },
+              "rows": [
+                { "group": "Legacy wallets", "wallets": 221 },
+                { "group": "Observed on both", "wallets": 7 },
+                { "group": "Current not on legacy", "wallets": 42 },
+                { "group": "Current wallets", "wallets": 49 }
+              ]
+            }
+          ],
+          "reportTables": [
+            {
+              "id": "program-lifecycle",
+              "title": "Program lifecycle",
+              "summary": "Customer betting under the current program was observed from November 2025 through 1 March 2026. Later administrative or failed interactions are not automatically classified as customer betting.",
+              "columns": [
+                { "field": "program", "label": "Program" }, { "field": "firstTransaction", "label": "First transaction" }, { "field": "lastObservedTransaction", "label": "Last observed transaction" }, { "field": "totalTransactions", "label": "Total transactions" }, { "field": "successfulTransactions", "label": "Successful" }, { "field": "failedTransactions", "label": "Failed" }, { "field": "activeDays", "label": "Active days" }
+              ],
+              "rows": [
+                { "program": "Legacy", "firstTransaction": "2022-12-18 05:04:48", "lastObservedTransaction": "2025-01-08 19:34:58", "totalTransactions": 76106, "successfulTransactions": 75714, "failedTransactions": 392, "activeDays": 566 },
+                { "program": "Current", "firstTransaction": "2025-11-06 00:20:26", "lastObservedTransaction": "2026-07-28 13:44:22", "totalTransactions": 8926, "successfulTransactions": 8895, "failedTransactions": 31, "activeDays": 116 }
+              ]
+            },
+            {
+              "id": "retention-summary",
+              "title": "Wallet retention summary",
+              "summary": "Wallet retention is not human-user retention. Thirty-day denominators exclude cohorts without a complete observation period, and current-program new wallets are not necessarily new across both programs.",
+              "columns": [
+                { "field": "program", "label": "Program" }, { "field": "bettingWallets", "label": "Betting wallets" }, { "field": "returningWallets", "label": "Returning" }, { "field": "oneDayWallets", "label": "One-day" }, { "field": "overallRepeatRate", "label": "Repeat rate" }, { "field": "sevenDayEligibleWallets", "label": "7-day eligible" }, { "field": "returnedWithinSevenDays", "label": "Returned in 7 days" }, { "field": "sevenDayRetention", "label": "7-day retention" }, { "field": "thirtyDayEligibleWallets", "label": "30-day eligible" }, { "field": "returnedWithinThirtyDays", "label": "Returned in 30 days" }, { "field": "thirtyDayRetention", "label": "30-day retention" }
+              ],
+              "rows": [
+                { "program": "Legacy", "bettingWallets": 221, "returningWallets": 147, "oneDayWallets": 74, "overallRepeatRate": "66.52%", "sevenDayEligibleWallets": "Not verified", "returnedWithinSevenDays": "Not verified", "sevenDayRetention": "52.27%", "thirtyDayEligibleWallets": "Not verified", "returnedWithinThirtyDays": "Not verified", "thirtyDayRetention": "58.45%" },
+                { "program": "Current", "bettingWallets": 49, "returningWallets": 31, "oneDayWallets": 18, "overallRepeatRate": "63.27%", "sevenDayEligibleWallets": 47, "returnedWithinSevenDays": 29, "sevenDayRetention": "61.70%", "thirtyDayEligibleWallets": 39, "returnedWithinThirtyDays": 27, "thirtyDayRetention": "69.23%" }
+              ]
+            },
+            {
+              "id": "transaction-concentration-table",
+              "title": "Transaction concentration comparison",
+              "summary": "High-frequency wallets are not labelled as bots, market makers, team wallets or humans without independent ownership evidence.",
+              "columns": [
+                { "field": "program", "label": "Program" }, { "field": "bettingWallets", "label": "Wallets" }, { "field": "successfulBettingTransactions", "label": "Successful bets" }, { "field": "largestWalletTransactions", "label": "Largest wallet bets" }, { "field": "largestWalletShare", "label": "Largest share" }, { "field": "topFiveShare", "label": "Top-five share" }, { "field": "topTenShare", "label": "Top-ten share" }, { "field": "medianTransactionsPerWallet", "label": "Median bets/wallet" }, { "field": "oneTransactionWalletShare", "label": "One-bet wallet share" }, { "field": "walletsAtLeastTenTransactions", "label": "Wallets with 10+ bets" }, { "field": "walletsAtLeastOneHundredTransactions", "label": "Wallets with 100+ bets" }
+              ],
+              "rows": [
+                { "program": "Legacy", "bettingWallets": 221, "successfulBettingTransactions": 33833, "largestWalletTransactions": 22273, "largestWalletShare": "65.83%", "topFiveShare": "75.71%", "topTenShare": "82.35%", "medianTransactionsPerWallet": 5, "oneTransactionWalletShare": "22.62%", "walletsAtLeastTenTransactions": 85, "walletsAtLeastOneHundredTransactions": 29 },
+                { "program": "Current", "bettingWallets": 49, "successfulBettingTransactions": 1829, "largestWalletTransactions": 318, "largestWalletShare": "17.39%", "topFiveShare": "56.75%", "topTenShare": "76.05%", "medianTransactionsPerWallet": 12, "oneTransactionWalletShare": "18.37%", "walletsAtLeastTenTransactions": 25, "walletsAtLeastOneHundredTransactions": 6 }
+              ]
+            },
+            {
+              "id": "migration-summary",
+              "title": "Contract migration summary",
+              "summary": "The two current-wallet groups sum to the 49 current wallets; they are not sequential conversion stages.",
+              "columns": [
+                { "field": "legacyWallets", "label": "Legacy wallets" }, { "field": "currentWallets", "label": "Current wallets" }, { "field": "observedOnBoth", "label": "Observed on both" }, { "field": "currentNotOnLegacy", "label": "Current not on legacy" }, { "field": "legacyMigrationRate", "label": "Legacy migration rate" }, { "field": "currentFromLegacy", "label": "Current from legacy" }, { "field": "currentNotSeenOnLegacy", "label": "Current not seen on legacy" }
+              ],
+              "rows": [
+                { "legacyWallets": 221, "currentWallets": 49, "observedOnBoth": 7, "currentNotOnLegacy": 42, "legacyMigrationRate": "3.17%", "currentFromLegacy": "14.29%", "currentNotSeenOnLegacy": "85.71%" }
+              ]
+            },            {
+              "id": "top-volume-wallets",
+              "title": "Leading wallets by decoded USDC volume",
+              "summary": "No repository Query 06B export was present to supersede the supplied reviewed rows. The aggregate concentration statement remains 48.96% for the largest wallet and 79.95% for the top three.",
+              "columns": [
+                { "field": "rank", "label": "Rank" }, { "field": "wallet", "label": "Wallet" }, { "field": "betTransactions", "label": "Bet transactions" }, { "field": "activeDays", "label": "Active days" }, { "field": "usdcVolume", "label": "USDC volume" }, { "field": "volumeShare", "label": "Volume share" }, { "field": "cumulativeShare", "label": "Cumulative share" }, { "field": "averageBet", "label": "Average bet" }, { "field": "medianBet", "label": "Median bet" }, { "field": "largestBet", "label": "Largest bet" }, { "field": "firstBet", "label": "First bet" }, { "field": "lastBet", "label": "Last bet" }
+              ],
+              "rows": [
+                { "rank": 1, "wallet": "EyekeC9DZpaW3K2XW77RBKWtADykz7xLXqsez8nA8hKh", "betTransactions": 318, "activeDays": 22, "usdcVolume": 177808.28, "volumeShare": "48.96%", "cumulativeShare": "48.96%", "averageBet": 559.00, "medianBet": 88.58, "largestBet": 2931.00, "firstBet": "2025-12-28", "lastBet": "2026-01-18" },
+                { "rank": 2, "wallet": "7WfN57sHfqTvGbaZUqLHa5HAZLjknLRcmqxrJobJwBgA", "betTransactions": 218, "activeDays": 24, "usdcVolume": 66075.00, "volumeShare": "18.20%", "cumulativeShare": "67.16%", "averageBet": 303.10, "medianBet": 69.95, "largestBet": 1088.00, "firstBet": "2025-12-14", "lastBet": "2026-02-04" },
+                { "rank": 3, "wallet": "DmpaRc5XPJv7vcpJPwMHPr2CEufUbYX8KG2eU1YcbTyx", "betTransactions": 204, "activeDays": 15, "usdcVolume": 46452.45, "volumeShare": "12.79%", "cumulativeShare": "79.95%", "averageBet": 227.71, "medianBet": 54.95, "largestBet": 2000.00, "firstBet": "2026-01-24", "lastBet": "2026-02-19" }
+              ]
+            }
+          ],
+          "reportNarrative": {
+            "whatHappened": "Purebet's current program grew from November 2025 through January 2026. It reached 978 successful betting transactions and $242,813.64 in decoded USDC volume in January, approximately 66.9% of total current-program volume. February volume fell approximately 81.6% from January, with both fewer bets and smaller typical bet sizes. Only one classified successful bet was observed in March.",
+            "whatDroveIt": "The current program’s activity depended on a small group of high-frequency, high-value wallets. Three wallets contributed 79.95% of decoded volume. The largest contributed 48.96%. The leading wallets stopped betting between January and February, after which transaction activity and volume declined. On-chain data establishes that they stopped, not their motivation. Approximately 63.27% of current-program wallets returned on another active day, but the total base contained only 49 betting wallets, so the percentage does not represent broad adoption.",
+            "superteamImplication": "Purebet demonstrated genuine usage and meaningful economic activity, but adoption remained narrow and financially concentrated. Superteam should treat diversification of the active bettor base, reduced dependence on a few high-value wallets and reactivation measurement as the most important adoption indicators for any future research cycle."
+          },
+          "limitations": [
+            "Wallets are not necessarily unique people.",
+            "Different wallets may belong to the same person or organisation.",
+            "High-frequency activity does not prove bot, market-maker or team ownership.",
+            "Current USDC volume was decoded from successful PlaceBet instructions.",
+            "Founder confirmation of program ownership remains preferable.",
+            "On-chain data cannot explain the human reason wallets stopped participating.",
+            "The report represents a static research cutoff and is not continuously updated."
+          ],
+          "methodologyNotes": [
+            "Current-program betting usage cutoff: 2026-03-02.",
+            "Customer betting was classified from successful current-program PlaceBet instructions through 1 March 2026.",
+            "Later administrative or failed transactions were not treated as customer betting activity.",
+            "No Dune query URL or query ID was present in the repository, so none is asserted here."
+          ],          "logoPath": "/brands/startups/purebet.png",
           "logoSourceUrl": "https://purebet.io/favicon.ico",
           "logoSourceType": "authenticated-favicon",
           "logoVerificationStatus": "authenticated-favicon",
@@ -1010,11 +1208,16 @@
           "summary": "A non-custodial on-chain sports-betting aggregator whose website currently reports that the platform is hibernating.",
           "directoryStage": "Early Development",
           "verifiedMetrics": [],
-          "sources": [],
+          "sources": [
+            { "url": "https://solscan.io/account/39mBcnQ27QA9nNZmM6VrumE2vtqs5v3HD7t7RGv9kXUV", "label": "Legacy program on Solscan", "note": "Legacy program address" },
+            { "url": "https://solscan.io/account/9bB3TADcwZEweUUcrp46FEpwMfLbwkEFQnc4patHPApp", "label": "Current program on Solscan", "note": "Current program address" },
+            { "url": "https://purebet.io/", "label": "Purebet website", "note": "Public product status" },
+            { "url": "https://x.com/Purebet_io", "label": "Purebet official X account", "note": "Project-controlled social source" }
+          ],
           "lastReviewed": "2026-09-02",
           "dataQualityNotes": [],
           "observedStatus": "Hibernating",
-          "canonicalFinding": "The current Purebet website states that the platform is hibernating. A mainnet executable program labelled publicly as the Purebet Program was discovered at 39mBcnQ27QA9nNZmM6VrumE2vtqs5v3HD7t7RGv9kXUV. Direct Solana RPC validation confirmed that it is executable and linked to program-data account 7Z3XMqoZfjom2CArncLmqSbhQVB5vKfApxdCt8qoyW4Q. The public RPC returned at least 3,000 program signatures before archival retrieval failed: 2,788 successful and 212 failed, producing a preliminary 92.93% success rate. The retrieved activity interval reached from 6 March 2024 to 8 January 2025. The 3,000 signatures are a lower bound, not a lifetime total.",
+          "canonicalFinding": "Purebet demonstrated genuine economic activity, but usage remained small and depended heavily on a small group of high-value wallets.",
           "founderVerification": "Not verified",
           "projectReportedMetrics": [],
           "classification": "Mainnet",
