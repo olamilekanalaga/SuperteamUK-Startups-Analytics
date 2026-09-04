@@ -362,3 +362,68 @@
 @media (hover: hover) and (pointer: fine) {
   .startup-card:hover { box-shadow: var(--startup-card-shadow-hover), 0 16px 34px light-dark(rgb(15 23 42 / 13%), rgb(0 0 0 / 36%)); }
 }
+.development-notice,
+.static-research-notice {
+  border: 1px solid color-mix(in srgb, var(--accent) 34%, var(--border));
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  color: var(--text);
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--background) 55%, transparent);
+}
+.development-notice { margin: 0 0 22px; }
+.development-notice strong { display: block; margin-bottom: 4px; }
+.development-notice p,
+.static-research-notice { line-height: 1.55; }
+.development-notice p { margin: 0; color: var(--secondary); }
+.development-progress__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+}
+.development-progress__item {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--secondary);
+  border-radius: 14px;
+  background: var(--surface-raised);
+  padding: 16px;
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--background) 58%, transparent);
+}
+.development-progress__item--verified { border-top-color: var(--positive); }
+.development-progress__item--limited { border-top-color: var(--chart-4); }
+.development-progress__item--missing { border-top-color: var(--negative); }
+.development-progress__item span {
+  display: block;
+  color: var(--secondary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.development-progress__item h4 { margin: 8px 0 6px; font-size: 1rem; }
+.development-progress__item p { margin: 0; color: var(--secondary); line-height: 1.5; }
+.static-research-notice { margin: 24px 0 12px; }
+.development-disclosure > summary { display: none; }
+.development-disclosure__content > .profile-section { margin-top: 0; }
+@media (max-width: 720px) {
+  .development-disclosure {
+    margin: 16px 0;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface-raised);
+    overflow: hidden;
+  }
+  .development-disclosure > summary {
+    display: list-item;
+    cursor: pointer;
+    padding: 14px;
+    color: var(--text);
+    font-weight: 700;
+  }
+  .development-disclosure > summary:focus-visible { outline: 3px solid var(--card-focus-ring); outline-offset: -3px; }
+  .development-disclosure__content { padding: 0 14px 14px; }
+  .development-progress__grid { grid-template-columns: 1fr; }
+  .development-notice,
+  .static-research-notice { padding: 12px; }
+}

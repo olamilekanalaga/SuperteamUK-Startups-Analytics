@@ -170,6 +170,28 @@ function SourceLinks({ startup }) {
     {startup.methodologyNotes?.length > 0 && <ul className="methodology-notes">{startup.methodologyNotes.map((note) => <li key={note}>{note}</li>)}</ul>}
   </section>;
 }
+function isDevelopmentReport(startup) {
+  return technicalGroup(startup) === "Devnet/Testnet";
+}
+function DevelopmentNotice({ startup }) {
+  if (!isDevelopmentReport(startup)) return null;
+  return <aside className="development-notice" role="note"><strong>Development environment</strong><p>This report measures development and testing activity. Devnet/Testnet transactions do not establish customer adoption, commercial usage or revenue.</p></aside>;
+}
+function DevelopmentProgress({ startup }) {
+  const steps = startup.developmentProgress ?? [];
+  if (!steps.length) return null;
+  return <section className="report-section development-progress" aria-labelledby={`${startupSlug(startup)}-progress-title`}>
+    <h3 id={`${startupSlug(startup)}-progress-title`}>Technical progression</h3>
+    <p className="chart-summary">Evidence states are categorical and do not represent funnel conversion or commercial adoption.</p>
+    <div className="development-progress__grid" role="list">{steps.map((step) => <article key={step.label} role="listitem" className={`development-progress__item development-progress__item--${step.state}`}><span>{step.stateLabel}</span><h4>{step.label}</h4><p>{step.detail}</p></article>)}</div>
+  </section>;
+}
+
+function DevelopmentDisclosure({ startup, label, children }) {
+  if (!isDevelopmentReport(startup)) return children;
+  return <details className="development-disclosure" open><summary>{label}</summary><div className="development-disclosure__content">{children}</div></details>;
+}
+
 function ReportKpis({ startup }) {
   const metrics = startup.headlineKpis ?? verifiedMetricsFor(startup).slice(0, 6);
   if (!metrics.length) return null;
@@ -222,15 +244,21 @@ function StartupDetail({ startup, onBack, chartProps }) {
       <div><dt>Directory stage</dt><dd>{publicValue(startup.directoryStage ?? startup.stage)}</dd></div><div><dt>Observed status</dt><dd>{publicValue(startup.observedStatus ?? startup.productStatus)}</dd></div><div><dt>Technical stage</dt><dd>{technicalGroup(startup)}</dd></div><div><dt>Classification</dt><dd>{publicValue(startup.classification)}</dd></div>
     </dl>
     <section className="canonical-finding"><p className="eyebrow">Canonical finding</p><RichNarrative id={`${startupSlug(startup)}-canonical-finding`} value={finding} /></section>
+    <DevelopmentNotice startup={startup} />
     <ReportKpis startup={startup} />
+    <DevelopmentProgress startup={startup} />
     <ReportCharts startup={startup} chartProps={chartProps} />
     <ReportTables startup={startup} />
     <NarrativeSection startup={startup} id="what-happened" title="What happened" value={narrative.whatHappened} />
+    <NarrativeSection startup={startup} id="evidence-demonstrates" title="What the test activity demonstrates" value={narrative.whatEvidenceDemonstrates} />
+    <NarrativeSection startup={startup} id="testing-drivers" title="Who or what drove activity" value={narrative.testingDrivers} />
+    <NarrativeSection startup={startup} id="testing-continuity" title="Testing continuity" value={narrative.testingContinuity} />
     <NarrativeSection startup={startup} id="drivers" title="What drove it" value={narrative.whatDroveIt} />
     <NarrativeSection startup={startup} id="implication" title="Superteam implication" value={narrative.superteamImplication} />
     <ReportEvidence startup={startup} />
-    <TextList title="Evidence limitations" items={startup.limitations ?? startup.dataQualityNotes ?? []} className="data-warnings" />
-    <div id="sources"><SourceLinks startup={startup} /></div>
+    <DevelopmentDisclosure startup={startup} label="Evidence limitations"><TextList title="Evidence limitations" items={startup.limitations ?? startup.dataQualityNotes ?? []} className="data-warnings" /></DevelopmentDisclosure>
+    <div id="sources"><DevelopmentDisclosure startup={startup} label="Sources and methodology"><SourceLinks startup={startup} /></DevelopmentDisclosure></div>
+    {isDevelopmentReport(startup) && <p className="static-research-notice">This report reflects evidence available up to the stated data cutoff. Metrics are not continuously updated unless a new research cycle is completed.</p>}
     <p className="last-reviewed">Data cutoff - {publicValue(startup.dataCutoff ?? startup.lastReviewed)}</p>
   </section>;
 }

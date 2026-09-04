@@ -499,6 +499,67 @@
           "logoAuditSources": [
             "Exact Prime Skill record in the authenticated Superteam UK directory",
             "https://startups.superteamuk.org/logos/primeskill.webp"
+          ],
+          "reportTemplate": "devnet-testnet",
+          "dataCutoff": "2026-09-02",
+          "headlineKpis": [
+            {
+              "label": "Historical Devnet signatures",
+              "value": "443",
+              "qualifier": "On-chain verified on Solana Devnet"
+            },
+            {
+              "label": "Historical success rate",
+              "value": "91.87%",
+              "qualifier": "On-chain verified; development activity"
+            },
+            {
+              "label": "Program accounts",
+              "value": "440",
+              "qualifier": "On-chain verified on Devnet"
+            },
+            {
+              "label": "Decoded testing wallets",
+              "value": "6",
+              "qualifier": "Decoded estimate; wallet ownership not verified"
+            }
+          ],
+          "developmentProgress": [
+            {
+              "label": "Devnet execution",
+              "state": "verified",
+              "stateLabel": "Verified",
+              "detail": "443 historical signatures with a 91.87% observed success rate."
+            },
+            {
+              "label": "Observed activity status",
+              "state": "limited",
+              "stateLabel": "Limited evidence",
+              "detail": "Latest stored activity was observed on 20 September 2025; period-level history is unavailable."
+            },
+            {
+              "label": "Production deployment",
+              "state": "missing",
+              "stateLabel": "Not verified",
+              "detail": "No attributable mainnet deployment was verified."
+            }
+          ],
+          "reportNarrative": {
+            "whatHappened": "PrimeSkill recorded 443 signatures on Solana Devnet with a 91.87% observed success rate. The stored research identifies 440 program accounts and six decoded testing wallets. Its latest observed Devnet activity was 20 September 2025.",
+            "whatEvidenceDemonstrates": "The stored evidence shows that a Solana Devnet program executed successfully and created or interacted with a substantial set of program accounts. It demonstrates technical testing, not customer adoption, commercial usage or revenue.",
+            "testingDrivers": "Six decoded testing wallets were identified. Wallet-level transaction counts and ownership attribution were not stored, so the distribution and ownership of testing activity cannot be determined.",
+            "testingContinuity": "Activity was observed as recently as 20 September 2025. The stored research does not include the first transaction, active-day count or period-level signature history, so sustained testing cannot be quantified.",
+            "superteamImplication": "Confirm program ownership with the founder, monitor whether testing resumes and request the official production program address if PrimeSkill progresses to mainnet."
+          },
+          "limitations": [
+            "No attributable mainnet deployment was verified.",
+            "Signing-wallet ownership was not verified.",
+            "Period-level signature timestamps were not available in the stored research.",
+            "Commercial usage cannot be determined from Devnet activity."
+          ],
+          "methodologyNotes": [
+            "This report measures development and testing activity. Devnet/Testnet transactions do not establish customer adoption, commercial usage or revenue.",
+            "Signature, success-rate, account and testing-wallet values reproduce the existing stored research; no new external research was conducted."
           ]
         },
         {
@@ -568,6 +629,67 @@
           "logoAuditSources": [
             "existing asset",
             "official website asset"
+          ],
+          "reportTemplate": "devnet-testnet",
+          "dataCutoff": "2026-09-02",
+          "headlineKpis": [
+            {
+              "label": "Historical Devnet signatures",
+              "value": "565",
+              "qualifier": "Devnet verified"
+            },
+            {
+              "label": "Historical success rate",
+              "value": "92.92%",
+              "qualifier": "Devnet verified"
+            },
+            {
+              "label": "Public dashboard rows",
+              "value": "16,435",
+              "qualifier": "Publicly observed off-chain dataset"
+            },
+            {
+              "label": "Verified test-token mints",
+              "value": "3",
+              "qualifier": "Devnet verified"
+            }
+          ],
+          "developmentProgress": [
+            {
+              "label": "Live off-chain product",
+              "state": "verified",
+              "stateLabel": "Publicly observed",
+              "detail": "The public climate dashboard is live, contains 16,435 rows and is updated daily."
+            },
+            {
+              "label": "Solana Devnet",
+              "state": "verified",
+              "stateLabel": "Verified",
+              "detail": "565 historical signatures, a 92.92% success rate and three test-token mints were verified on Devnet."
+            },
+            {
+              "label": "Solana mainnet",
+              "state": "missing",
+              "stateLabel": "Not verified",
+              "detail": "No attributable mainnet address was verified."
+            }
+          ],
+          "reportNarrative": {
+            "whatHappened": "END Corp operates a live public climate-data dashboard that is updated daily and contained 16,435 rows at the research cutoff. Separate Solana Devnet evidence recorded 565 historical signatures, a 92.92% historical success rate and three verified test-token mints.",
+            "whatEvidenceDemonstrates": "The evidence demonstrates that END Corp maintained a functioning public climate-data product and tested program and token infrastructure on Solana Devnet. It does not establish mainnet deployment, customer adoption, commercial usage or revenue.",
+            "testingContinuity": "The stored research confirms historical Devnet activity, but it does not contain period-level timestamps, first and last transaction dates or an active-day count. Testing continuity therefore cannot be quantified.",
+            "superteamImplication": "Validate the Devnet findings with the founder and request the production program address when a mainnet deployment becomes available."
+          },
+          "limitations": [
+            "All verified program and token addresses were on Solana Devnet.",
+            "No attributable mainnet address was verified.",
+            "Signing-wallet data was not available in the stored research.",
+            "Raw success and failure counts were not stored, so the success rate cannot be expanded into a count comparison.",
+            "Commercial usage cannot be determined from Devnet activity."
+          ],
+          "methodologyNotes": [
+            "This report measures development and testing activity. Devnet/Testnet transactions do not establish customer adoption, commercial usage or revenue.",
+            "The public dashboard measurement is off-chain product evidence and is presented separately from Solana Devnet testing."
           ]
         },
         {
@@ -685,6 +807,66 @@
           "logoAuditSources": [
             "existing asset",
             "official product X"
+          ],
+          "reportTemplate": "devnet-testnet",
+          "dataCutoff": "2026-09-02",
+          "headlineKpis": [
+            {
+              "label": "Project-reported submissions",
+              "value": "300",
+              "qualifier": "Project-reported; not independently verified on-chain"
+            },
+            {
+              "label": "Named games",
+              "value": "27",
+              "qualifier": "Individually named in the public census"
+            },
+            {
+              "label": "Named developers",
+              "value": "25",
+              "qualifier": "Individually named in the public census"
+            },
+            {
+              "label": "Officially announced winners",
+              "value": "10",
+              "qualifier": "Official announcement"
+            }
+          ],
+          "developmentProgress": [
+            {
+              "label": "Public product evidence",
+              "state": "verified",
+              "stateLabel": "Observed",
+              "detail": "A public census named 27 games and 25 developers; 300 submissions were project-reported."
+            },
+            {
+              "label": "Testnet evidence",
+              "state": "limited",
+              "stateLabel": "Unattributed",
+              "detail": "The record is classified as testnet plus off-chain, but no official public program was verified."
+            },
+            {
+              "label": "Product continuity",
+              "state": "missing",
+              "stateLabel": "Ended",
+              "detail": "Production ended on 26 June 2026."
+            }
+          ],
+          "reportNarrative": {
+            "whatHappened": "Scrolly recorded 300 submissions as a project-reported count. Its public census individually named 27 games and 25 developers, and an official announcement named ten winners. Production ended on 26 June 2026.",
+            "whatEvidenceDemonstrates": "The public records demonstrate an off-chain game-building programme and documented participation. No official token or public Scrolly program was verified, so the stored evidence cannot measure testnet execution or blockchain usage.",
+            "testingContinuity": "No attributable program or transaction timeline was stored. Product production ended on 26 June 2026, but that off-chain date must not be interpreted as a blockchain activity cutoff.",
+            "superteamImplication": "Treat Scrolly as a completed historical programme, preserve its public participation evidence and request an attributable testnet program only if technical validation remains useful."
+          },
+          "limitations": [
+            "No official token or public Scrolly program was verified.",
+            "The 300-submission figure is project-reported.",
+            "The public census measures named games and developers, not on-chain users.",
+            "No testnet transaction or signing-wallet dataset was available."
+          ],
+          "methodologyNotes": [
+            "This report measures development and testing activity. Devnet/Testnet transactions do not establish customer adoption, commercial usage or revenue.",
+            "Public census and official-announcement evidence is separated from unverified blockchain activity."
           ]
         },
         {
@@ -3135,7 +3317,44 @@
             "official product X"
           ],
           "logoSourceUrl": "https://framerusercontent.com/images/EwBmg6SClRT3lcs8QJSppefc.png",
-          "logoSourceType": "authenticated-app-icon"
+          "logoSourceType": "authenticated-app-icon",
+          "reportTemplate": "devnet-testnet",
+          "dataCutoff": "2026-09-02",
+          "developmentProgress": [
+            {
+              "label": "Alphanet or test environment",
+              "state": "limited",
+              "stateLabel": "Public evidence",
+              "detail": "Available evidence describes a pre-production Alphanet or test environment."
+            },
+            {
+              "label": "Official program identifiers",
+              "state": "missing",
+              "stateLabel": "Not verified",
+              "detail": "Official testnet and mainnet program IDs were not stored."
+            },
+            {
+              "label": "Mainnet deployment",
+              "state": "missing",
+              "stateLabel": "Not verified",
+              "detail": "No independently verified production deployment was established."
+            }
+          ],
+          "reportNarrative": {
+            "whatHappened": "Bulk Trade was observed in an Alphanet or test environment. The stored record contains no verified program address, transaction counts, signing-wallet data or activity timeline.",
+            "whatEvidenceDemonstrates": "The available evidence supports a pre-production testing classification for Solana order-book and perpetual-futures infrastructure. It does not establish a production mainnet deployment or measurable commercial usage.",
+            "testingContinuity": "No period-level test activity or deployment dates were available in the stored research, so testing continuity cannot be determined.",
+            "superteamImplication": "Request official testnet and production program IDs, keep test activity separate from any later mainnet activity and reassess only when attributable deployment evidence is available."
+          },
+          "limitations": [
+            "No official testnet or mainnet program ID was verified.",
+            "No transaction, signing-wallet or active-day metrics were stored.",
+            "Testnet and mainnet metrics must never be combined."
+          ],
+          "methodologyNotes": [
+            "This report measures development and testing activity. Devnet/Testnet transactions do not establish customer adoption, commercial usage or revenue.",
+            "No KPI or chart module is rendered because the stored record contains no quantitative test evidence."
+          ]
         },
         {
           "founder": "Robin A.",
@@ -4549,7 +4768,45 @@
           "logoSource": null,
           "logoVerificationStatus": "monogram-no-downloadable-asset",
           "logoSourceType": "monogram-no-downloadable-asset",
-          "lastReviewed": "2026-09-02"
+          "lastReviewed": "2026-09-02",
+          "reportTemplate": "devnet-testnet",
+          "dataCutoff": "2026-09-02",
+          "developmentProgress": [
+            {
+              "label": "Experimental program code",
+              "state": "verified",
+              "stateLabel": "Public repository",
+              "detail": "Official public repositories contain the experimental Percolator program architecture."
+            },
+            {
+              "label": "Solana Devnet entry point",
+              "state": "verified",
+              "stateLabel": "Documented",
+              "detail": "The official CLI configuration documents the Devnet program address shown in this report."
+            },
+            {
+              "label": "Production deployment",
+              "state": "missing",
+              "stateLabel": "Not verified",
+              "detail": "No official mainnet program was established."
+            }
+          ],
+          "reportNarrative": {
+            "whatHappened": "Percolator has public experimental program code and a documented Solana Devnet entry point. The stored research does not yet include signature counts, instruction outcomes, signer counts, account creation or market-creation activity.",
+            "whatEvidenceDemonstrates": "The official repositories demonstrate an experimental perpetual-futures risk engine and document a Devnet program configuration. They explicitly describe the software as experimental, unaudited, educational and unsuitable for production or real funds.",
+            "testingContinuity": "A Devnet address is documented, but transaction timestamps and active-day results were not stored. Continued testing therefore cannot be determined from the current record.",
+            "superteamImplication": "Keep Percolator in Devnet evaluation, produce the planned technical-activity report and move it to address-led mainnet research only after an official production program is verified."
+          },
+          "limitations": [
+            "The documented program address is Devnet only.",
+            "No signature, success/failure, signer, account or market metrics were available in the stored research.",
+            "Official repositories warn that the software is experimental, unaudited and unsuitable for production or real funds.",
+            "Unofficial forks must not be merged into this record."
+          ],
+          "methodologyNotes": [
+            "This report measures development and testing activity. Devnet/Testnet transactions do not establish customer adoption, commercial usage or revenue.",
+            "The program address is reproduced from the official public CLI configuration and must not be treated as a mainnet address."
+          ]
         },
         {
           "id": "STUK-063",

@@ -14,12 +14,13 @@ const mainnet = startups.filter((row) => row.queue === "Mainnet Analysis Queue")
 const slug = (row) => (row.displayAlias ? `${row.startup}-${row.displayAlias}` : row.currentBrand ? `${row.startup}-${row.currentBrand}` : row.startup)
   .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 const logoKeys = new Set(["logo", "logoPath", "logoSource", "logoSourceUrl", "logoSourceType", "logoVerificationStatus", "logoAuditCategory", "logoAuditSources"]);
-const canonicalRows = startups.slice(0, 43).filter((row) => row.id !== "STUK-008").map((row) => Object.fromEntries(Object.entries(row).filter(([key]) => !logoKeys.has(key))));
+const developmentIds = new Set(["STUK-001", "STUK-002", "STUK-004", "STUK-039", "STUK-062"]);
+const canonicalRows = startups.slice(0, 43).filter((row) => row.id !== "STUK-008" && !developmentIds.has(row.id)).map((row) => Object.fromEntries(Object.entries(row).filter(([key]) => !logoKeys.has(key))));
 
 // Fingerprint of every canonical field before this logo/UI correction.
-test("existing STUK-001 through STUK-043 remain byte-stable outside logo metadata", () => {
+test("unrelated STUK-001 through STUK-043 records remain byte-stable outside logo metadata", () => {
   const fingerprint = createHash("sha256").update(JSON.stringify(canonicalRows)).digest("hex");
-  assert.equal(fingerprint, "becb5e2ab24d39bb6528ea779e571d509254187724d316b6b53ad036e01efe53");
+  assert.equal(fingerprint, "eaefe97f8dc1fcefcc48074b5825209589d6d8351578ff14583366c1dfdaaa06");
   assert.deepEqual(startups.map((row) => row.id), Array.from({ length: 66 }, (_, i) => `STUK-${String(i + 1).padStart(3, "0")}`));
   assert.equal(new Set(startups.map(slug)).size, 66);
 });
@@ -243,11 +244,11 @@ test("address status labels derive from entry-point attribution and preserve the
   assert.doesNotMatch(source, /startup\s*===\s*["']Purebet/u);
 });
 
-test("image and status corrections preserve all research records and queue membership", () => {
+test("unrelated research records and queue membership remain preserved", () => {
   const fingerprint = createHash("sha256")
-    .update(JSON.stringify(startups.filter((row) => row.id !== "STUK-008").map((row) => Object.fromEntries(Object.entries(row).filter(([key]) => !logoKeys.has(key))))))
+    .update(JSON.stringify(startups.filter((row) => row.id !== "STUK-008" && !developmentIds.has(row.id)).map((row) => Object.fromEntries(Object.entries(row).filter(([key]) => !logoKeys.has(key))))))
     .digest("hex");
-  assert.equal(fingerprint, "d06de934893a99b88f523b56e5b32e9f2eaffa45ed10d9deb2ba1789542bbbe0");
+  assert.equal(fingerprint, "194fff88850d34ad35536d2c6dc027c6f702b64882b0351b51b2e39d395dfd4a");
   assert.equal(startups.length, 66);
   assert.equal(mainnet.length, 33);
   assert.equal(startups.length - mainnet.length, 33);
@@ -294,4 +295,48 @@ test("END Corp verified evidence is preserved and empty filler is removed", () =
   assert.deepEqual(end.metrics.map((metric) => metric.value), ["565", "92.92%", "16,435", "3"]);
   assert.doesNotMatch(source, /Not recorded for this research pass/u);
   assert.match(source, /No attributable mainnet deployment was verified during this research period/u);
+});
+test("every Devnet or Testnet startup uses the reusable development report schema", () => {
+  const development = startups.filter((row) => /devnet|testnet/i.test([row.classification, row.technicalStatus, row.queue].join(" ")));
+  assert.deepEqual(development.map((row) => row.id), ["STUK-001", "STUK-002", "STUK-004", "STUK-039", "STUK-062"]);
+  for (const row of development) {
+    assert.equal(row.reportTemplate, "devnet-testnet", row.id);
+    assert.equal(row.dataCutoff, "2026-09-02", row.id);
+    assert.ok(row.reportNarrative?.whatHappened, row.id + " what happened");
+    assert.ok(row.reportNarrative?.whatEvidenceDemonstrates, row.id + " evidence meaning");
+    assert.ok(row.reportNarrative?.testingContinuity, row.id + " continuity");
+    assert.ok(row.reportNarrative?.superteamImplication, row.id + " implication");
+    assert.ok(row.developmentProgress?.length, row.id + " progression");
+    assert.ok(row.limitations?.length, row.id + " limitations");
+    assert.ok(row.methodologyNotes?.some((note) => note.includes("do not establish customer adoption, commercial usage or revenue")), row.id + " warning");
+  }
+});
+
+test("development reports conditionally render supported evidence without fake zeroes", () => {
+  const prime = startups.find((row) => row.id === "STUK-001");
+  const end = startups.find((row) => row.id === "STUK-002");
+  const scrolly = startups.find((row) => row.id === "STUK-004");
+  const bulk = startups.find((row) => row.id === "STUK-039");
+  const percolator = startups.find((row) => row.id === "STUK-062");
+  assert.deepEqual(prime.headlineKpis.map((metric) => metric.value), ["443", "91.87%", "440", "6"]);
+  assert.deepEqual(end.headlineKpis.map((metric) => metric.value), ["565", "92.92%", "16,435", "3"]);
+  assert.equal(scrolly.headlineKpis[0].qualifier.startsWith("Project-reported"), true);
+  assert.equal(bulk.headlineKpis, undefined);
+  assert.equal(percolator.headlineKpis, undefined);
+  assert.equal(percolator.technicalEntryPoints[0].network, "Solana Devnet");
+  assert.match(source, /if \(!metrics\.length\) return null/u);
+  assert.match(source, /if \(!startup\.reportCharts\?\.length\) return null/u);
+  assert.match(source, /This report measures development and testing activity\. Devnet\/Testnet transactions do not establish customer adoption, commercial usage or revenue\./u);
+  assert.doesNotMatch(JSON.stringify([prime, end, scrolly, bulk, percolator]), /customer count|commercial volume|market share/i);
+});
+
+test("Purebet and approved Overview implementation remain unchanged by development reports", () => {
+  const purebet = startups.find((row) => row.id === "STUK-008");
+  const fingerprint = createHash("sha256").update(JSON.stringify(purebet)).digest("hex");
+  assert.equal(fingerprint, "c97a676b2c635f5ed3a281388f04c97d3e91988984f0d35b72ba7ea9e97525a1");
+  assert.match(source, /title="Directory universe"/u);
+  assert.match(source, /title="Researched"/u);
+  assert.match(source, /title="Queue A"/u);
+  assert.match(source, /title="Queue B"/u);
+  assert.doesNotMatch(source.slice(source.indexOf('view === "overview"'), source.indexOf('view === "archive"')), /DevelopmentNotice|DevelopmentProgress/u);
 });
