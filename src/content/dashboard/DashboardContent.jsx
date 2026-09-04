@@ -104,7 +104,7 @@ const projectMetricsFor = (startup) => [
 const verifiedNetworkStatus = (startup) => {
   const evidence = String(startup.chainEvidence ?? "").toLowerCase();
   const technical = [startup.technicalState, startup.technicalStatus, startup.classification].filter(Boolean).join(" ").toLowerCase();
-  const hasVerifiedMainnet = technical.includes("mainnet") && evidence === "on-chain verified";
+  const hasVerifiedMainnet = technical.includes("mainnet") && (evidence === "on-chain verified" || evidence === "founder-confirmed");
   const hasVerifiedDevnet = technical.includes("devnet") && (evidence === "on-chain verified" || (startup.metrics ?? []).some((metric) => /devnet verified/iu.test(metric.qualifier ?? "")));
   if (hasVerifiedMainnet && hasVerifiedDevnet) return { label: "Mainnet + Devnet", tone: "mainnet" };
   if (hasVerifiedMainnet) return { label: "Mainnet", tone: "mainnet" };

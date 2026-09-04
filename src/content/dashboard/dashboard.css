@@ -507,3 +507,36 @@
 }
 @media (max-width: 340px) { .report-kpi-grid { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .report-link-buttons a, .report-export button { transition: none; } }
+/* Overview KPI cards reuse the approved directory-card depth language. */
+.metric-strip > * {
+  overflow: visible;
+  border: 1px solid var(--analytics-card-border);
+  border-top: 5px solid var(--analytics-card-accent);
+  border-radius: 18px;
+  background: var(--analytics-card-background);
+  box-shadow: 5px 6px 0 var(--analytics-card-depth), var(--analytics-card-shadow);
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .metric-strip > *:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--analytics-card-accent) 35%, var(--analytics-card-border));
+    box-shadow: 7px 9px 0 var(--analytics-card-depth), var(--analytics-card-hover-shadow);
+  }
+}
+@media (pointer: coarse) {
+  .metric-strip > *:active {
+    transform: translateY(1px);
+    box-shadow: 4px 5px 0 var(--analytics-card-depth), var(--analytics-card-shadow);
+  }
+}
+@media (max-width: 720px) {
+  .metric-strip > * {
+    min-height: 0;
+    border-radius: 16px;
+    box-shadow: 4px 5px 0 var(--analytics-card-depth), var(--analytics-card-shadow);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .metric-strip > * { transition: none; }
+}

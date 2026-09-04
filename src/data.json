@@ -2092,41 +2092,156 @@
           "sector": "Solana DeFi / liquidity management",
           "directoryStage": "Not Raising (Self Funded)",
           "observedStatus": "Live product",
-          "technicalStatus": "Solana mainnet liquidity-management product",
+          "technicalStatus": "Solana Mainnet; founder-confirmed program",
           "technicalState": "Mainnet",
           "classification": "Mainnet follow-up",
           "queue": "Mainnet Analysis Queue",
-          "analysisStatus": "Program attribution outstanding",
-          "summary": "A live Solana liquidity-management product requiring official program and vault attribution.",
-          "canonicalFinding": "HawkFi appears to operate a live Solana liquidity-management product. Program and operational addresses must be gathered from official documentation or attributable transactions before metrics are calculated.",
+          "analysisStatus": "Research completed",
+          "summary": "Self-custodial Solana liquidity management and LP automation for concentrated-liquidity positions.",
+          "canonicalFinding": "HawkFi is a self-custodial Solana liquidity-management and LP-automation product. Its founder-confirmed program shows genuine mainnet activity, but raw transaction counts substantially overstate direct wallet interaction because the known HAWK automation signer generated approximately 98.46% of successful program transactions during the analysed 30-day period.",
           "dataQualityNotes": [
-            "Directory X appears stale or incorrect; retained separately from current official X @HawkFi_."
+            "Directory X appears stale or founder-linked; retained separately from current official project X @HawkFi_.",
+            "The product previously operated under the Hawksight brand, so first observed activity must not be described as the HawkFi launch date.",
+            "Raw program transaction counts are dominated by the known HAWK automation signer."
           ],
           "outstandingAnalysis": [
-            "Verify program IDs and vault accounts",
-            "Measure deposits, withdrawals, users, volume and current TVL"
+            "Validate a non-duplicative financial-volume methodology",
+            "Import the verified 30-day retention result when available",
+            "Complete the 30-day priced fee inflow query",
+            "Determine whether other automated signers should be excluded from the active-wallet proxy"
           ],
           "sources": [
+            "https://hawkfi.ag",
             "https://x.com/HawkFi_"
           ],
-          "verifiedMetrics": [],
-          "technicalEntryPoints": [],
-          "whatItBuilds": null,
-          "completedAnalysis": [],
-          "lastReviewed": "2026-09-02",
-          "founderVerification": "Not verified",
+          "verifiedMetrics": [
+            {
+              "label": "24H user-signed transactions",
+              "value": "741",
+              "qualifier": "PROXY - known HAWK automation signer excluded"
+            },
+            {
+              "label": "7D user-signed transactions",
+              "value": "5,346",
+              "qualifier": "PROXY - known HAWK automation signer excluded"
+            },
+            {
+              "label": "30D user-signed transactions",
+              "value": "29,574",
+              "qualifier": "PROXY - known HAWK automation signer excluded"
+            },
+            {
+              "label": "24H Dune-priced fee inflows",
+              "value": "$465.29",
+              "qualifier": "VERIFIED priced subset; at least this amount"
+            },
+            {
+              "label": "7D Dune-priced fee inflows",
+              "value": "$2,527.10",
+              "qualifier": "VERIFIED priced subset; at least this amount"
+            },
+            {
+              "label": "Known automation share",
+              "value": "≈98.46%",
+              "qualifier": "DERIVED"
+            }
+          ],
+          "technicalEntryPoints": [
+            {
+              "name": "HawkFi Program",
+              "network": "Solana Mainnet",
+              "address": "FqGg2Y1FNxMiGd51Q6UETixQWkF5fB92MysbYogRJb3P",
+              "type": "Executable program",
+              "attributionStatus": "Founder-confirmed",
+              "explorerUrl": "https://solscan.io/account/FqGg2Y1FNxMiGd51Q6UETixQWkF5fB92MysbYogRJb3P"
+            },
+            {
+              "name": "HAWK automation / fee signer",
+              "network": "Solana Mainnet",
+              "address": "HAWK3BVnwptKRFYfVoVGhBc2TYxpyG9jmAbkHeW9tyKE",
+              "type": "Automation signer",
+              "attributionStatus": "Known HawkFi infrastructure used in research",
+              "explorerUrl": "https://solscan.io/account/HAWK3BVnwptKRFYfVoVGhBc2TYxpyG9jmAbkHeW9tyKE"
+            },
+            {
+              "name": "HawkFi fee wallet",
+              "network": "Solana Mainnet",
+              "address": "4K3a2ucXiGvuMJMPNneRDyzmNp6i4RdzXJmBdWwGwPEh",
+              "type": "Fee wallet",
+              "attributionStatus": "Known HawkFi infrastructure used in research",
+              "explorerUrl": "https://solscan.io/account/4K3a2ucXiGvuMJMPNneRDyzmNp6i4RdzXJmBdWwGwPEh"
+            }
+          ],
+          "whatItBuilds": "HawkFi helps liquidity providers manage concentrated-liquidity positions through automation such as rebalancing and fee management while interacting with underlying venues including Meteora and Orca.",
+          "completedAnalysis": [
+            "Founder-confirmed program attribution",
+            "Earliest observed successful program activity",
+            "Known automation signer identified",
+            "Known fee wallet identified",
+            "24H, 7D and 30D automation-adjusted active-wallet proxy",
+            "24H, 7D and 30D user-signed activity proxy",
+            "24H and 7D Dune-priced fee inflows"
+          ],
+          "lastReviewed": "2026-09-04",
+          "founderVerification": "Founder-confirmed program attribution",
           "projectReportedMetrics": [],
           "stage": "Not Raising (Self Funded)",
           "productStatus": "Live product",
-          "oneLine": "A live Solana liquidity-management product requiring official program and vault attribution.",
-          "finding": "HawkFi appears to operate a live Solana liquidity-management product. Program and operational addresses must be gathered from official documentation or attributable transactions before metrics are calculated.",
-          "nextAction": "Verify program IDs and vault accounts",
-          "metrics": [],
-          "productEvidence": "Not publicly verifiable",
-          "chainEvidence": "Not publicly verifiable",
-          "userEvidence": "Not publicly verifiable",
-          "transactionEvidence": "Not publicly verifiable",
-          "revenueEvidence": "Not publicly verifiable",
+          "oneLine": "Self-custodial Solana liquidity management and LP automation for concentrated-liquidity positions.",
+          "finding": "HawkFi is a self-custodial Solana liquidity-management and LP-automation product. Its founder-confirmed program shows genuine mainnet activity, but raw transaction counts substantially overstate direct wallet interaction because the known HAWK automation signer generated approximately 98.46% of successful program transactions during the analysed 30-day period.",
+          "nextAction": "Validate retention, complete the 30-day priced fee inflow query and establish a non-duplicative LP-volume methodology.",
+          "metrics": [
+            {
+              "label": "24H active wallets",
+              "value": "75",
+              "qualifier": "PROXY"
+            },
+            {
+              "label": "7D active wallets",
+              "value": "207",
+              "qualifier": "PROXY"
+            },
+            {
+              "label": "30D active wallets",
+              "value": "511",
+              "qualifier": "PROXY"
+            },
+            {
+              "label": "24H user-signed transactions",
+              "value": "741",
+              "qualifier": "PROXY"
+            },
+            {
+              "label": "7D user-signed transactions",
+              "value": "5,346",
+              "qualifier": "PROXY"
+            },
+            {
+              "label": "30D user-signed transactions",
+              "value": "29,574",
+              "qualifier": "PROXY"
+            },
+            {
+              "label": "24H Dune-priced fee inflows",
+              "value": "$465.29",
+              "qualifier": "VERIFIED priced subset"
+            },
+            {
+              "label": "7D Dune-priced fee inflows",
+              "value": "$2,527.10",
+              "qualifier": "VERIFIED priced subset"
+            },
+            {
+              "label": "Known automation share",
+              "value": "≈98.46%",
+              "qualifier": "DERIVED"
+            }
+          ],
+          "productEvidence": "Publicly observed",
+          "chainEvidence": "Founder-confirmed",
+          "userEvidence": "Proxy",
+          "transactionEvidence": "On-chain verified",
+          "revenueEvidence": "Partially on-chain verified",
           "logo": "/brands/startups/hawkfi.png",
           "logoSource": "https://www.hawkfi.ag/assets/logo/hawkfi-logo-only.png",
           "logoPath": "/brands/startups/hawkfi.png",
@@ -2137,7 +2252,343 @@
             "https://www.hawkfi.ag/assets/logo/hawkfi-logo-only.png"
           ],
           "logoSourceUrl": "https://www.hawkfi.ag/assets/logo/hawkfi-logo-only.png",
-          "logoSourceType": "Official website logo"
+          "logoSourceType": "Official website logo",
+          "founderContacts": [
+            {
+              "label": "Founder X",
+              "type": "x",
+              "url": "https://x.com/and__so?s=11",
+              "handle": "@AND__SO"
+            }
+          ],
+          "website": "https://hawkfi.ag",
+          "researchStatus": "Completed",
+          "founderConfirmations": [
+            {
+              "statement": "The co-founder explicitly confirmed that FqGg2Y1FNxMiGd51Q6UETixQWkF5fB92MysbYogRJb3P is the HawkFi program after the researcher independently identified it through on-chain analysis.",
+              "evidenceType": "FOUNDER CONFIRMED"
+            }
+          ],
+          "headlineKpis": [
+            {
+              "label": "24H active wallets",
+              "value": "75",
+              "qualifier": "PROXY - distinct successful signers excluding the known HAWK automation signer"
+            },
+            {
+              "label": "7D active wallets",
+              "value": "207",
+              "qualifier": "PROXY - distinct successful signers excluding the known HAWK automation signer"
+            },
+            {
+              "label": "30D active wallets",
+              "value": "511",
+              "qualifier": "PROXY - distinct successful signers excluding the known HAWK automation signer"
+            },
+            {
+              "label": "30D user-signed activity",
+              "value": "29,574",
+              "qualifier": "PROXY - successful signer activity after excluding the known HAWK automation signer"
+            },
+            {
+              "label": "7D Dune-priced fee inflows",
+              "value": "$2,527.10",
+              "qualifier": "VERIFIED priced subset - not complete audited protocol revenue"
+            },
+            {
+              "label": "Known automation share",
+              "value": "≈98.46%",
+              "qualifier": "DERIVED from 1,908,392 of 1,938,285 successful 30D program transactions"
+            }
+          ],
+          "reportCharts": [
+            {
+              "id": "active-wallet-proxy",
+              "title": "Active-wallet proxy by observation window",
+              "summary": "Distinct successful transaction signers interacting with the founder-confirmed program, excluding the known HAWK automation signer. Wallets are not independently verified human customers.",
+              "evidenceType": "PROXY",
+              "spec": {
+                "type": "bar",
+                "x": "window",
+                "y": "activeWallets",
+                "showXAxisLabel": false,
+                "showYAxisLabel": false
+              },
+              "rows": [
+                {
+                  "window": "24H",
+                  "activeWallets": 75
+                },
+                {
+                  "window": "7D",
+                  "activeWallets": 207
+                },
+                {
+                  "window": "30D",
+                  "activeWallets": 511
+                }
+              ]
+            },
+            {
+              "id": "user-signed-activity",
+              "title": "User-signed activity proxy",
+              "summary": "Successful signer activity after excluding the known HAWK automation signer. Other automated activity may remain.",
+              "evidenceType": "PROXY",
+              "spec": {
+                "type": "bar",
+                "x": "window",
+                "y": "userSignedTransactions",
+                "showXAxisLabel": false,
+                "showYAxisLabel": false
+              },
+              "rows": [
+                {
+                  "window": "24H",
+                  "userSignedTransactions": 741
+                },
+                {
+                  "window": "7D",
+                  "userSignedTransactions": 5346
+                },
+                {
+                  "window": "30D",
+                  "userSignedTransactions": 29574
+                }
+              ]
+            },
+            {
+              "id": "priced-fee-inflows",
+              "title": "Dune-priced fee inflows",
+              "summary": "Transfers into the HawkFi fee wallet signed by the known HAWK automation signer. Some received assets lack usable Dune USD prices, so these are minimum priced inflows rather than audited total revenue.",
+              "evidenceType": "VERIFIED priced subset",
+              "spec": {
+                "type": "bar",
+                "x": "window",
+                "y": "pricedFeeInflowsUsd",
+                "showXAxisLabel": false,
+                "showYAxisLabel": false
+              },
+              "rows": [
+                {
+                  "window": "24H",
+                  "feeTransfers": 16775,
+                  "pricedFeeInflowsUsd": 465.29
+                },
+                {
+                  "window": "7D",
+                  "feeTransfers": 99519,
+                  "pricedFeeInflowsUsd": 2527.1
+                }
+              ]
+            }
+          ],
+          "reportTables": [
+            {
+              "id": "activity-windows",
+              "title": "Active-wallet and user-signed activity proxies",
+              "summary": "The known HAWK automation signer is excluded. Active wallets are not independently verified human customers.",
+              "evidenceType": "PROXY",
+              "columns": [
+                {
+                  "field": "window",
+                  "label": "Window"
+                },
+                {
+                  "field": "activeWallets",
+                  "label": "Active wallets"
+                },
+                {
+                  "field": "userSignedTransactions",
+                  "label": "User-signed transactions"
+                },
+                {
+                  "field": "evidenceStatus",
+                  "label": "Evidence status"
+                }
+              ],
+              "rows": [
+                {
+                  "window": "24H",
+                  "activeWallets": 75,
+                  "userSignedTransactions": 741,
+                  "evidenceStatus": "PROXY"
+                },
+                {
+                  "window": "7D",
+                  "activeWallets": 207,
+                  "userSignedTransactions": 5346,
+                  "evidenceStatus": "PROXY"
+                },
+                {
+                  "window": "30D",
+                  "activeWallets": 511,
+                  "userSignedTransactions": 29574,
+                  "evidenceStatus": "PROXY"
+                }
+              ]
+            },
+            {
+              "id": "engagement-ratios",
+              "title": "Derived active-wallet engagement ratios",
+              "summary": "Ratios use the non-HAWK executor active-wallet proxy and do not establish human-user engagement.",
+              "evidenceType": "DERIVED",
+              "columns": [
+                {
+                  "field": "ratio",
+                  "label": "Ratio"
+                },
+                {
+                  "field": "calculation",
+                  "label": "Calculation"
+                },
+                {
+                  "field": "value",
+                  "label": "Value"
+                },
+                {
+                  "field": "evidenceStatus",
+                  "label": "Evidence status"
+                }
+              ],
+              "rows": [
+                {
+                  "ratio": "WAU / MAU",
+                  "calculation": "207 / 511",
+                  "value": "≈40.5%",
+                  "evidenceStatus": "DERIVED"
+                },
+                {
+                  "ratio": "DAU / MAU",
+                  "calculation": "75 / 511",
+                  "value": "≈14.7%",
+                  "evidenceStatus": "DERIVED"
+                },
+                {
+                  "ratio": "DAU / WAU",
+                  "calculation": "75 / 207",
+                  "value": "≈36.2%",
+                  "evidenceStatus": "DERIVED"
+                }
+              ]
+            },
+            {
+              "id": "fee-inflows",
+              "title": "Priced fee inflow evidence",
+              "summary": "Only assets with usable Dune USD prices are included. The 30D query is pending because of the current engine limit/timeout.",
+              "evidenceType": "VERIFIED / PENDING",
+              "columns": [
+                {
+                  "field": "window",
+                  "label": "Window"
+                },
+                {
+                  "field": "feeTransfers",
+                  "label": "Fee transfers"
+                },
+                {
+                  "field": "pricedFeeInflows",
+                  "label": "Dune-priced fee inflows"
+                },
+                {
+                  "field": "evidenceStatus",
+                  "label": "Evidence status"
+                }
+              ],
+              "rows": [
+                {
+                  "window": "24H",
+                  "feeTransfers": 16775,
+                  "pricedFeeInflows": "$465.29",
+                  "evidenceStatus": "VERIFIED priced subset"
+                },
+                {
+                  "window": "7D",
+                  "feeTransfers": 99519,
+                  "pricedFeeInflows": "$2,527.10",
+                  "evidenceStatus": "VERIFIED priced subset"
+                },
+                {
+                  "window": "30D",
+                  "feeTransfers": "Pending",
+                  "pricedFeeInflows": "Pending",
+                  "evidenceStatus": "PENDING - Dune engine limit / timeout"
+                }
+              ]
+            },
+            {
+              "id": "research-status",
+              "title": "Pending analytical measures",
+              "summary": "Unavailable results are not represented as zero.",
+              "evidenceType": "PENDING",
+              "columns": [
+                {
+                  "field": "metric",
+                  "label": "Metric"
+                },
+                {
+                  "field": "status",
+                  "label": "Status"
+                },
+                {
+                  "field": "reason",
+                  "label": "Reason"
+                }
+              ],
+              "rows": [
+                {
+                  "metric": "Volume",
+                  "status": "Pending methodology",
+                  "reason": "Gross token-transfer volume may double-count deposits, rebalances, internal movements and withdrawals."
+                },
+                {
+                  "metric": "Retention",
+                  "status": "Pending result",
+                  "reason": "A 30-day Dune investigation exists, but no verified result is present in the stored research."
+                }
+              ]
+            }
+          ],
+          "automationAnalysis": {
+            "period": "30D",
+            "successfulProgramTransactions": 1938285,
+            "knownAutomationSignerTransactions": 1908392,
+            "knownAutomationSignerShare": "≈98.46%",
+            "evidenceStatus": "DERIVED"
+          },
+          "volume": {
+            "status": "pending_methodology"
+          },
+          "retention": {
+            "status": "pending_result"
+          },
+          "firstObservedActivity": {
+            "timestamp": "2022-05-03 06:26:11 UTC",
+            "statement": "The current founder-confirmed program has observable successful on-chain activity dating to 3 May 2022.",
+            "evidenceStatus": "VERIFIED"
+          },
+          "reportNarrative": {
+            "whatHappened": "The current founder-confirmed HawkFi program has observable successful on-chain activity dating to 3 May 2022. During the analysed 30-day period it recorded 1,938,285 successful program transactions, of which 1,908,392 were generated by the known HAWK automation signer.",
+            "whatDroveIt": "The known automation signer generated approximately 98.46% of successful HawkFi-program transactions during the analysed 30-day period. Raw program transaction counts therefore substantially overstate direct wallet interaction.",
+            "whoDroveIt": "After excluding the known HAWK automation signer, the active-wallet proxy measured 75 wallets over 24H, 207 over 7D and 511 over 30D. These are signing wallets, not independently verified human customers.",
+            "continuity": "The active-wallet proxy produces derived WAU/MAU of approximately 40.5%, DAU/MAU of approximately 14.7% and DAU/WAU of approximately 36.2%. A verified cohort-retention result is not present, so retention remains pending.",
+            "superteamImplication": "Evaluate HawkFi using automation-adjusted active-wallet and fee-inflow measures rather than raw program transactions or underlying Meteora and Orca volume. Future research should validate retention, complete priced fee coverage and a non-duplicative LP-volume methodology."
+          },
+          "limitations": [
+            "Active wallets are a non-HAWK executor signer proxy, not independently verified human customers.",
+            "Other automated signers may remain after excluding the known HAWK automation signer.",
+            "Underlying Meteora and Orca trading volume must not automatically be attributed to HawkFi.",
+            "Gross token-transfer volume may double-count capital across deposits, rebalances, internal movements and withdrawals.",
+            "Dune-priced fee inflows exclude assets without a usable USD price and are not complete audited protocol revenue.",
+            "The verified 30-day retention result is not present in the stored research."
+          ],
+          "methodologyNotes": [
+            "Program attribution is founder-confirmed after the researcher independently identified the address through on-chain analysis.",
+            "Active-wallet proxy: distinct successful transaction signers interacting with the founder-confirmed HawkFi program, excluding HAWK3BVnwptKRFYfVoVGhBc2TYxpyG9jmAbkHeW9tyKE.",
+            "Fee inflows: transfers into 4K3a2ucXiGvuMJMPNneRDyzmNp6i4RdzXJmBdWwGwPEh where the transaction signer is HAWK3BVnwptKRFYfVoVGhBc2TYxpyG9jmAbkHeW9tyKE.",
+            "Volume remains pending until a methodology avoids double-counting LP automation flows.",
+            "Retention remains pending because no verified query result is stored."
+          ],
+          "dataCutoff": "2026-09-04"
         },
         {
           "id": "STUK-020",

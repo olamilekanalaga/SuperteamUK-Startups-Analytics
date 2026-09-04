@@ -15,12 +15,12 @@ const slug = (row) => (row.displayAlias ? `${row.startup}-${row.displayAlias}` :
   .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 const logoKeys = new Set(["logo", "logoPath", "logoSource", "logoSourceUrl", "logoSourceType", "logoVerificationStatus", "logoAuditCategory", "logoAuditSources"]);
 const developmentIds = new Set(["STUK-001", "STUK-002", "STUK-004", "STUK-039", "STUK-062"]);
-const canonicalRows = startups.slice(0, 43).filter((row) => row.id !== "STUK-008" && !developmentIds.has(row.id)).map((row) => Object.fromEntries(Object.entries(row).filter(([key]) => !logoKeys.has(key))));
+const canonicalRows = startups.slice(0, 43).filter((row) => row.id !== "STUK-008" && row.id !== "STUK-019" && !developmentIds.has(row.id)).map((row) => Object.fromEntries(Object.entries(row).filter(([key]) => !logoKeys.has(key))));
 
 // Fingerprint of every canonical field before this logo/UI correction.
 test("unrelated STUK-001 through STUK-043 records remain byte-stable outside logo metadata", () => {
   const fingerprint = createHash("sha256").update(JSON.stringify(canonicalRows)).digest("hex");
-  assert.equal(fingerprint, "cee739fb8f2ca69491bc2fe1422ecd209cd7d2b82be021b6729cf1a70decdea4");
+  assert.equal(fingerprint, "a43a7aead6101eb9b20a9238a85e1650a4c5edf35c6aa1f0f926bed898a3574f");
   assert.deepEqual(startups.map((row) => row.id), Array.from({ length: 66 }, (_, i) => `STUK-${String(i + 1).padStart(3, "0")}`));
   assert.equal(new Set(startups.map(slug)).size, 66);
 });
@@ -243,9 +243,9 @@ test("address status labels derive from entry-point attribution and preserve the
 
 test("unrelated research records and queue membership remain preserved", () => {
   const fingerprint = createHash("sha256")
-    .update(JSON.stringify(startups.filter((row) => row.id !== "STUK-008" && !developmentIds.has(row.id)).map((row) => Object.fromEntries(Object.entries(row).filter(([key]) => !logoKeys.has(key))))))
+    .update(JSON.stringify(startups.filter((row) => row.id !== "STUK-008" && row.id !== "STUK-019" && !developmentIds.has(row.id)).map((row) => Object.fromEntries(Object.entries(row).filter(([key]) => !logoKeys.has(key))))))
     .digest("hex");
-  assert.equal(fingerprint, "7d993bc1e8a71cc4393eeb263fa1db8768a052dc247c1a3564bbb1aa829a7f0d");
+  assert.equal(fingerprint, "587e0a1d32a16146d97367e42280bca9a5d9c9c5d5297893bd93b38b10b945ed");
   assert.equal(startups.length, 66);
   assert.equal(mainnet.length, 32);
   assert.equal(startups.length - mainnet.length, 34);
@@ -377,4 +377,58 @@ test("founder-confirmed END, Xeno and Scrolly conclusions control report renderi
   assert.equal(scrolly.classification, "Off-chain");
   assert.match(scrolly.canonicalFinding, /Coinflow.*sunset/u);
   assert.deepEqual(scrolly.projectReportedMetrics.map((metric) => metric.value), ["40,000+", "1.7-1.9 million", "300", "10"]);
+});
+test("HawkFi completed research uses the shared report schema with founder-confirmed attribution", () => {
+  const hawk = startups.find((row) => row.id === "STUK-019");
+  assert.equal(hawk.researchStatus, "Completed");
+  assert.equal(hawk.chainEvidence, "Founder-confirmed");
+  assert.equal(hawk.website, "https://hawkfi.ag");
+  assert.deepEqual(hawk.founderContacts.map(({ handle, url }) => [handle, url]), [["@AND__SO", "https://x.com/and__so?s=11"]]);
+  const program = hawk.technicalEntryPoints.find((entry) => entry.address === "FqGg2Y1FNxMiGd51Q6UETixQWkF5fB92MysbYogRJb3P");
+  assert.equal(program.attributionStatus, "Founder-confirmed");
+  assert.equal(program.network, "Solana Mainnet");
+  assert.ok(hawk.technicalEntryPoints.some((entry) => entry.address === "HAWK3BVnwptKRFYfVoVGhBc2TYxpyG9jmAbkHeW9tyKE"));
+  assert.ok(hawk.technicalEntryPoints.some((entry) => entry.address === "4K3a2ucXiGvuMJMPNneRDyzmNp6i4RdzXJmBdWwGwPEh"));
+});
+
+test("HawkFi metrics preserve proxy, derived, verified-priced and pending evidence states", () => {
+  const hawk = startups.find((row) => row.id === "STUK-019");
+  const activity = hawk.reportTables.find((table) => table.id === "activity-windows").rows;
+  assert.deepEqual(activity.map((row) => [row.window, row.activeWallets, row.userSignedTransactions]), [
+    ["24H", 75, 741],
+    ["7D", 207, 5346],
+    ["30D", 511, 29574],
+  ]);
+  activity.forEach((row) => assert.equal(row.evidenceStatus, "PROXY"));
+  assert.deepEqual(hawk.reportTables.find((table) => table.id === "engagement-ratios").rows.map((row) => row.value), ["≈40.5%", "≈14.7%", "≈36.2%"]);
+  const fees = hawk.reportTables.find((table) => table.id === "fee-inflows").rows;
+  assert.deepEqual(fees.map((row) => row.pricedFeeInflows), ["$465.29", "$2,527.10", "Pending"]);
+  assert.match(fees[0].evidenceStatus, /VERIFIED priced subset/u);
+  assert.equal(hawk.automationAnalysis.successfulProgramTransactions, 1938285);
+  assert.equal(hawk.automationAnalysis.knownAutomationSignerTransactions, 1908392);
+  assert.equal(hawk.automationAnalysis.knownAutomationSignerShare, "≈98.46%");
+  assert.equal(hawk.volume.status, "pending_methodology");
+  assert.equal(hawk.retention.status, "pending_result");
+});
+
+test("HawkFi language does not convert proxies or priced subsets into unsupported claims", () => {
+  const hawk = startups.find((row) => row.id === "STUK-019");
+  const serialized = JSON.stringify(hawk);
+  assert.match(hawk.firstObservedActivity.statement, /observable successful on-chain activity dating to 3 May 2022/u);
+  assert.doesNotMatch(serialized, /HawkFi launched on 3 May 2022/u);
+  assert.match(serialized, /not independently verified human customers/u);
+  assert.match(serialized, /not complete audited protocol revenue/u);
+  assert.match(serialized, /Underlying Meteora and Orca trading volume must not automatically be attributed to HawkFi/u);
+  assert.ok(!hawk.reportTables.some((table) => table.id === "retention-result"));
+});
+
+test("Overview KPI cards reuse the theme-aware directory-card depth without changing values", () => {
+  assert.match(css, /Overview KPI cards reuse the approved directory-card depth language/u);
+  assert.match(css, /\.metric-strip > \* \{[\s\S]*border-top: 5px solid var\(--analytics-card-accent\)/u);
+  assert.match(css, /\.metric-strip > \* \{[\s\S]*box-shadow: 5px 6px 0 var\(--analytics-card-depth\)/u);
+  assert.match(source, /title="Directory universe" value=\{String\(summary\.directoryStartups\)\}/u);
+  assert.match(source, /title="Researched"/u);
+  assert.match(source, /title="Queue A"/u);
+  assert.match(source, /title="Queue B"/u);
+  assert.deepEqual(snapshot.queries.research_summary.rows[0], { directoryStartups: 66, researched: 66, nonMainnet: 34, mainnetQueue: 32, completionRate: 1 });
 });
