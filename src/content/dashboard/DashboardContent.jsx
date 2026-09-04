@@ -101,21 +101,29 @@ const projectMetricsFor = (startup) => [
   ...(startup.metrics ?? []).filter((metric) => /reported|claim/iu.test(metric.qualifier ?? "")),
 ];
 
+const verifiedNetworkStatus = (startup) => {
+  const evidence = String(startup.chainEvidence ?? "").toLowerCase();
+  const technical = [startup.technicalState, startup.technicalStatus, startup.classification].filter(Boolean).join(" ").toLowerCase();
+  const hasVerifiedMainnet = technical.includes("mainnet") && evidence === "on-chain verified";
+  const hasVerifiedDevnet = technical.includes("devnet") && (evidence === "on-chain verified" || (startup.metrics ?? []).some((metric) => /devnet verified/iu.test(metric.qualifier ?? "")));
+  if (hasVerifiedMainnet && hasVerifiedDevnet) return { label: "Mainnet + Devnet", tone: "mainnet" };
+  if (hasVerifiedMainnet) return { label: "Mainnet", tone: "mainnet" };
+  if (hasVerifiedDevnet) return { label: "Devnet", tone: "devnet" };
+  return null;
+};
+const cardDescription = (startup) => { const value = String(startup.whatItBuilds ?? startup.oneLine ?? startup.summary ?? "Project description not verified.").trim(); return value.match(/^.*?[.!?](?:\s|$)/u)?.[0].trim() ?? value; };
 function StartupCard({ startup, onNavigate }) {
-  const status = compactStatus(startup);
-  const verifiedMetric = verifiedMetricsFor(startup)[0];
+  const network = verifiedNetworkStatus(startup);
+  const description = cardDescription(startup);
   const openProfile = (event) => {
     if (!event.defaultPrevented && event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
       event.preventDefault();
       onNavigate(startupPath(startup));
     }
   };
-  return <a className={`startup-card startup-card--${status.tone}`} href={startupPath(startup)} onClick={openProfile} aria-label={"View " + displayName(startup) + " profile"}>
-    <div className="startup-card__identity"><ProjectLogo startup={startup} /><div><h3>{displayName(startup)}</h3><p>{sectorTags(startup)[0] ?? "Sector not verified"}</p></div></div>
-    <div className="startup-card__badges"><StatusPill tone={status.tone}>{status.label}</StatusPill><StatusPill tone="research">{researchStatus(startup)}</StatusPill></div>
-    {verifiedMetric && <p className="startup-card__metric"><strong>{verifiedMetric.value}</strong> {verifiedMetric.label}</p>}
-    <p className="startup-card__description">{startup.canonicalFinding ?? startup.finding ?? startup.oneLine ?? startup.summary}</p>
-    {startup.lastReviewed && <p className="startup-card__cutoff">Data cutoff {startup.dataCutoff ?? startup.lastReviewed}</p>}
+  return <a className={"startup-card startup-card--" + (network?.tone ?? "neutral")} href={startupPath(startup)} onClick={openProfile} aria-label={"View " + displayName(startup) + " profile. " + description} title={description}>
+    <div className="startup-card__identity"><ProjectLogo startup={startup} /><div><h3>{displayName(startup)}</h3><p>{sectorTags(startup)[0] ?? "Sector not verified"}</p></div>{network && <div className="startup-card__network"><StatusPill tone={network.tone}>{network.label}</StatusPill></div>}</div>
+    <p className="startup-card__description">{description}</p>
   </a>;
 }
 
@@ -159,17 +167,46 @@ function TextList({ title, items = [], className = "" }) {
   if (!items.length) return null;
   return <section className={`profile-section ${className}`}><h3>{title}</h3><ul>{items.map((item) => <li key={item}>{item}</li>)}</ul></section>;
 }
+const founderIsDisplayable = (startup) => {
+  const founder = startup.founder ?? startup.directoryFounder;
+  if (!founder || /not (?:publicly )?verified|not listed|no directory|requires confirmation/iu.test(founder)) return false;
+  return Boolean(startup.founderContacts?.length) || !/not verified|requires confirmation/iu.test(startup.founderVerification ?? "");
+};
+const projectLinksFor = (startup) => {
+  const links = [];
+  const add = (label, url) => { if (url && !links.some((item) => item.url === url)) links.push({ label, url }); };
+  add("Website", startup.website);
+  add("Project X", startup.xAccount);
+  (startup.xAccounts ?? []).forEach((url, index) => add(index ? "Project X " + (index + 1) : "Project X", url));
+  add("Project Telegram", startup.projectTelegram);
+  add("Discord", startup.discord);
+  add("GitHub", startup.github);
+  add("Documentation", startup.docs ?? startup.documentation);
+  return links;
+};
+function ReportIntroductionLinks({ startup }) {
+  const founderContacts = startup.founderContacts ?? [];
+  const projectLinks = projectLinksFor(startup);
+  const showFounder = founderIsDisplayable(startup);
+  if (!showFounder && !founderContacts.length && !projectLinks.length) return null;
+  return <section className="report-links" aria-label="Founder and project links">
+    {(showFounder || founderContacts.length > 0) && <div className="report-links__group"><p className="report-links__label">Founder contact</p>{showFounder && <strong>{startup.founder ?? startup.directoryFounder}</strong>}<div className="report-link-buttons">{founderContacts.map((contact) => <a key={contact.url} href={contact.url} target="_blank" rel="noopener noreferrer" aria-label={contact.label + ": " + contact.handle} title={contact.label + ": " + contact.handle}>{contact.label}<span>{contact.handle}</span></a>)}</div></div>}
+    {projectLinks.length > 0 && <div className="report-links__group"><p className="report-links__label">Official project links</p><div className="report-link-buttons report-link-buttons--project">{projectLinks.map((link) => <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer" aria-label={link.label} title={link.label}>{link.label}</a>)}</div></div>}
+  </section>;
+}
 function SourceLinks({ startup }) {
   const links = [...new Map([startup.website, startup.xAccount, ...(startup.sources ?? [])].filter(Boolean).map((source) => {
     const item = typeof source === "string" ? { url: source } : source;
     return [item.url, item];
   })).values()];
-  if (!links.length && !startup.methodologyNotes?.length) return null;
-  return <section className="profile-section"><h3>Sources and methodology</h3>
+  if (!links.length && !startup.methodologyNotes?.length && !startup.dataCutoff && !startup.lastReviewed) return null;
+  return <section className="profile-section source-methodology-panel"><h3>Sources and methodology</h3>
     {links.length > 0 && <ul className="source-links">{links.map((source) => <li key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label ?? source.url}</a>{source.note && <span>{source.note}</span>}</li>)}</ul>}
     {startup.methodologyNotes?.length > 0 && <ul className="methodology-notes">{startup.methodologyNotes.map((note) => <li key={note}>{note}</li>)}</ul>}
+    <p className="last-reviewed">Data cutoff - {publicValue(startup.dataCutoff ?? startup.lastReviewed)}</p>
   </section>;
 }
+
 function isDevelopmentReport(startup) {
   return technicalGroup(startup) === "Devnet/Testnet";
 }
@@ -216,50 +253,89 @@ function NarrativeSection({ startup, id, title, value }) {
   return <section className="report-section narrative-section"><RichNarrative id={`${startupSlug(startup)}-${id}`} value={`## ${title}\n\n${value}`} /></section>;
 }
 function ReportEvidence({ startup }) {
-  const verified = verifiedMetricsFor(startup);
-  const reported = projectMetricsFor(startup);
-  return <section id="evidence" className="report-section report-evidence"><h3>Evidence</h3>
+  return <section className="report-section report-evidence" aria-label="Evidence context">
+    <section className="profile-section"><h3>Off-chain context</h3><p>{startup.whatItBuilds ?? startup.summary ?? startup.oneLine}</p><EvidenceLedger startup={startup} /></section>
+    {startup.founderConfirmations?.length > 0 && <section className="profile-section founder-confirmations"><h3>Founder-confirmed context</h3><ul>{startup.founderConfirmations.map((item) => <li key={item.statement}>{item.statement}<small>{item.evidenceType}</small></li>)}</ul></section>}
     <TechnicalEntryPoints startup={startup} />
-    <section className="profile-section"><h3>Off-chain evidence</h3><p>{startup.whatItBuilds ?? startup.summary ?? startup.oneLine}</p><EvidenceLedger startup={startup} /></section>
-    {startup.evidenceBoundary && <section className="profile-section"><h3>Evidence limitations</h3><p>{startup.evidenceBoundary}</p></section>}
     {startup.nextAction && <section className="profile-section"><h3>Further research required</h3><p>{startup.nextAction}</p></section>}
-    <MetricSection title="Independently verified metrics" metrics={verified} />
-    <MetricSection title="Founder or project-reported metrics" metrics={reported} reported />
     <div className="analysis-checklists"><AnalysisChecklist title="Completed research" items={startup.completedAnalysis} completed /><AnalysisChecklist title="Outstanding analysis" items={startup.outstandingAnalysis} /></div>
   </section>;
 }
+function EvidenceLimitations({ startup }) {
+  const items = [...new Set([...(startup.evidenceBoundary ? [startup.evidenceBoundary] : []), ...(startup.limitations ?? []), ...(startup.dataQualityNotes ?? [])].filter(Boolean))];
+  if (!items.length) return null;
+  return <TextList title="Evidence limitations" items={items} className="data-warnings evidence-limitations" />;
+}
+const csvEscape = (value) => {
+  const text = value == null ? "" : String(value);
+  return /[",\n\r]/u.test(text) ? '"' + text.replace(/"/g, '""') + '"' : text;
+};
+const reportExportRows = (startup) => {
+  const rows = [];
+  const push = (row) => rows.push({ section: "", dataset: "", date: "", entity: displayName(startup), metric: "", value: "", unit: "", evidence_type: "", source: "", notes: "", ...row });
+  const kpis = startup.headlineKpis ?? verifiedMetricsFor(startup).slice(0, 6);
+  kpis.forEach((metric) => push({ section: "kpi", dataset: "headline_kpis", metric: metric.label, value: metric.value, unit: metric.unit ?? "", evidence_type: metric.qualifier ?? "", source: metric.sourceUrl ?? "", notes: metric.notes ?? "" }));
+  (startup.reportCharts ?? []).forEach((chart) => chart.rows.forEach((row) => {
+    const date = row.date ?? row.month ?? row.period ?? row.firstTransaction ?? "";
+    const entity = row.wallet ?? row.walletLabel ?? row.program ?? row.group ?? row.market ?? displayName(startup);
+    Object.entries(row).filter(([field]) => !["date", "month", "period", "wallet", "walletLabel", "program", "group", "market"].includes(field)).forEach(([metric, value]) => push({ section: "chart", dataset: chart.id, date, entity, metric, value, unit: chart.unit ?? "", evidence_type: chart.evidenceType ?? "", source: chart.sourceUrl ?? "", notes: chart.summary ?? "" }));
+  }));
+  (startup.reportTables ?? []).forEach((table) => table.rows.forEach((row) => {
+    const date = row.date ?? row.month ?? row.period ?? row.firstTransaction ?? "";
+    const entity = row.wallet ?? row.program ?? row.group ?? displayName(startup);
+    Object.entries(row).filter(([field]) => !["date", "month", "period", "wallet", "program", "group"].includes(field)).forEach(([metric, value]) => push({ section: "table", dataset: table.id, date, entity, metric, value, unit: table.unit ?? "", evidence_type: table.evidenceType ?? "", source: table.sourceUrl ?? "", notes: table.summary ?? "" }));
+  }));
+  (startup.technicalEntryPoints ?? []).filter((entry) => entry.address).forEach((entry) => push({ section: "evidence", dataset: "technical_entry_points", entity: entry.name, metric: entry.type, value: entry.address, unit: entry.network, evidence_type: entry.attributionStatus, source: entry.explorerUrl ?? "", notes: "" }));
+  (startup.founderConfirmations ?? []).forEach((item) => push({ section: "evidence", dataset: "founder_confirmations", metric: "Founder confirmation", value: item.statement, evidence_type: item.evidenceType, notes: "" }));
+  return rows;
+};
+function ReportCsvExport({ startup }) {
+  const rows = reportExportRows(startup);
+  if (!rows.length) return null;
+  const download = () => {
+    const columns = ["section", "dataset", "date", "entity", "metric", "value", "unit", "evidence_type", "source", "notes"];
+    const csv = [columns.join(","), ...rows.map((row) => columns.map((column) => csvEscape(row[column])).join(","))].join("\r\n");
+    const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = startupSlug(startup) + "-report-data.csv";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  };
+  return <section className="report-export" aria-label="Report data export"><button type="button" onClick={download}>Download report data · CSV</button></section>;
+}
+
 function StartupDetail({ startup, onBack, chartProps }) {
   const narrative = startup.reportNarrative ?? {};
   const finding = startup.canonicalFinding ?? startup.finding;
-  return <section className={`startup-profile startup-profile--${technicalGroup(startup).toLowerCase().replace(/[^a-z]+/g, "-")}`} aria-label={displayName(startup) + " profile"}>
+  const continuity = narrative.retention ?? narrative.testingContinuity ?? narrative.continuity;
+  return <section className={"startup-profile startup-profile--" + technicalGroup(startup).toLowerCase().replace(/[^a-z]+/g, "-")} aria-label={displayName(startup) + " profile"}>
     <button type="button" className="profile-back" onClick={onBack}>&larr; Back to startups</button>
-    <nav className="profile-anchors" aria-label="Report sections"><a href="#summary">Summary</a><a href="#metrics">Metrics</a><a href="#evidence">Evidence</a><a href="#sources">Sources</a></nav>
-    <header id="summary" className="startup-detail__header">
+    <header className="startup-detail__header">
       <ProjectLogo startup={startup} profile />
       <div><p className="eyebrow">{startup.sector}</p><h2>{displayName(startup)}</h2><p>{startup.whatItBuilds ?? startup.summary}</p></div>
       <StatusPill tone={isMainnet(startup) ? "mainnet" : "research"}>{researchStatus(startup)}</StatusPill>
     </header>
-    <dl className="fact-grid">
-      <div><dt>Founder</dt><dd>{publicValue(startup.founder ?? startup.directoryFounder)}</dd></div><div><dt>Sector</dt><dd>{publicValue(startup.sector)}</dd></div>
-      <div><dt>Directory stage</dt><dd>{publicValue(startup.directoryStage ?? startup.stage)}</dd></div><div><dt>Observed status</dt><dd>{publicValue(startup.observedStatus ?? startup.productStatus)}</dd></div><div><dt>Technical stage</dt><dd>{technicalGroup(startup)}</dd></div><div><dt>Classification</dt><dd>{publicValue(startup.classification)}</dd></div>
-    </dl>
-    <section className="canonical-finding"><p className="eyebrow">Canonical finding</p><RichNarrative id={`${startupSlug(startup)}-canonical-finding`} value={finding} /></section>
+    <ReportIntroductionLinks startup={startup} />
+    <section className="canonical-finding"><p className="eyebrow">Canonical finding</p><RichNarrative id={startupSlug(startup) + "-canonical-finding"} value={finding} /></section>
     <DevelopmentNotice startup={startup} />
     <ReportKpis startup={startup} />
     <DevelopmentProgress startup={startup} />
     <ReportCharts startup={startup} chartProps={chartProps} />
     <ReportTables startup={startup} />
     <NarrativeSection startup={startup} id="what-happened" title="What happened" value={narrative.whatHappened} />
+    <NarrativeSection startup={startup} id="drivers" title="What drove the observable activity" value={narrative.whatDroveIt} />
+    <NarrativeSection startup={startup} id="testing-drivers" title="Who or which wallets or cohorts drove it" value={narrative.whoDroveIt ?? narrative.testingDrivers} />
+    <NarrativeSection startup={startup} id="continuity" title="Whether activity continued or users returned" value={continuity} />
     <NarrativeSection startup={startup} id="evidence-demonstrates" title="What the test activity demonstrates" value={narrative.whatEvidenceDemonstrates} />
-    <NarrativeSection startup={startup} id="testing-drivers" title="Who or what drove activity" value={narrative.testingDrivers} />
-    <NarrativeSection startup={startup} id="testing-continuity" title="Testing continuity" value={narrative.testingContinuity} />
-    <NarrativeSection startup={startup} id="drivers" title="What drove it" value={narrative.whatDroveIt} />
-    <NarrativeSection startup={startup} id="implication" title="Superteam implication" value={narrative.superteamImplication} />
     <ReportEvidence startup={startup} />
-    <DevelopmentDisclosure startup={startup} label="Evidence limitations"><TextList title="Evidence limitations" items={startup.limitations ?? startup.dataQualityNotes ?? []} className="data-warnings" /></DevelopmentDisclosure>
-    <div id="sources"><DevelopmentDisclosure startup={startup} label="Sources and methodology"><SourceLinks startup={startup} /></DevelopmentDisclosure></div>
+    <NarrativeSection startup={startup} id="implication" title="Superteam implication" value={narrative.superteamImplication} />
+    <DevelopmentDisclosure startup={startup} label="Evidence limitations"><EvidenceLimitations startup={startup} /></DevelopmentDisclosure>
+    <ReportCsvExport startup={startup} />
+    <div><DevelopmentDisclosure startup={startup} label="Sources and methodology"><SourceLinks startup={startup} /></DevelopmentDisclosure></div>
     {isDevelopmentReport(startup) && <p className="static-research-notice">This report reflects evidence available up to the stated data cutoff. Metrics are not continuously updated unless a new research cycle is completed.</p>}
-    <p className="last-reviewed">Data cutoff - {publicValue(startup.dataCutoff ?? startup.lastReviewed)}</p>
   </section>;
 }
 const internalResearchPipeline = ["Directory intake", "Identity verification", "Product research", "Technical classification", "Evidence collection", "Queue assignment", "Publication"];
@@ -315,6 +391,7 @@ export function DashboardContent() {
   const [research, setResearch] = useState("All");
   const [sector, setSector] = useState("All");
   const [sort, setSort] = useState("directory");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const route = useMemo(() => routeFromPathname(pathname, startups), [pathname, startups]);
   const view = route.view;
   const selected = route.startup;
@@ -359,6 +436,7 @@ export function DashboardContent() {
     url.pathname = nextPath;
     globalThis.history.pushState({}, "", url);
     setPathname(url.pathname);
+    setMobileMenuOpen(false);
   };
   const navClick = (path) => (event) => {
     if (!event.defaultPrevented && event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
@@ -375,7 +453,7 @@ export function DashboardContent() {
   return <article className="page startup-archive" aria-label="Superteam UK startup analytics"><div className="archive-frame">
     <aside className="archive-rail" aria-label="Analytics sections"><BrandMark />{navItems.map((item) => <a key={item.path} className={view === item.view ? "active" : ""} href={item.path} onClick={navClick(item.path)} aria-label={item.label}><span aria-hidden="true">{item.icon}</span></a>)}</aside>
     <div className="archive-main">
-      <header className="archive-header"><div><p className="eyebrow">Superteam UK Startup Analytics</p><h1>Startup <em>analytics.</em></h1><p className="header-description">Products, evidence, users and activity across the Superteam UK startup ecosystem.</p></div><nav className="header-actions" aria-label="Primary views">{navItems.map((item) => <a key={item.path} className={view === item.view ? "active" : ""} href={item.path} onClick={navClick(item.path)}>{item.label}</a>)}</nav></header>
+      <header className="archive-header"><div><p className="eyebrow">Superteam UK Startup Analytics</p><h1>Startup <em>analytics.</em></h1><p className="header-description">Products, evidence, users and activity across the Superteam UK startup ecosystem.</p></div><nav className="header-actions" aria-label="Primary views">{navItems.map((item) => <a key={item.path} className={view === item.view ? "active" : ""} href={item.path} onClick={navClick(item.path)}>{item.label}</a>)}</nav><button type="button" className="mobile-menu-trigger" aria-label="Open website navigation" aria-controls="mobile-site-menu" aria-expanded={mobileMenuOpen} onClick={() => setMobileMenuOpen((open) => !open)}><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span></button>{mobileMenuOpen && <nav id="mobile-site-menu" className="mobile-site-menu" aria-label="Website navigation">{navItems.map((item) => <a key={item.path} className={view === item.view ? "active" : ""} href={item.path} onClick={navClick(item.path)}>{item.label}</a>)}</nav>}</header>
       {view === "overview" && <>
         <section className="metric-strip" aria-label="Research progress">
           <MetricCard id="directory-size" queryId="research_summary" sourceRows={[summary]} title="Directory universe" value={String(summary.directoryStartups)} description="Published startup records." />
@@ -394,6 +472,5 @@ export function DashboardContent() {
       {route.notFound && <section className="route-not-found" role="status"><p className="eyebrow">Not found</p><h2>Startup profile unavailable.</h2><p>The URL does not match a verified startup profile.</p><button type="button" onClick={() => navigateTo("/startups")}>Return to startups</button></section>}
       <footer className="archive-footer"><span>Evidence-led research by Olamilekan Alaga</span><span>Data cutoff &middot; {snapshot.report?.asOf ?? "2026-09-02"}</span></footer>
     </div>
-    <nav className="mobile-nav" aria-label="Primary views">{navItems.map((item) => <a key={item.path} className={view === item.view ? "active" : ""} href={item.path} onClick={navClick(item.path)}><span aria-hidden="true">{item.icon}</span>{item.label}</a>)}</nav>
   </div></article>;
 }

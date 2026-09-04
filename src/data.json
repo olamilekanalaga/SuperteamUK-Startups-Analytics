@@ -15,8 +15,8 @@
         {
           "directoryStartups": 66,
           "researched": 66,
-          "nonMainnet": 33,
-          "mainnetQueue": 33,
+          "nonMainnet": 34,
+          "mainnetQueue": 32,
           "completionRate": 1
         }
       ],
@@ -576,7 +576,7 @@
           "productStatus": "Live data product",
           "technicalStatus": "Live off-chain + Solana devnet",
           "queue": "Non-Mainnet Research",
-          "analysisStatus": "Devnet report shared",
+          "analysisStatus": "Research completed",
           "oneLine": "Climate-data infrastructure with live SST dashboards and a pre-mainnet Solana layer.",
           "whatItBuilds": "END Corp operates public sea-surface-temperature data products and is developing decentralised satellite ground-station and token infrastructure.",
           "finding": "The public climate dashboard is live and updated daily. All verified END Corp program and token addresses were on Solana devnet; no known mainnet address was found.",
@@ -620,7 +620,7 @@
           "dataQualityNotes": [],
           "observedStatus": "Live data product",
           "canonicalFinding": "The public climate dashboard is live and updated daily. All verified END Corp program and token addresses were on Solana devnet; no known mainnet address was found.",
-          "founderVerification": "Not verified",
+          "founderVerification": "Founder-confirmed",
           "projectReportedMetrics": [],
           "classification": "Devnet/testnet",
           "logo": "/brands/startups/end-corp.png",
@@ -690,6 +690,24 @@
           "methodologyNotes": [
             "This report measures development and testing activity. Devnet/Testnet transactions do not establish customer adoption, commercial usage or revenue.",
             "The public dashboard measurement is off-chain product evidence and is presented separately from Solana Devnet testing."
+          ],
+          "founderContacts": [
+            {
+              "label": "Founder Telegram",
+              "type": "telegram",
+              "url": "https://t.me/andrewjamesrobinson",
+              "handle": "@andrewjamesrobinson"
+            }
+          ],
+          "founderConfirmations": [
+            {
+              "statement": "The documented Solana Devnet activity belongs to END Corp.",
+              "evidenceType": "Founder-confirmed"
+            },
+            {
+              "statement": "END Corp is not live on Solana mainnet.",
+              "evidenceType": "Founder-confirmed"
+            }
           ]
         },
         {
@@ -748,16 +766,16 @@
           "logoSourceUrl": "https://x.com/Scrollyfeed",
           "logoSourceType": "authenticated-logo",
           "logoVerificationStatus": "authenticated-logo",
-          "founder": "Dean Ball",
+          "founder": "Dean",
           "sector": "Gaming",
           "stage": "Self-funded",
           "productStatus": "Sunset",
-          "technicalStatus": "Testnet + off-chain",
+          "technicalStatus": "Founder-confirmed off-chain product; payments processed through Coinflow",
           "queue": "Non-Mainnet Research",
-          "analysisStatus": "Historical profile complete",
+          "analysisStatus": "Research completed",
           "oneLine": "A short-form playable-game feed that supported a large no-code game jam.",
-          "whatItBuilds": "Scrolly was a feed for instantly playable games, shared points, leaderboards and developer distribution. The founder confirmed that activity and Coinflow payments were off-chain.",
-          "finding": "No official token or public Scrolly program was verified. Public records support 300 submissions as a project-reported count, while 27 games and 25 developers were individually named in the public census. Production ended on 26 June 2026.",
+          "whatItBuilds": "Scrolly was a short-form feed for instantly playable games, shared points, leaderboards and developer distribution. The founder confirmed that all product activity and Coinflow payments were off-chain.",
+          "finding": "Founder Dean confirmed that none of Scrolly's product activity occurred on-chain. Payments were processed through Coinflow, the original Scrolly product was sunset, and he is developing a new casino product based on a related concept.",
           "nextAction": "Retain as a historical ecosystem-support case study and keep platform-wide claims separate from named developer evidence.",
           "productEvidence": "Founder-confirmed",
           "chainEvidence": "Founder-confirmed",
@@ -789,7 +807,7 @@
           "technicalEntryPoints": [],
           "completedAnalysis": [],
           "outstandingAnalysis": [],
-          "technicalState": "Devnet/testnet",
+          "technicalState": "Off-chain/Early",
           "summary": "A short-form playable-game feed that supported a large no-code game jam.",
           "directoryStage": "Self-funded",
           "verifiedMetrics": [],
@@ -797,10 +815,31 @@
           "lastReviewed": "2026-09-02",
           "dataQualityNotes": [],
           "observedStatus": "Sunset",
-          "canonicalFinding": "No official token or public Scrolly program was verified. Public records support 300 submissions as a project-reported count, while 27 games and 25 developers were individually named in the public census. Production ended on 26 June 2026.",
-          "founderVerification": "Not verified",
-          "projectReportedMetrics": [],
-          "classification": "Devnet/testnet",
+          "canonicalFinding": "Founder Dean confirmed that none of Scrolly's product activity occurred on-chain. Payments were processed through Coinflow, the original Scrolly product was sunset, and he is developing a new casino product based on a related concept.",
+          "founderVerification": "Founder-confirmed",
+          "projectReportedMetrics": [
+            {
+              "label": "Reported users",
+              "value": "40,000+",
+              "qualifier": "Founder-reported off-chain metric"
+            },
+            {
+              "label": "Reported games played",
+              "value": "1.7-1.9 million",
+              "qualifier": "Founder-reported off-chain metric"
+            },
+            {
+              "label": "Game Jam submissions",
+              "value": "300",
+              "qualifier": "Project-reported"
+            },
+            {
+              "label": "Winners",
+              "value": "10",
+              "qualifier": "Official announcement"
+            }
+          ],
+          "classification": "Off-chain",
           "logo": "/brands/startups/scrolly.jpg",
           "logoSource": "https://x.com/Scrollyfeed",
           "logoAuditCategory": "authenticated-logo",
@@ -808,23 +847,23 @@
             "existing asset",
             "official product X"
           ],
-          "reportTemplate": "devnet-testnet",
+          "reportTemplate": "off-chain",
           "dataCutoff": "2026-09-02",
           "headlineKpis": [
             {
-              "label": "Project-reported submissions",
+              "label": "Reported users",
+              "value": "40,000+",
+              "qualifier": "Founder-reported off-chain metric"
+            },
+            {
+              "label": "Reported games played",
+              "value": "1.7-1.9 million",
+              "qualifier": "Founder-reported off-chain metric"
+            },
+            {
+              "label": "Game Jam submissions",
               "value": "300",
-              "qualifier": "Project-reported; not independently verified on-chain"
-            },
-            {
-              "label": "Named games",
-              "value": "27",
-              "qualifier": "Individually named in the public census"
-            },
-            {
-              "label": "Named developers",
-              "value": "25",
-              "qualifier": "Individually named in the public census"
+              "qualifier": "Project-reported"
             },
             {
               "label": "Officially announced winners",
@@ -832,41 +871,48 @@
               "qualifier": "Official announcement"
             }
           ],
-          "developmentProgress": [
-            {
-              "label": "Public product evidence",
-              "state": "verified",
-              "stateLabel": "Observed",
-              "detail": "A public census named 27 games and 25 developers; 300 submissions were project-reported."
-            },
-            {
-              "label": "Testnet evidence",
-              "state": "limited",
-              "stateLabel": "Unattributed",
-              "detail": "The record is classified as testnet plus off-chain, but no official public program was verified."
-            },
-            {
-              "label": "Product continuity",
-              "state": "missing",
-              "stateLabel": "Ended",
-              "detail": "Production ended on 26 June 2026."
-            }
-          ],
           "reportNarrative": {
-            "whatHappened": "Scrolly recorded 300 submissions as a project-reported count. Its public census individually named 27 games and 25 developers, and an official announcement named ten winners. Production ended on 26 June 2026.",
-            "whatEvidenceDemonstrates": "The public records demonstrate an off-chain game-building programme and documented participation. No official token or public Scrolly program was verified, so the stored evidence cannot measure testnet execution or blockchain usage.",
-            "testingContinuity": "No attributable program or transaction timeline was stored. Product production ended on 26 June 2026, but that off-chain date must not be interpreted as a blockchain activity cutoff.",
-            "superteamImplication": "Treat Scrolly as a completed historical programme, preserve its public participation evidence and request an attributable testnet program only if technical validation remains useful."
+            "whatHappened": "Scrolly operated as an off-chain playable-game feed and later sunset. The founder reported more than 40,000 users, 1.7-1.9 million games played, 300 Game Jam submissions and ten winners.",
+            "whatEvidenceDemonstrates": "Founder confirmation establishes that Scrolly's activity was off-chain and that payments used Coinflow. The reported participation figures are not independently verified blockchain metrics.",
+            "continuity": "The original Scrolly product was sunset. The founder reported that he is developing a new casino product based on a related concept.",
+            "superteamImplication": "Treat Scrolly as a completed historical off-chain case study and keep its founder-reported participation figures separate from independently verified on-chain evidence."
           },
           "limitations": [
-            "No official token or public Scrolly program was verified.",
-            "The 300-submission figure is project-reported.",
-            "The public census measures named games and developers, not on-chain users.",
-            "No testnet transaction or signing-wallet dataset was available."
+            "The participation figures are founder- or project-reported off-chain metrics.",
+            "No Scrolly product activity occurred on-chain.",
+            "Coinflow payment activity does not create an attributable Scrolly blockchain dataset."
           ],
           "methodologyNotes": [
-            "This report measures development and testing activity. Devnet/Testnet transactions do not establish customer adoption, commercial usage or revenue.",
-            "Public census and official-announcement evidence is separated from unverified blockchain activity."
+            "Founder confirmation controls the technical interpretation: Scrolly activity was off-chain.",
+            "Historical participation figures remain labelled as founder- or project-reported."
+          ],
+          "founderContacts": [
+            {
+              "label": "Founder X",
+              "type": "x",
+              "url": "https://x.com/deandev10",
+              "handle": "@deandev10"
+            },
+            {
+              "label": "Founder Telegram",
+              "type": "telegram",
+              "url": "https://t.me/DeanDev10",
+              "handle": "@DeanDev10"
+            }
+          ],
+          "founderConfirmations": [
+            {
+              "statement": "None of Scrolly's product activity occurred on-chain.",
+              "evidenceType": "Founder-confirmed"
+            },
+            {
+              "statement": "Payments were processed through Coinflow.",
+              "evidenceType": "Founder-confirmed"
+            },
+            {
+              "statement": "The original Scrolly product was sunset and a new casino product is being developed from a related concept.",
+              "evidenceType": "Founder-confirmed"
+            }
           ]
         },
         {
@@ -2157,7 +2203,21 @@
             "official product X"
           ],
           "logoSourceUrl": "https://zynta.com/wp-content/uploads/2025/06/icon.png",
-          "logoSourceType": "authenticated-app-icon"
+          "logoSourceType": "authenticated-app-icon",
+          "founderContacts": [
+            {
+              "label": "Founder X",
+              "type": "x",
+              "url": "https://x.com/onthehouz",
+              "handle": "@onthehouz"
+            },
+            {
+              "label": "Founder Telegram",
+              "type": "telegram",
+              "url": "https://t.me/Onthehouz",
+              "handle": "@Onthehouz"
+            }
+          ]
         },
         {
           "id": "STUK-021",
@@ -4018,8 +4078,8 @@
           ]
         },
         {
-          "founder": "Not publicly verified",
-          "founderVerification": "Not publicly verified",
+          "founder": "Clive",
+          "founderVerification": "Founder-confirmed",
           "verifiedMetrics": [],
           "projectReportedMetrics": [],
           "technicalEntryPoints": [],
@@ -4049,15 +4109,15 @@
           "xAccount": "https://x.com/xeno_money",
           "sector": "Stablecoin payments / contactless payments",
           "stage": "Not publicly verified",
-          "observedStatus": "Live mainnet product",
-          "technicalStatus": "Live contactless stablecoin payment product with mainnet-facing settlement rails",
-          "technicalState": "Mainnet",
-          "classification": "Mainnet",
-          "queue": "Mainnet Analysis Queue",
+          "observedStatus": "Product not shipped to the App Store",
+          "technicalStatus": "Founder confirmed Solana functionality is not live",
+          "technicalState": "Off-chain/Early",
+          "classification": "Off-chain",
+          "queue": "Non-Mainnet Research",
           "summary": "Contactless stablecoin payment infrastructure for wallets, merchants and payment terminals.",
-          "finding": "The project explicitly states that it has no XENO token; supported rails and attributable operational transaction entry points still require verification.",
-          "nextAction": "Identify supported stablecoin rails and verified operational transaction entry points.",
-          "analysisStatus": "Mainnet analysis required",
+          "finding": "Founder Clive confirmed that Xeno Money's Solana functionality is not live and that the product has not shipped to the App Store. The absence of live on-chain activity is the completed finding.",
+          "nextAction": "Preserve the completed finding and reassess only if the founder confirms a future product launch.",
+          "analysisStatus": "Research completed",
           "logoPath": "/brands/startups/xeno-money.png",
           "logoVerificationStatus": "authenticated-logo",
           "logoAuditCategory": "authenticated-logo",
@@ -4070,14 +4130,50 @@
           "logoSourceUrl": "https://xeno.money/",
           "logoSourceType": "authenticated-logo",
           "directoryStage": "Not publicly verified",
-          "productStatus": "Live mainnet product",
+          "productStatus": "Product not shipped to the App Store",
           "oneLine": "Contactless stablecoin payment infrastructure for wallets, merchants and payment terminals.",
-          "canonicalFinding": "The project explicitly states that it has no XENO token; supported rails and attributable operational transaction entry points still require verification.",
+          "canonicalFinding": "Founder Clive confirmed that Xeno Money's Solana functionality is not live and that the product has not shipped to the App Store. The absence of live on-chain activity is the completed finding.",
           "whatItBuilds": "Contactless stablecoin payment infrastructure for wallets, merchants and payment terminals.",
-          "productEvidence": "Live mainnet product",
-          "chainEvidence": "Analysis outstanding",
-          "outstandingAnalysis": [
-            "Identify supported stablecoin rails and verified operational transaction entry points."
+          "productEvidence": "Founder-confirmed",
+          "chainEvidence": "Founder-confirmed absence of live functionality",
+          "outstandingAnalysis": [],
+          "founderContacts": [
+            {
+              "label": "Founder X",
+              "type": "x",
+              "url": "https://x.com/clive_99",
+              "handle": "@clive_99"
+            },
+            {
+              "label": "Founder Telegram",
+              "type": "telegram",
+              "url": "https://t.me/clive0x123",
+              "handle": "@clive0x123"
+            }
+          ],
+          "founderConfirmations": [
+            {
+              "statement": "Xeno Money's Solana functionality is not live.",
+              "evidenceType": "Founder-confirmed"
+            },
+            {
+              "statement": "The product has not shipped to the App Store.",
+              "evidenceType": "Founder-confirmed"
+            }
+          ],
+          "reportTemplate": "off-chain",
+          "reportNarrative": {
+            "whatHappened": "Founder Clive confirmed that Xeno Money's Solana functionality is not live and the product has not shipped to the App Store.",
+            "whatEvidenceDemonstrates": "The completed research establishes the absence of live attributable on-chain product activity during this research period.",
+            "superteamImplication": "Treat the current absence of live Solana functionality and an App Store release as the completed finding; request fresh launch evidence before reopening on-chain analysis."
+          },
+          "limitations": [
+            "No live Solana functionality was available for on-chain measurement.",
+            "The product had not shipped to the App Store.",
+            "No wallet, transaction, volume or retention analysis is supported."
+          ],
+          "methodologyNotes": [
+            "Founder confirmation controls the current product and technical interpretation."
           ]
         },
         {

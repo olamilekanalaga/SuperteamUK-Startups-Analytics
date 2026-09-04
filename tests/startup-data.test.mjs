@@ -20,20 +20,20 @@ const canonicalRows = startups.slice(0, 43).filter((row) => row.id !== "STUK-008
 // Fingerprint of every canonical field before this logo/UI correction.
 test("unrelated STUK-001 through STUK-043 records remain byte-stable outside logo metadata", () => {
   const fingerprint = createHash("sha256").update(JSON.stringify(canonicalRows)).digest("hex");
-  assert.equal(fingerprint, "eaefe97f8dc1fcefcc48074b5825209589d6d8351578ff14583366c1dfdaaa06");
+  assert.equal(fingerprint, "cee739fb8f2ca69491bc2fe1422ecd209cd7d2b82be021b6729cf1a70decdea4");
   assert.deepEqual(startups.map((row) => row.id), Array.from({ length: 66 }, (_, i) => `STUK-${String(i + 1).padStart(3, "0")}`));
   assert.equal(new Set(startups.map(slug)).size, 66);
 });
 
-test("derived totals are 66 researched, 33 mainnet, 33 non-mainnet, 0 remaining and 100 percent", () => {
+test("derived totals reflect the founder-confirmed Xeno off-chain classification", () => {
   const summary = snapshot.queries.research_summary.rows[0];
   assert.equal(summary.directoryStartups, 66);
   assert.equal(startups.length, 66);
-  assert.equal(mainnet.length, 33);
-  assert.equal(startups.length - mainnet.length, 33);
+  assert.equal(mainnet.length, 32);
+  assert.equal(startups.length - mainnet.length, 34);
   assert.equal(66 - startups.length, 0);
   assert.equal(Number(((startups.length / 66) * 100).toFixed(1)), 100);
-  assert.deepEqual(summary, { directoryStartups: 66, researched: 66, nonMainnet: 33, mainnetQueue: 33, completionRate: 1 });
+  assert.deepEqual(summary, { directoryStartups: 66, researched: 66, nonMainnet: 34, mainnetQueue: 32, completionRate: 1 });
 });
 
 test("pathname is the source of truth for overview, directory, insights, profiles, invalid slugs, and history", () => {
@@ -92,20 +92,17 @@ test("the common logo component has meaningful alt text, lazy list loading, and 
   assert.match(source, /showImage = startup\.logoPath && !failed/u);
 });
 
-test("directory cards expose evidence-led summaries while remaining full-link routes", () => {
+test("directory cards contain only approved identity, network and product content", () => {
   const card = source.slice(source.indexOf("function StartupCard"), source.indexOf("function EvidenceLedger"));
-  assert.match(card, /<a className=\{`startup-card/u);
+  assert.match(card, /<a className=/u);
   assert.match(card, /href=\{startupPath\(startup\)\}/u);
-  assert.match(card, /researchStatus\(startup\)/u);
-  assert.match(card, /verifiedMetricsFor\(startup\)\[0\]/u);
-  assert.match(card, /startup\.canonicalFinding/u);
-  assert.match(card, /Data cutoff/u);
-  assert.doesNotMatch(card, /View profile|startup\.id|SourceLinks/u);
-  assert.doesNotMatch(css, /\.startup-card[^{}]*\{[^}]*aspect-ratio/su);
+  assert.match(card, /verifiedNetworkStatus\(startup\)/u);
+  assert.match(card, /sectorTags\(startup\)\[0\]/u);
+  assert.match(card, /cardDescription\(startup\)/u);
+  for (const forbidden of ["researchStatus(startup)", "verifiedMetricsFor(startup)[0]", "startup.canonicalFinding", "Data cutoff", "View profile", "startup.id", "SourceLinks"]) assert.ok(!card.includes(forbidden), forbidden);
   assert.match(css, /\.startup-card__description[\s\S]*-webkit-line-clamp:\s*3/u);
   assert.match(css, /@media \(max-width: 720px\)[\s\S]*\.startup-list \{ grid-template-columns: minmax\(0, 1fr\)/u);
 });
-
 test("semantic startup-card tokens and classification strips cover every requested state", () => {
   for (const token of ["--startup-card-background", "--startup-card-border", "--startup-card-shadow", "--startup-card-shadow-hover", "--startup-card-title", "--startup-card-description", "--startup-card-tag-background", "--startup-card-tag-border", "--startup-card-focus-ring"]) assert.ok(theme.includes(token), token);
   for (const tone of ["mainnet", "historical", "devnet", "testnet", "offchain", "prelaunch", "sunset", "acquired", "unverified"]) assert.ok(css.includes(`startup-card--${tone}`), tone);
@@ -134,7 +131,7 @@ test("STUK-044 through STUK-053 use the existing schema with canonical classific
     ["STUK-048", "Darklake", "Historical mainnet", "Mainnet Analysis Queue"],
     ["STUK-049", "Seer", "Off-chain/tooling", "Non-Mainnet Research"],
     ["STUK-050", "FairScale", "Mainnet", "Mainnet Analysis Queue"],
-    ["STUK-051", "Xeno Money", "Mainnet", "Mainnet Analysis Queue"],
+    ["STUK-051", "Xeno Money", "Off-chain", "Non-Mainnet Research"],
     ["STUK-052", "Pangea", "Unverified", "Non-Mainnet Research"],
     ["STUK-053", "Altify", "Mainnet/custodial", "Mainnet Analysis Queue"],
   ];
@@ -146,8 +143,8 @@ test("STUK-044 through STUK-053 use the existing schema with canonical classific
   }
 });
 
-test("only the six canonical additions enter the mainnet queue", () => {
-  assert.deepEqual(startups.slice(43, 53).filter((row) => row.queue === "Mainnet Analysis Queue").map((row) => row.startup), ["cherry.fun", "Vanish", "Darklake", "FairScale", "Xeno Money", "Altify"]);
+test("founder-confirmed Xeno is excluded from the mainnet additions", () => {
+  assert.deepEqual(startups.slice(43, 53).filter((row) => row.queue === "Mainnet Analysis Queue").map((row) => row.startup), ["cherry.fun", "Vanish", "Darklake", "FairScale", "Altify"]);
 });
 
 test("project claims, token cautions, and attribution boundaries remain explicit", () => {
@@ -248,10 +245,10 @@ test("unrelated research records and queue membership remain preserved", () => {
   const fingerprint = createHash("sha256")
     .update(JSON.stringify(startups.filter((row) => row.id !== "STUK-008" && !developmentIds.has(row.id)).map((row) => Object.fromEntries(Object.entries(row).filter(([key]) => !logoKeys.has(key))))))
     .digest("hex");
-  assert.equal(fingerprint, "194fff88850d34ad35536d2c6dc027c6f702b64882b0351b51b2e39d395dfd4a");
+  assert.equal(fingerprint, "7d993bc1e8a71cc4393eeb263fa1db8768a052dc247c1a3564bbb1aa829a7f0d");
   assert.equal(startups.length, 66);
-  assert.equal(mainnet.length, 33);
-  assert.equal(startups.length - mainnet.length, 33);
+  assert.equal(mainnet.length, 32);
+  assert.equal(startups.length - mainnet.length, 34);
 });
 
 test("public navigation contains Overview, Startups and Ask Dandy while preserving the hidden Insights route", () => {
@@ -260,7 +257,9 @@ test("public navigation contains Overview, Startups and Ask Dandy while preservi
   assert.match(source, /label: "Ask Dandy"/u);
   assert.match(source, /pathname === "\/insights"/u);
   assert.doesNotMatch(source, /label: "Insights"/u);
-  assert.match(source, /className="mobile-nav"/u);
+  assert.match(source, /className="mobile-menu-trigger"/u);
+  assert.match(source, /className="mobile-site-menu"/u);
+  assert.doesNotMatch(source, /<nav className="mobile-nav"/u);
   assert.match(css, /@media \(max-width: 720px\)[\s\S]*\.archive-rail, \.header-actions \{ display: none;/u);
 });
 
@@ -298,7 +297,7 @@ test("END Corp verified evidence is preserved and empty filler is removed", () =
 });
 test("every Devnet or Testnet startup uses the reusable development report schema", () => {
   const development = startups.filter((row) => /devnet|testnet/i.test([row.classification, row.technicalStatus, row.queue].join(" ")));
-  assert.deepEqual(development.map((row) => row.id), ["STUK-001", "STUK-002", "STUK-004", "STUK-039", "STUK-062"]);
+  assert.deepEqual(development.map((row) => row.id), ["STUK-001", "STUK-002", "STUK-039", "STUK-062"]);
   for (const row of development) {
     assert.equal(row.reportTemplate, "devnet-testnet", row.id);
     assert.equal(row.dataCutoff, "2026-09-02", row.id);
@@ -315,19 +314,17 @@ test("every Devnet or Testnet startup uses the reusable development report schem
 test("development reports conditionally render supported evidence without fake zeroes", () => {
   const prime = startups.find((row) => row.id === "STUK-001");
   const end = startups.find((row) => row.id === "STUK-002");
-  const scrolly = startups.find((row) => row.id === "STUK-004");
   const bulk = startups.find((row) => row.id === "STUK-039");
   const percolator = startups.find((row) => row.id === "STUK-062");
   assert.deepEqual(prime.headlineKpis.map((metric) => metric.value), ["443", "91.87%", "440", "6"]);
   assert.deepEqual(end.headlineKpis.map((metric) => metric.value), ["565", "92.92%", "16,435", "3"]);
-  assert.equal(scrolly.headlineKpis[0].qualifier.startsWith("Project-reported"), true);
   assert.equal(bulk.headlineKpis, undefined);
   assert.equal(percolator.headlineKpis, undefined);
   assert.equal(percolator.technicalEntryPoints[0].network, "Solana Devnet");
   assert.match(source, /if \(!metrics\.length\) return null/u);
   assert.match(source, /if \(!startup\.reportCharts\?\.length\) return null/u);
   assert.match(source, /This report measures development and testing activity\. Devnet\/Testnet transactions do not establish customer adoption, commercial usage or revenue\./u);
-  assert.doesNotMatch(JSON.stringify([prime, end, scrolly, bulk, percolator]), /customer count|commercial volume|market share/i);
+  assert.doesNotMatch(JSON.stringify([prime, end, bulk, percolator]), /customer count|commercial volume|market share/i);
 });
 
 test("Purebet and approved Overview implementation remain unchanged by development reports", () => {
@@ -339,4 +336,45 @@ test("Purebet and approved Overview implementation remain unchanged by developme
   assert.match(source, /title="Queue A"/u);
   assert.match(source, /title="Queue B"/u);
   assert.doesNotMatch(source.slice(source.indexOf('view === "overview"'), source.indexOf('view === "archive"')), /DevelopmentNotice|DevelopmentProgress/u);
+});
+
+test("mobile menu, continuous reports, contacts, CSV and KPI title fitting use shared authored components", () => {
+  assert.match(source, /aria-expanded=\{mobileMenuOpen\}/u);
+  assert.doesNotMatch(source, /profile-anchors|Summary<|Metrics<|Evidence<|Sources</u);
+  assert.match(source, /Download report data · CSV/u);
+  assert.match(source, /\["section", "dataset", "date", "entity", "metric", "value", "unit", "evidence_type", "source", "notes"\]/u);
+  assert.match(css, /component-title-text[\s\S]*white-space:\s*normal/u);
+  assert.match(css, /component-title-text[\s\S]*-webkit-line-clamp:\s*2/u);
+  assert.match(css, /box-shadow:\s*6px 7px 0 var\(--analytics-card-depth\)/u);
+});
+
+test("researcher-supplied founder contacts remain structured and project links stay separate", () => {
+  const expected = {
+    "END Corp": [["Founder Telegram", "@andrewjamesrobinson"]],
+    "Xeno Money": [["Founder X", "@clive_99"], ["Founder Telegram", "@clive0x123"]],
+    "Scrolly": [["Founder X", "@deandev10"], ["Founder Telegram", "@DeanDev10"]],
+    "Zynta": [["Founder X", "@onthehouz"], ["Founder Telegram", "@Onthehouz"]],
+  };
+  for (const [name, contacts] of Object.entries(expected)) {
+    const row = startups.find((startup) => startup.startup === name);
+    assert.deepEqual(row.founderContacts.map(({ label, handle }) => [label, handle]), contacts);
+    row.founderContacts.forEach((contact) => assert.match(contact.url, /^https:\/\/(?:x\.com|t\.me)\//u));
+  }
+  assert.match(source, /Founder contact/u);
+  assert.match(source, /Official project links/u);
+  assert.match(source, /target="_blank" rel="noopener noreferrer"/u);
+});
+
+test("founder-confirmed END, Xeno and Scrolly conclusions control report rendering", () => {
+  const end = startups.find((row) => row.id === "STUK-002");
+  const xeno = startups.find((row) => row.id === "STUK-051");
+  const scrolly = startups.find((row) => row.id === "STUK-004");
+  assert.equal(end.analysisStatus, "Research completed");
+  assert.match(end.founderConfirmations.map((item) => item.statement).join(" "), /not live on Solana mainnet/u);
+  assert.equal(xeno.classification, "Off-chain");
+  assert.match(xeno.canonicalFinding, /not live.*not shipped to the App Store/u);
+  assert.equal(xeno.reportCharts, undefined);
+  assert.equal(scrolly.classification, "Off-chain");
+  assert.match(scrolly.canonicalFinding, /Coinflow.*sunset/u);
+  assert.deepEqual(scrolly.projectReportedMetrics.map((metric) => metric.value), ["40,000+", "1.7-1.9 million", "300", "10"]);
 });
