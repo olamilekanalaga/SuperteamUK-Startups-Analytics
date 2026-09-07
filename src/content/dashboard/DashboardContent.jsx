@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 
 import { ChartRenderer, DataComponent, DataTable, MetricCard, RichNarrative, useDataApp } from "../../data-app-public.jsx";
+import { CANONICAL_STAGE, attributionState, canonicalStageLabel, canonicalStageTone, canonicalStartupStage, deriveEcosystemStageCounts } from "./startup-stage.js";
+import { buildStartupMeasurementStatus } from "../../../analytics/measurement/startup-contract.js";
 
 const statusSpec = { type: "bar", x: "category", y: "startups", showXAxisLabel: false, showYAxisLabel: false };
 const stageSpec = { type: "rankedList", x: "stage", y: "startups", initialVisibleCount: 6 };
@@ -63,21 +65,6 @@ function ProjectLogo({ startup, profile = false }) {
   </span>;
 }
 
-const compactStatus = (startup) => {
-  const value = String(startup.classification ?? startup.technicalState ?? startup.queue ?? "").toLowerCase();
-  if (value.includes("historical mainnet")) return { label: "Historical", tone: "historical" };
-  if (value.includes("mainnet")) return { label: "Mainnet", tone: "mainnet" };
-  if (value.includes("devnet")) return { label: "Devnet", tone: "devnet" };
-  if (value.includes("testnet")) return { label: "Testnet", tone: "testnet" };
-  if (value.includes("infrastructure")) return { label: "Infrastructure", tone: "infrastructure" };
-  if (value.includes("pre-launch")) return { label: "Pre-launch", tone: "prelaunch" };
-  if (value.includes("wound") || value.includes("inactive")) return { label: "Wound down", tone: "sunset" };
-  if (value.includes("acquired") || value.includes("exited")) return { label: "Acquired", tone: "acquired" };
-  if (value.includes("identity") || value.includes("unverified")) return { label: "Unverified", tone: "unverified" };
-  if (value.includes("off-chain")) return { label: "Off-chain", tone: "offchain" };
-  return { label: isMainnet(startup) ? "Mainnet" : "Reviewed", tone: isMainnet(startup) ? "mainnet" : "research" };
-};
-
 const sectorTags = (startup) => String(startup.sector ?? "").split(/\s*(?:\/|;|,)\s*/u).filter(Boolean);
 const researchStatus = (startup) => {
   const value = String(startup.researchStatus ?? startup.analysisStatus ?? "").toLowerCase();
@@ -86,13 +73,7 @@ const researchStatus = (startup) => {
   if (value.includes("progress") || value.includes("outstanding") || value.includes("awaiting") || value.includes("required")) return "In progress";
   return "Not started";
 };
-const technicalGroup = (startup) => {
-  const value = `${startup.technicalState ?? ""} ${startup.technicalStatus ?? ""} ${startup.classification ?? ""}`.toLowerCase();
-  if (value.includes("devnet") || value.includes("testnet")) return "Devnet/Testnet";
-  if (value.includes("mainnet")) return "Mainnet";
-  if (value.includes("identity") || value.includes("unverified")) return "Unverified";
-  return "Off-chain/Early";
-};
+const technicalGroup = (startup) => canonicalStageLabel[canonicalStartupStage(startup)];
 const verifiedMetricsFor = (startup) => startup.verifiedMetrics?.length
   ? startup.verifiedMetrics
   : (startup.metrics ?? []).filter((metric) => !/reported|claim|preliminary/iu.test(metric.qualifier ?? ""));
@@ -101,19 +82,10 @@ const projectMetricsFor = (startup) => [
   ...(startup.metrics ?? []).filter((metric) => /reported|claim/iu.test(metric.qualifier ?? "")),
 ];
 
-const verifiedNetworkStatus = (startup) => {
-  const evidence = String(startup.chainEvidence ?? "").toLowerCase();
-  const technical = [startup.technicalState, startup.technicalStatus, startup.classification].filter(Boolean).join(" ").toLowerCase();
-  const hasVerifiedMainnet = technical.includes("mainnet") && (evidence === "on-chain verified" || evidence === "founder-confirmed");
-  const hasVerifiedDevnet = technical.includes("devnet") && (evidence === "on-chain verified" || (startup.metrics ?? []).some((metric) => /devnet verified/iu.test(metric.qualifier ?? "")));
-  if (hasVerifiedMainnet && hasVerifiedDevnet) return { label: "Mainnet + Devnet", tone: "mainnet" };
-  if (hasVerifiedMainnet) return { label: "Mainnet", tone: "mainnet" };
-  if (hasVerifiedDevnet) return { label: "Devnet", tone: "devnet" };
-  return null;
-};
 const cardDescription = (startup) => { const value = String(startup.whatItBuilds ?? startup.oneLine ?? startup.summary ?? "Project description not verified.").trim(); return value.match(/^.*?[.!?](?:\s|$)/u)?.[0].trim() ?? value; };
 function StartupCard({ startup, onNavigate }) {
-  const network = verifiedNetworkStatus(startup);
+  const stage = canonicalStartupStage(startup);
+  const network = { label: canonicalStageLabel[stage], tone: canonicalStageTone[stage] };
   const description = cardDescription(startup);
   const openProfile = (event) => {
     if (!event.defaultPrevented && event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
@@ -140,7 +112,7 @@ function TechnicalEntryPoints({ startup }) {
   const entries = startup.technicalEntryPoints ?? [];
   return <section className="profile-section"><h3>On-chain evidence</h3>
     {entries.length === 0
-      ? <p className="empty-evidence">{technicalGroup(startup) === "Devnet/Testnet" ? "No attributable mainnet deployment was verified during this research period." : "No attributable on-chain deployment was verified during this research period."}</p>
+      ? <p className="empty-evidence">{canonicalStartupStage(startup) === CANONICAL_STAGE.DEVNET ? "No attributable mainnet deployment was verified during this research period." : "No attributable on-chain deployment was verified during this research period."}</p>
       : <div className="entry-point-list">{entries.map((entry) => <article key={entry.address}>
         <div><strong>{entry.name}</strong><span>{entry.network} &middot; {entry.type}</span></div>
         <a href={entry.explorerUrl} target="_blank" rel="noopener noreferrer">{entry.address}</a>
@@ -208,7 +180,7 @@ function SourceLinks({ startup }) {
 }
 
 function isDevelopmentReport(startup) {
-  return technicalGroup(startup) === "Devnet/Testnet";
+  return canonicalStartupStage(startup) === CANONICAL_STAGE.DEVNET;
 }
 function DevelopmentNotice({ startup }) {
   if (!isDevelopmentReport(startup)) return null;
@@ -307,6 +279,21 @@ function ReportCsvExport({ startup }) {
   return <section className="report-export" aria-label="Report data export"><button type="button" onClick={download}>Download report data · CSV</button></section>;
 }
 
+const shortAddress = (address) => address.length > 14 ? address.slice(0, 6) + "..." + address.slice(-4) : address;
+function MeasurementStatus({ startup }) {
+  const contract = buildStartupMeasurementStatus(startup, { stage: canonicalStartupStage(startup), attributionState: attributionState(startup) });
+  if (!contract) return null;
+  return <section className="measurement-status" aria-labelledby={startupSlug(startup) + "-measurement-title"}>
+    <div className="measurement-status__heading"><div><p className="eyebrow">Measurement system</p><h3 id={startupSlug(startup) + "-measurement-title"}>On-chain measurement readiness</h3></div><div className="measurement-status__badges"><StatusPill tone="mainnet">{contract.stage}</StatusPill><StatusPill tone={contract.attributionState === "verified" ? "verified" : contract.attributionState === "partial" ? "partial" : "outstanding"}>{contract.attributionLabel}</StatusPill></div></div>
+    <div className="measurement-readiness"><span>Measurement readiness</span><strong><i aria-hidden="true" />{contract.readinessLabel}</strong></div>
+    <div className="measurement-status__grid">
+      <section className="measurement-panel"><h4>Known on-chain sources</h4>{contract.sources.length ? <ul className="measurement-sources">{contract.sources.map((source) => <li key={source.label + source.address}><div><strong>{source.label}</strong><span>{source.confirmation}</span></div>{source.explorerUrl ? <a href={source.explorerUrl} target="_blank" rel="noopener noreferrer" title={source.address} aria-label={source.label + ": " + source.address}>{shortAddress(source.address)}</a> : <code title={source.address}>{shortAddress(source.address)}</code>}</li>)}</ul> : <p className="measurement-empty">{contract.sourceEmptyMessage}</p>}</section>
+      <section className="measurement-panel"><h4>Data coverage</h4><ul className="measurement-coverage">{contract.coverage.map((item) => <li key={item.label}><span>{item.label}</span><strong data-status={item.status}>{item.statusLabel}</strong></li>)}</ul></section>
+    </div>
+    <section className="measurement-panel measurement-performance"><h4>Performance</h4><div className="measurement-metrics">{contract.metrics.map((metric) => <article key={metric.label}><span>{metric.label}</span><strong aria-label={metric.label + " value unavailable"}>—</strong><small>{metric.statusLabel}</small></article>)}</div></section>
+    <p className="measurement-status__note">No live pipeline values are connected. Research aggregates elsewhere in this report are not promoted into this measurement contract.</p>
+  </section>;
+}
 function StartupDetail({ startup, onBack, chartProps }) {
   const narrative = startup.reportNarrative ?? {};
   const finding = startup.canonicalFinding ?? startup.finding;
@@ -320,6 +307,7 @@ function StartupDetail({ startup, onBack, chartProps }) {
     </header>
     <ReportIntroductionLinks startup={startup} />
     <section className="canonical-finding"><p className="eyebrow">Canonical finding</p><RichNarrative id={startupSlug(startup) + "-canonical-finding"} value={finding} /></section>
+    <MeasurementStatus startup={startup} />
     <DevelopmentNotice startup={startup} />
     <ReportKpis startup={startup} />
     <DevelopmentProgress startup={startup} />
@@ -375,7 +363,7 @@ function AskDandyView() {
 function DirectoryControls({ search, setSearch, technical, setTechnical, research, setResearch, sector, setSector, sort, setSort, sectors }) {
   return <section className="directory-controls" aria-label="Startup directory controls">
     <label className="directory-search"><span>Search startups</span><input type="search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Name, founder, sector or address" /></label>
-    <label><span>Technical stage</span><select value={technical} onChange={(event) => setTechnical(event.target.value)}>{["All", "Mainnet", "Devnet/Testnet", "Off-chain/Early", "Unverified"].map((value) => <option key={value}>{value}</option>)}</select></label>
+    <label><span>Technical stage</span><select value={technical} onChange={(event) => setTechnical(event.target.value)}>{["All", "Off-chain", "Building", "Devnet", "Mainnet", "Historical Mainnet", "Unresolved", "Inactive"].map((value) => <option key={value}>{value}</option>)}</select></label>
     <label><span>Research status</span><select value={research} onChange={(event) => setResearch(event.target.value)}>{["All", "Completed", "In progress", "Awaiting founder", "Not started"].map((value) => <option key={value}>{value}</option>)}</select></label>
     <label><span>Sector</span><select value={sector} onChange={(event) => setSector(event.target.value)}><option>All</option>{sectors.map((value) => <option key={value}>{value}</option>)}</select></label>
     <label><span>Sort</span><select value={sort} onChange={(event) => setSort(event.target.value)}><option value="directory">Directory order</option><option value="name">Name A-Z</option><option value="technical">Technical stage</option><option value="research">Research status</option></select></label>
@@ -403,6 +391,7 @@ export function DashboardContent() {
     mainnetQueue: startups.filter(isMainnet).length,
     completionRate: startups.length / summarySource.directoryStartups,
   }), [startups, summarySource.directoryStartups]);
+  const ecosystemStages = useMemo(() => deriveEcosystemStageCounts(startups), [startups]);
   const statusRows = useMemo(() => distributionRows(startups.map((item) => item.technicalState), "category"), [startups]);
   const stageRows = useMemo(() => distributionRows(startups.map((item) => normalizedStage(item.directoryStage ?? item.stage)), "stage"), [startups]);
   const queueRows = useMemo(() => startups.filter(isMainnet).map((item) => ({
@@ -466,7 +455,7 @@ export function DashboardContent() {
       </>}
       {view === "archive" && !route.notFound && (selected
         ? <StartupDetail startup={selected} onBack={() => navigateTo("/startups")} chartProps={chartProps} />
-        : <section className="startup-directory" aria-label="Startup directory"><DirectoryControls search={search} setSearch={setSearch} technical={technical} setTechnical={setTechnical} research={research} setResearch={setResearch} sector={sector} setSector={setSector} sort={sort} setSort={setSort} sectors={sectors} /><p className="directory-result-count" aria-live="polite">Showing {visibleStartups.length} of {startups.length} startups</p><div className="startup-list">{visibleStartups.map((startup) => <StartupCard key={startup.id} startup={startup} onNavigate={navigateTo} />)}</div></section>)}
+        : <section className="startup-directory" aria-label="Startup directory"><section className="ecosystem-stage-summary" aria-label="Ecosystem progression summary"><div className="ecosystem-stage-summary__primary"><div><span>All Startups</span><strong>{ecosystemStages.total}</strong></div>{[CANONICAL_STAGE.OFFCHAIN, CANONICAL_STAGE.BUILDING, CANONICAL_STAGE.DEVNET, CANONICAL_STAGE.MAINNET].map((stage) => <div key={stage}><span>{canonicalStageLabel[stage]}</span><strong>{ecosystemStages[stage]}</strong></div>)}</div><div className="startup-journey"><span>Startup journey</span><ol aria-label="Building to growth journey"><li>Building</li><li>Devnet</li><li>Mainnet</li><li>Growth</li></ol></div><p className="ecosystem-stage-summary__secondary">Outside the active journey: <span>Historical {ecosystemStages.HISTORICAL_MAINNET}</span><span>Unresolved {ecosystemStages.UNRESOLVED}</span><span>Inactive {ecosystemStages.INACTIVE}</span></p></section><DirectoryControls search={search} setSearch={setSearch} technical={technical} setTechnical={setTechnical} research={research} setResearch={setResearch} sector={sector} setSector={setSector} sort={sort} setSort={setSort} sectors={sectors} /><p className="directory-result-count" aria-live="polite">Showing {visibleStartups.length} of {startups.length} startups</p><div className="startup-list">{visibleStartups.map((startup) => <StartupCard key={startup.id} startup={startup} onNavigate={navigateTo} />)}</div></section>)}
       {view === "insights" && <InsightsView statusRows={statusRows} stageRows={stageRows} queueRows={queueRows} chartProps={chartProps} researchedCount={summary.researched} />}
       {view === "ask-dandy" && <AskDandyView />}
       {route.notFound && <section className="route-not-found" role="status"><p className="eyebrow">Not found</p><h2>Startup profile unavailable.</h2><p>The URL does not match a verified startup profile.</p><button type="button" onClick={() => navigateTo("/startups")}>Return to startups</button></section>}

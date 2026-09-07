@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
+import { CANONICAL_STAGE, attributionState, canonicalStartupStage, deriveEcosystemStageCounts } from "../src/content/dashboard/startup-stage.js";
 import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
@@ -96,7 +97,7 @@ test("directory cards contain only approved identity, network and product conten
   const card = source.slice(source.indexOf("function StartupCard"), source.indexOf("function EvidenceLedger"));
   assert.match(card, /<a className=/u);
   assert.match(card, /href=\{startupPath\(startup\)\}/u);
-  assert.match(card, /verifiedNetworkStatus\(startup\)/u);
+  assert.match(card, /canonicalStartupStage\(startup\)/u);
   assert.match(card, /sectorTags\(startup\)\[0\]/u);
   assert.match(card, /cardDescription\(startup\)/u);
   for (const forbidden of ["researchStatus(startup)", "verifiedMetricsFor(startup)[0]", "startup.canonicalFinding", "Data cutoff", "View profile", "startup.id", "SourceLinks"]) assert.ok(!card.includes(forbidden), forbidden);
@@ -265,7 +266,7 @@ test("public navigation contains Overview, Startups and Ask Dandy while preservi
 
 test("directory supports the requested search, filters and sorting without changing source records", () => {
   for (const label of ["Search startups", "Technical stage", "Research status", "Sector", "Sort"]) assert.ok(source.includes(label), label);
-  for (const value of ["Mainnet", "Devnet/Testnet", "Off-chain/Early", "Unverified", "Completed", "In progress", "Awaiting founder", "Not started"]) assert.ok(source.includes(value), value);
+  for (const value of ["Off-chain", "Building", "Devnet", "Mainnet", "Historical Mainnet", "Unresolved", "Inactive", "Completed", "In progress", "Awaiting founder", "Not started"]) assert.ok(source.includes(value), value);
   assert.match(source, /technicalEntryPoints[\s\S]*entry\.address/u);
   assert.match(source, /visibleStartups\.map/u);
   assert.match(source, /Directory order/u);
@@ -431,4 +432,39 @@ test("Overview KPI cards reuse the theme-aware directory-card depth without chan
   assert.match(source, /title="Queue A"/u);
   assert.match(source, /title="Queue B"/u);
   assert.deepEqual(snapshot.queries.research_summary.rows[0], { directoryStartups: 66, researched: 66, nonMainnet: 34, mainnetQueue: 32, completionRate: 1 });
+});
+test("canonical startup stages preserve the approved seven-state progression model", () => {
+  const counts = deriveEcosystemStageCounts(startups);
+  assert.deepEqual(counts, { total: 66, OFFCHAIN: 19, BUILDING: 5, DEVNET: 4, MAINNET: 30, HISTORICAL_MAINNET: 2, UNRESOLVED: 5, INACTIVE: 1 });
+  assert.equal(Object.values(counts).slice(1).reduce((sum, count) => sum + count, 0), counts.total);
+});
+
+test("approved individually mapped records are not inferred into false stages", () => {
+  const expected = { "Home Harvest": CANONICAL_STAGE.OFFCHAIN, Wysdom: CANONICAL_STAGE.OFFCHAIN, "Moon Boi Studios / DD Gaming": CANONICAL_STAGE.BUILDING, "Solistic Technologies": CANONICAL_STAGE.BUILDING, "Cluck Rush": CANONICAL_STAGE.BUILDING, "Joyplay Ltd": CANONICAL_STAGE.UNRESOLVED, "Quantum Street": CANONICAL_STAGE.UNRESOLVED, Yauga: CANONICAL_STAGE.UNRESOLVED, Pangea: CANONICAL_STAGE.UNRESOLVED, "Nexus AI": CANONICAL_STAGE.UNRESOLVED };
+  for (const [name, stage] of Object.entries(expected)) assert.equal(canonicalStartupStage(startups.find((startup) => startup.startup === name)), stage, name);
+});
+
+test("historical and inactive records remain outside the active technical journey", () => {
+  assert.deepEqual(startups.filter((startup) => canonicalStartupStage(startup) === CANONICAL_STAGE.HISTORICAL_MAINNET).map((startup) => startup.startup), ["Rise of the Gorecats", "Darklake"]);
+  assert.deepEqual(startups.filter((startup) => canonicalStartupStage(startup) === CANONICAL_STAGE.INACTIVE).map((startup) => startup.startup), ["Signed Trade"]);
+});
+
+test("deployment stage remains separate from mainnet attribution confidence", () => {
+  const hawk = startups.find((startup) => startup.startup === "HawkFi");
+  const agridex = startups.find((startup) => startup.startup === "AgriDex");
+  const purebet = startups.find((startup) => startup.startup === "Purebet");
+  assert.equal(canonicalStartupStage(hawk), CANONICAL_STAGE.MAINNET);
+  assert.equal(attributionState(hawk), "verified");
+  assert.equal(canonicalStartupStage(agridex), CANONICAL_STAGE.MAINNET);
+  assert.equal(attributionState(agridex), "awaiting_attribution");
+  assert.equal(canonicalStartupStage(purebet), CANONICAL_STAGE.MAINNET);
+  assert.equal(attributionState(purebet), "partial");
+});
+
+test("directory uses canonical counts, filters and stage badges without changing card geometry", () => {
+  assert.match(source, /deriveEcosystemStageCounts\(startups\)/u);
+  assert.match(source, /"All", "Off-chain", "Building", "Devnet", "Mainnet", "Historical Mainnet", "Unresolved", "Inactive"/u);
+  assert.match(source, /canonicalStageLabel\[canonicalStartupStage\(startup\)\]/u);
+  assert.match(source, /Building<\/li><li>Devnet<\/li><li>Mainnet<\/li><li>Growth/u);
+  assert.match(css, /\.startup-card \{[\s\S]*border-top: 6px solid var\(--classification-strip\)/u);
 });

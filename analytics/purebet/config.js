@@ -1,0 +1,15 @@
+import { ATTRIBUTION_STATE, CHAINS, DEPLOYMENT_STATUS, EVIDENCE_QUALITY } from "../measurement/constants.js";
+import { validateProtocolSource } from "../measurement/schemas.js";
+export const PUREBET_CONFIG = Object.freeze({
+  startup: Object.freeze({ id: "STUK-008", name: "Purebet", stage: "mainnet", attributionState: ATTRIBUTION_STATE.PARTIAL }),
+  methodologyVersion: "purebet-v1",
+  crossProgramDeduplicationValidated: false,
+  productionDataLoaded: false,
+  qualification: Object.freeze({ userLabel: "Qualified betting wallet", qualifyingEventTypes: Object.freeze(["bet"]), requireSuccessfulTransaction: true, excludeAdminAndProtocolAccounts: true, note: "A qualified wallet must originate a decoded betting interaction. A signer or fee payer alone is not sufficient." }),
+  volume: Object.freeze({ definition: "Sum of decoded qualifying stake amounts placed.", includedEventTypes: Object.freeze(["bet"]), excludedEventTypes: Object.freeze(["settlement", "payout", "deposit", "withdrawal", "unknown"]), preventStakePayoutDoubleCount: true }),
+  sources: Object.freeze([
+    validateProtocolSource({ id: "purebet-current-program", startupId: "STUK-008", startupName: "Purebet", chain: CHAINS.SOLANA, sourceType: "program", address: "9bB3TADcwZEweUUcrp46FEpwMfLbwkEFQnc4patHPApp", label: "Current program", deploymentStatus: DEPLOYMENT_STATUS.CURRENT, attributionState: ATTRIBUTION_STATE.PARTIAL, evidenceQuality: EVIDENCE_QUALITY.STRONG_PUBLIC_EVIDENCE, evidenceSource: "Existing repository research; official/founder confirmation not stored", validFrom: null, validTo: null, notes: "Keep separate from legacy program until deduplication is validated." }),
+    validateProtocolSource({ id: "purebet-legacy-program", startupId: "STUK-008", startupName: "Purebet", chain: CHAINS.SOLANA, sourceType: "program", address: "39mBcnQ27QA9nNZmM6VrumE2vtqs5v3HD7t7RGv9kXUV", label: "Legacy program", deploymentStatus: DEPLOYMENT_STATUS.LEGACY, attributionState: ATTRIBUTION_STATE.PARTIAL, evidenceQuality: EVIDENCE_QUALITY.STRONG_PUBLIC_EVIDENCE, evidenceSource: "Existing repository research; official/founder confirmation not stored", validFrom: null, validTo: null, notes: "Historical activity must not be merged into current activity without validated rules." }),
+    validateProtocolSource({ id: "purebet-legacy-program-data", startupId: "STUK-008", startupName: "Purebet", chain: CHAINS.SOLANA, sourceType: "program_data", address: "7Z3XMqoZfjom2CArncLmqSbhQVB5vKfApxdCt8qoyW4Q", label: "Legacy program-data account", deploymentStatus: DEPLOYMENT_STATUS.SUPPORTING, attributionState: ATTRIBUTION_STATE.PARTIAL, evidenceQuality: EVIDENCE_QUALITY.STRONG_PUBLIC_EVIDENCE, evidenceSource: "Existing repository research", validFrom: null, validTo: null, notes: "Supporting deployment evidence; not a user-activity source by itself." }),
+  ]),
+});
