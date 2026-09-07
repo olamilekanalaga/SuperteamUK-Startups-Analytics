@@ -93,16 +93,18 @@ test("the common logo component has meaningful alt text, lazy list loading, and 
   assert.match(source, /showImage = startup\.logoPath && !failed/u);
 });
 
-test("directory cards contain only approved identity, network and product content", () => {
-  const card = source.slice(source.indexOf("function StartupCard"), source.indexOf("function EvidenceLedger"));
+test("directory cards expose identity, stage, description and empty-safe performance slots", () => {
+  const card = source.slice(source.indexOf("function StartupCard"), source.indexOf("function HeadlineMetricCard"));
   assert.match(card, /<a className=/u);
   assert.match(card, /href=\{startupPath\(startup\)\}/u);
   assert.match(card, /canonicalStartupStage\(startup\)/u);
-  assert.match(card, /sectorTags\(startup\)\[0\]/u);
+  assert.match(card, /industryLabel\(startup\)/u);
   assert.match(card, /cardDescription\(startup\)/u);
-  for (const forbidden of ["researchStatus(startup)", "verifiedMetricsFor(startup)[0]", "startup.canonicalFinding", "Data cutoff", "View profile", "startup.id", "SourceLinks"]) assert.ok(!card.includes(forbidden), forbidden);
+  assert.match(card, /startup-card__metrics/u);
+  assert.match(card, /metric\?\.value \?\? "—"/u);
+  for (const forbidden of ["startup.canonicalFinding", "Data cutoff", "View profile", "startup.id", "SourceLinks"]) assert.ok(!card.includes(forbidden), forbidden);
   assert.match(css, /\.startup-card__description[\s\S]*-webkit-line-clamp:\s*3/u);
-  assert.match(css, /@media \(max-width: 720px\)[\s\S]*\.startup-list \{ grid-template-columns: minmax\(0, 1fr\)/u);
+  assert.match(css, /@media \(max-width: 800px\)[\s\S]*\.startup-list \{ grid-template-columns: 1fr/u);
 });
 test("semantic startup-card tokens and classification strips cover every requested state", () => {
   for (const token of ["--startup-card-background", "--startup-card-border", "--startup-card-shadow", "--startup-card-shadow-hover", "--startup-card-title", "--startup-card-description", "--startup-card-tag-background", "--startup-card-tag-border", "--startup-card-focus-ring"]) assert.ok(theme.includes(token), token);
@@ -252,24 +254,21 @@ test("unrelated research records and queue membership remain preserved", () => {
   assert.equal(startups.length - mainnet.length, 34);
 });
 
-test("public navigation contains Overview, Startups and Ask Dandy while preserving the hidden Insights route", () => {
-  assert.match(source, /label: "Overview"/u);
-  assert.match(source, /label: "Startups"/u);
-  assert.match(source, /label: "Ask Dandy"/u);
+test("public navigation follows the homepage section model while preserving hidden legacy routes", () => {
+  for (const label of ["Home", "Startup Directory", "Ecosystem Impact", "Milestones", "About"]) assert.ok(source.includes(`label: "${label}"`), label);
   assert.match(source, /pathname === "\/insights"/u);
   assert.doesNotMatch(source, /label: "Insights"/u);
-  assert.match(source, /className="mobile-menu-trigger"/u);
+  assert.match(source, /className="mobile-app-header"/u);
+  assert.match(source, /className="mobile-bottom-nav"/u);
   assert.match(source, /className="mobile-site-menu"/u);
-  assert.doesNotMatch(source, /<nav className="mobile-nav"/u);
-  assert.match(css, /@media \(max-width: 720px\)[\s\S]*\.archive-rail, \.header-actions \{ display: none;/u);
+  assert.match(css, /@media \(max-width: 800px\)[\s\S]*\.archive-rail \{ display: none;/u);
 });
 
-test("directory supports the requested search, filters and sorting without changing source records", () => {
-  for (const label of ["Search startups", "Technical stage", "Research status", "Sector", "Sort"]) assert.ok(source.includes(label), label);
-  for (const value of ["Off-chain", "Building", "Devnet", "Mainnet", "Historical Mainnet", "Unresolved", "Inactive", "Completed", "In progress", "Awaiting founder", "Not started"]) assert.ok(source.includes(value), value);
-  assert.match(source, /technicalEntryPoints[\s\S]*entry\.address/u);
+test("directory supports approved search, stage and industry filters without changing source records", () => {
+  for (const label of ["Search", "Stage", "Industry"]) assert.ok(source.includes(label), label);
+  for (const value of ["Off-chain", "Building", "Devnet", "Mainnet", "Growth", "Historical Mainnet", "Unresolved", "Inactive"]) assert.ok(source.includes(value), value);
+  assert.match(source, /technical === "Growth" \? hasTrustedPerformance/u);
   assert.match(source, /visibleStartups\.map/u);
-  assert.match(source, /Directory order/u);
 });
 
 test("Purebet report uses the supplied verified dashboard data and reusable report modules", () => {
@@ -461,10 +460,10 @@ test("deployment stage remains separate from mainnet attribution confidence", ()
   assert.equal(attributionState(purebet), "partial");
 });
 
-test("directory uses canonical counts, filters and stage badges without changing card geometry", () => {
+test("directory uses canonical counts, journey filters and stage badges in the approved geometry", () => {
   assert.match(source, /deriveEcosystemStageCounts\(startups\)/u);
-  assert.match(source, /"All", "Off-chain", "Building", "Devnet", "Mainnet", "Historical Mainnet", "Unresolved", "Inactive"/u);
+  assert.match(source, /"All", "Off-chain", "Building", "Devnet", "Mainnet", "Growth", "Historical Mainnet", "Unresolved", "Inactive"/u);
   assert.match(source, /canonicalStageLabel\[canonicalStartupStage\(startup\)\]/u);
-  assert.match(source, /Building<\/li><li>Devnet<\/li><li>Mainnet<\/li><li>Growth/u);
-  assert.match(css, /\.startup-card \{[\s\S]*border-top: 6px solid var\(--classification-strip\)/u);
+  assert.match(source, /function JourneyNavigator/u);
+  assert.match(css, /\.startup-list \{ display: grid; grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/u);
 });

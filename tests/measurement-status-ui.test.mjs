@@ -38,22 +38,24 @@ test("AgriDex remains blocked on attribution without fabricated identifiers or v
   assert.equal(contract.sourceEmptyMessage,"Attribution required");
   assert.ok(contract.metrics.every((metric)=>metric.value===null&&metric.status==="attribution_required"));
 });
-test("public frontend keeps measurement machinery internal and does not expose fetched sample data",async()=>{
+test("public frontend keeps measurement machinery internal while exposing evidence-safe public performance",async()=>{
   const source=await readFile(new URL("src/content/dashboard/DashboardContent.jsx",root),"utf8");
   assert.match(source,/function MeasurementStatus\(\{ startup, contract \}\)/u);
-  assert.doesNotMatch(source,/<MeasurementStatus startup=\{startup\} contract=\{contract\} \/>/u);
-  assert.match(source,/<PublicPerformanceStatus startup=\{startup\} contract=\{contract\} \/>/u);
+  assert.doesNotMatch(source,/<MeasurementStatus startup=\{startup\}/u);
+  assert.match(source,/const performanceMetricsFor/u);
+  assert.match(source,/metric\?\.value \?\? "—"/u);
   assert.doesNotMatch(source,/92\.6|2026-01-24T23:30/u);
 });
-test("directory and startup intelligence routes have distinct information hierarchy",async()=>{
+test("directory and startup intelligence routes have distinct public hierarchy",async()=>{
   const source=await readFile(new URL("src/content/dashboard/DashboardContent.jsx",root),"utf8");
-  const directoryBranch=source.match(/selected\s*\?\s*<StartupDetail[\s\S]*?:\s*<section className="startup-directory"[\s\S]*?<DirectoryControls/u)?.[0]??"";
-  assert.match(directoryBranch,/ecosystem-stage-summary/u);
-  assert.match(directoryBranch,/DirectoryControls/u);
+  assert.match(source,/function DirectoryHome/u);
+  assert.match(source,/Industry contribution/u);
+  assert.match(source,/Startup directory/u);
   const detail=source.slice(source.indexOf("function StartupDetail"),source.indexOf("const internalResearchPipeline"));
-  assert.doesNotMatch(detail,/ecosystem-stage-summary|DirectoryControls/u);
-  assert.ok(detail.indexOf("startup-intelligence-hero")<detail.indexOf("<PublicPerformanceStatus startup"));
-  assert.ok(detail.indexOf("<PublicPerformanceStatus startup")<detail.indexOf("canonical-finding"));
-  assert.match(detail,/Back to All Startups/u);
-  assert.match(detail,/StartupProgression/u);
+  assert.doesNotMatch(detail,/DirectoryControls|IndustryContribution/u);
+  assert.match(detail,/profile-hero/u);
+  assert.match(detail,/profile-metric-grid/u);
+  assert.match(detail,/Performance over time/u);
+  assert.match(detail,/ResearchDetails/u);
+  assert.match(detail,/Back to Startup Directory/u);
 });
