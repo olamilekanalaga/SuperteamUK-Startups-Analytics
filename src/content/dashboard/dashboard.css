@@ -68,6 +68,94 @@
   .project-logo--profile { width: 78px; height: 78px; }
 }
 
+/* Superteam UK ecosystem journey: editorial public surface over the measurement engine. */
+.archive-frame { border-color: color-mix(in srgb, var(--text) 12%, var(--border)); border-radius: 0; }
+.archive-main { padding: clamp(28px, 4vw, 56px); }
+.archive-header { align-items: flex-start; margin-bottom: clamp(34px, 6vw, 72px); }
+.archive-header h1 { max-width: 820px; font-size: clamp(58px, 8.4vw, 112px); line-height: .83; letter-spacing: -.065em; }
+.archive-header h1 em { color: var(--secondary); }
+.archive-header .eyebrow { margin-bottom: 26px; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: .16em; }
+.header-description { max-width: 720px; margin-top: 32px; color: var(--text); font: 500 clamp(16px, 1.6vw, 21px)/1.6 ui-monospace, SFMono-Regular, Consolas, monospace; }
+.archive-header--directory { margin-bottom: 38px; }
+.archive-header--directory h1 { font-size: clamp(52px, 6.6vw, 84px); }
+.archive-header--directory .eyebrow { margin-bottom: 18px; }
+.archive-header--directory .header-description { max-width: 650px; margin-top: 22px; font-size: clamp(14px, 1.25vw, 17px); }
+.archive-header--profile { justify-content: flex-end; margin-bottom: 24px; }
+.archive-header--profile > div { display: none; }
+.header-actions { border-color: color-mix(in srgb, var(--text) 16%, var(--border)); background: transparent; }
+.ecosystem-stage-summary { gap: 0; padding: 0; overflow: hidden; border-color: color-mix(in srgb, var(--text) 14%, var(--border)); border-radius: 0; box-shadow: none; }
+.ecosystem-stage-summary__intro { display: grid; max-width: 820px; gap: 12px; padding: clamp(26px, 4vw, 48px); }
+.ecosystem-stage-summary__intro .eyebrow { margin: 0; }
+.ecosystem-stage-summary__intro h2 { margin: 0; font: 500 clamp(34px, 4.5vw, 62px)/.98 Georgia, "Times New Roman", serif; letter-spacing: -.045em; }
+.ecosystem-stage-summary__intro > p:last-child { max-width: 680px; margin: 5px 0 0; color: var(--secondary); font-size: 16px; line-height: 1.65; }
+.ecosystem-stage-summary__primary { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--border); }
+.ecosystem-stage-summary__primary div,
+.ecosystem-stage-summary__primary button { display: grid; min-height: 150px; align-content: space-between; justify-items: start; gap: 8px; padding: 22px; border: 0; border-right: 1px solid var(--border); border-radius: 0; background: transparent; color: var(--text); text-align: left; }
+.ecosystem-stage-summary__primary button { font: inherit; cursor: pointer; }
+.ecosystem-stage-summary__primary button.active { background: color-mix(in srgb, var(--accent) 13%, var(--surface)); }
+.ecosystem-stage-summary__primary button:hover { background: color-mix(in srgb, var(--accent) 7%, var(--surface)); }
+.ecosystem-stage-summary__primary span { text-transform: uppercase; letter-spacing: .11em; }
+.ecosystem-stage-summary__primary strong { font-size: clamp(38px, 4vw, 58px); line-height: 1; }
+.ecosystem-stage-summary__primary small { color: var(--secondary); font-size: 11px; line-height: 1.35; }
+.ecosystem-stage-summary__secondary { padding: 16px 22px; border-top: 1px solid var(--border); }
+.directory-controls { grid-template-columns: minmax(260px, 1.5fr) repeat(3, minmax(150px, .7fr)); margin-top: 28px; }
+.startup-card { grid-template-rows: auto auto auto; border-top-width: 1px; border-radius: 4px; box-shadow: none; }
+.startup-card::after { position: absolute; top: -1px; left: -1px; width: 72px; height: 5px; background: var(--classification-strip); content: ""; }
+.startup-card__performance { display: flex; flex-wrap: wrap; align-items: baseline; gap: 5px; padding-top: 14px; border-top: 1px solid var(--border); color: var(--secondary); font-size: 12px; }
+.startup-card__performance span { flex-basis: 100%; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+.startup-card__performance strong { color: var(--text); font: 500 21px/1.2 Georgia, serif; }
+.startup-intelligence-hero { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: 24px; padding: clamp(24px, 4vw, 48px); border: 1px solid var(--border); border-radius: 0; }
+.startup-intelligence-hero h2 { font-size: clamp(48px, 7vw, 88px); line-height: .9; }
+.startup-intelligence-hero > div > p:not(.eyebrow) { max-width: 760px; color: var(--secondary); font-size: clamp(16px, 1.6vw, 20px); line-height: 1.6; }
+.startup-hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin-top: 22px; }
+.startup-hero__actions a { padding: 8px 12px; border: 1px solid var(--border); border-radius: 999px; color: var(--text); font-size: 12px; font-weight: 700; text-decoration: none; }
+.startup-progress { margin-top: 14px; border-radius: 0; box-shadow: none; }
+.performance-intro { display: grid; grid-template-columns: 1fr minmax(260px, .6fr); gap: 24px; align-items: end; margin: 46px 0 18px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+.performance-intro h3 { margin: 6px 0 0; font: 500 clamp(30px, 4vw, 48px)/1 Georgia, serif; letter-spacing: -.035em; }
+.performance-intro > p { margin: 0; color: var(--secondary); line-height: 1.55; }
+.performance-empty { margin: 34px 0; padding: clamp(24px, 4vw, 42px); border: 1px solid var(--border); border-left: 6px solid var(--accent); background: color-mix(in srgb, var(--accent) 5%, var(--surface-raised)); }
+.performance-empty h3 { margin: 8px 0 12px; font: 500 clamp(28px, 3.6vw, 44px)/1.05 Georgia, serif; }
+.performance-empty > p:last-child { max-width: 720px; margin-bottom: 0; color: var(--secondary); font-size: 16px; line-height: 1.65; }
+.canonical-finding { margin-top: 38px; border-radius: 0; }
+.research-details { margin-top: 42px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.research-details > summary { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 22px 4px; cursor: pointer; list-style: none; }
+.research-details > summary::-webkit-details-marker { display: none; }
+.research-details > summary span { font: 500 clamp(22px, 2.5vw, 32px)/1.1 Georgia, serif; }
+.research-details > summary small { color: var(--secondary); text-align: right; }
+.research-details > summary::after { flex: 0 0 auto; content: "+"; font-size: 28px; }
+.research-details[open] > summary::after { content: "−"; }
+.research-details__content { padding-bottom: 30px; }
+.research-details .report-evidence { margin-top: 8px; }
+.research-details .source-methodology-panel { margin-top: 24px; }
+
+@media (max-width: 900px) {
+  .ecosystem-stage-summary__primary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ecosystem-stage-summary__primary > :first-child { grid-column: 1 / -1; }
+  .directory-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .directory-search { grid-column: 1 / -1; }
+}
+@media (max-width: 720px) {
+  .archive-main { padding: 25px 16px 20px; }
+  .archive-header { margin-bottom: 34px; }
+  .archive-header h1 { font-size: clamp(49px, 15vw, 72px); }
+  .archive-header--directory { margin-bottom: 28px; }
+  .archive-header--profile { min-height: 44px; margin-bottom: 12px; padding-right: 0; }
+  .archive-header .eyebrow { margin-bottom: 18px; }
+  .header-description { margin-top: 22px; font-size: 15px; }
+  .ecosystem-stage-summary__intro { padding: 26px 20px; }
+  .ecosystem-stage-summary__primary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ecosystem-stage-summary__primary div,
+  .ecosystem-stage-summary__primary button { min-height: 124px; padding: 17px; }
+  .ecosystem-stage-summary__primary > :first-child { grid-column: 1 / -1; }
+  .directory-controls { grid-template-columns: 1fr; }
+  .directory-search { grid-column: auto; }
+  .startup-intelligence-hero { grid-template-columns: 1fr; padding: 24px 20px; }
+  .startup-intelligence-hero h2 { font-size: clamp(44px, 14vw, 64px); }
+  .performance-intro { grid-template-columns: 1fr; margin-top: 34px; }
+  .research-details > summary { align-items: flex-start; }
+  .research-details > summary small { display: none; }
+}
+
 
 /* Canonical analysis details */
 .profile-section { margin-top: 26px; }
@@ -665,4 +753,66 @@
   .startup-progress li { gap: 4px; font-size: 10px; }
   .measurement-status { margin-top: 20px; }
   .measurement-status__grid--coverage-first { grid-template-areas: "coverage" "sources"; }
+}
+
+/* Final cascade for the Superteam UK public directory treatment. */
+.archive-frame { border-radius: 0; }
+.archive-main { padding: clamp(28px, 4vw, 56px); }
+.archive-header { align-items: flex-start; margin-bottom: clamp(34px, 6vw, 72px); }
+.archive-header h1 { max-width: 820px; font-size: clamp(58px, 8.4vw, 112px); line-height: .83; letter-spacing: -.065em; }
+.archive-header h1 em { color: var(--secondary); }
+.archive-header .eyebrow { margin-bottom: 26px; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: .16em; }
+.header-description { max-width: 720px; margin-top: 32px; color: var(--text); font: 500 clamp(16px, 1.6vw, 21px)/1.6 ui-monospace, SFMono-Regular, Consolas, monospace; }
+.ecosystem-stage-summary { gap: 0; padding: 0; overflow: hidden; border-radius: 0; box-shadow: none; }
+.ecosystem-stage-summary__intro { display: grid; max-width: 820px; gap: 12px; padding: clamp(26px, 4vw, 48px); }
+.ecosystem-stage-summary__intro .eyebrow { margin: 0; }
+.ecosystem-stage-summary__intro h2 { margin: 0; font: 500 clamp(34px, 4.5vw, 62px)/.98 Georgia, "Times New Roman", serif; letter-spacing: -.045em; }
+.ecosystem-stage-summary__intro > p:last-child { max-width: 680px; margin: 5px 0 0; color: var(--secondary); font-size: 16px; line-height: 1.65; }
+.ecosystem-stage-summary__primary { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--border); }
+.ecosystem-stage-summary__primary div,
+.ecosystem-stage-summary__primary button { display: grid; min-height: 150px; align-content: space-between; justify-items: start; gap: 8px; padding: 22px; border: 0; border-right: 1px solid var(--border); border-radius: 0; background: transparent; color: var(--text); text-align: left; }
+.ecosystem-stage-summary__primary button { font: inherit; cursor: pointer; }
+.ecosystem-stage-summary__primary button.active { background: color-mix(in srgb, var(--accent) 13%, var(--surface)); }
+.ecosystem-stage-summary__primary strong { font-size: clamp(38px, 4vw, 58px); line-height: 1; }
+.ecosystem-stage-summary__primary small { color: var(--secondary); font-size: 11px; line-height: 1.35; }
+.ecosystem-stage-summary__secondary { padding: 16px 22px; border-top: 1px solid var(--border); }
+.directory-controls { grid-template-columns: minmax(260px, 1.5fr) repeat(3, minmax(150px, .7fr)); margin-top: 28px; }
+.startup-card { position: relative; grid-template-rows: auto auto auto; border-top-width: 1px; border-radius: 4px; box-shadow: none; }
+.startup-card::after { position: absolute; top: -1px; left: -1px; width: 72px; height: 5px; background: var(--classification-strip); content: ""; }
+.startup-card__performance { display: flex; flex-wrap: wrap; align-items: baseline; gap: 5px; padding-top: 14px; border-top: 1px solid var(--border); color: var(--secondary); font-size: 12px; }
+.startup-card__performance span { flex-basis: 100%; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+.startup-card__performance strong { color: var(--text); font: 500 21px/1.2 Georgia, serif; }
+.startup-intelligence-hero { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: 24px; padding: clamp(24px, 4vw, 48px); border: 1px solid var(--border); border-radius: 0; }
+.startup-intelligence-hero h2 { font-size: clamp(48px, 7vw, 88px); line-height: .9; }
+.startup-hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin-top: 22px; }
+.startup-hero__actions a { padding: 8px 12px; border: 1px solid var(--border); border-radius: 999px; color: var(--text); font-size: 12px; font-weight: 700; text-decoration: none; }
+.startup-progress { margin-top: 14px; border-radius: 0; box-shadow: none; }
+.performance-intro { display: grid; grid-template-columns: 1fr minmax(260px, .6fr); gap: 24px; align-items: end; margin: 46px 0 18px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+.performance-intro h3 { margin: 6px 0 0; font: 500 clamp(30px, 4vw, 48px)/1 Georgia, serif; letter-spacing: -.035em; }
+.performance-intro > p { margin: 0; color: var(--secondary); line-height: 1.55; }
+.performance-empty { margin: 34px 0; padding: clamp(24px, 4vw, 42px); border: 1px solid var(--border); border-left: 6px solid var(--accent); background: color-mix(in srgb, var(--accent) 5%, var(--surface-raised)); }
+.performance-empty h3 { margin: 8px 0 12px; font: 500 clamp(28px, 3.6vw, 44px)/1.05 Georgia, serif; }
+.performance-empty > p:last-child { max-width: 720px; margin-bottom: 0; color: var(--secondary); font-size: 16px; line-height: 1.65; }
+.research-details { margin-top: 42px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.research-details > summary { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 22px 4px; cursor: pointer; list-style: none; }
+.research-details > summary span { font: 500 clamp(22px, 2.5vw, 32px)/1.1 Georgia, serif; }
+.research-details > summary small { color: var(--secondary); text-align: right; }
+.research-details > summary::after { flex: 0 0 auto; content: "+"; font-size: 28px; }
+.research-details[open] > summary::after { content: "−"; }
+.research-details__content { padding-bottom: 30px; }
+@media (max-width: 900px) {
+  .ecosystem-stage-summary__primary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ecosystem-stage-summary__primary > :first-child { grid-column: 1 / -1; }
+  .directory-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .directory-search { grid-column: 1 / -1; }
+}
+@media (max-width: 720px) {
+  .archive-main { padding: 25px 16px 20px; }
+  .archive-header h1 { font-size: clamp(49px, 15vw, 72px); }
+  .ecosystem-stage-summary__primary div, .ecosystem-stage-summary__primary button { min-height: 124px; padding: 17px; }
+  .directory-controls { grid-template-columns: 1fr; }
+  .directory-search { grid-column: auto; }
+  .startup-intelligence-hero { grid-template-columns: 1fr; padding: 24px 20px; }
+  .performance-intro { grid-template-columns: 1fr; margin-top: 34px; }
+  .research-details > summary small { display: none; }
 }

@@ -93,9 +93,11 @@ function StartupCard({ startup, onNavigate }) {
       onNavigate(startupPath(startup));
     }
   };
+  const headlineMetric = [CANONICAL_STAGE.MAINNET, CANONICAL_STAGE.DEVNET].includes(stage) ? (startup.headlineKpis ?? [])[0] : null;
   return <a className={"startup-card startup-card--" + (network?.tone ?? "neutral")} href={startupPath(startup)} onClick={openProfile} aria-label={"View " + displayName(startup) + " profile. " + description} title={description}>
     <div className="startup-card__identity"><ProjectLogo startup={startup} /><div><h3>{displayName(startup)}</h3><p>{sectorTags(startup)[0] ?? "Sector not verified"}</p></div>{network && <div className="startup-card__network"><StatusPill tone={network.tone}>{network.label}</StatusPill></div>}</div>
     <p className="startup-card__description">{description}</p>
+    {headlineMetric && <p className="startup-card__performance"><span>{stage === CANONICAL_STAGE.DEVNET ? "Devnet milestone" : "Latest measured"}</span><strong>{headlineMetric.value}</strong> {headlineMetric.label}</p>}
   </a>;
 }
 
@@ -288,6 +290,27 @@ function StartupProgression({ stage }) {
     <ol>{journey.map((item) => <li key={item} aria-current={item === current ? "step" : undefined} className={item === current ? "current" : ""}>{item === "GROWTH" ? "Growth" : canonicalStageLabel[item]}</li>)}</ol>
   </section>;
 }
+function PublicPerformanceStatus({ startup, contract }) {
+  const hasPerformance = Boolean((startup.headlineKpis ?? []).length || verifiedMetricsFor(startup).length);
+  if (hasPerformance) return <section className="performance-intro"><div><p className="eyebrow">Performance</p><h3>What the startup is doing on-chain.</h3></div><p>Reviewed results are shown with their evidence limits and research cutoff.</p></section>;
+  const stage = canonicalStartupStage(startup);
+  const message = stage === CANONICAL_STAGE.DEVNET
+    ? "This startup has reached Devnet. Development activity can be celebrated here, while customer usage, volume and revenue wait for Mainnet."
+    : stage === CANONICAL_STAGE.MAINNET && contract?.attributionState === "awaiting_attribution"
+      ? "This startup is on Mainnet, but independent performance is not published until an official on-chain source can be attributed to it."
+      : stage === CANONICAL_STAGE.MAINNET
+        ? "This startup is on Mainnet. Performance will appear here when a reviewed measurement cycle is available."
+        : "Performance tracking begins when the startup reaches an attributable on-chain milestone.";
+  return <section className="performance-empty"><p className="eyebrow">Performance</p><h3>Metrics are not published yet.</h3><p>{message}</p></section>;
+}
+function ResearchDetails({ startup }) {
+  return <details className="research-details"><summary><span>Research, evidence and methodology</span><small>Addresses, verification, limitations and sources</small></summary><div className="research-details__content">
+    <ReportEvidence startup={startup} />
+    <EvidenceLimitations startup={startup} />
+    <ReportCsvExport startup={startup} />
+    <SourceLinks startup={startup} />
+  </div></details>;
+}
 function MeasurementStatus({ startup, contract }) {
   if (!contract) return null;
   return <section className="measurement-status" aria-labelledby={startupSlug(startup) + "-measurement-title"}>
@@ -310,19 +333,13 @@ function StartupDetail({ startup, onBack, chartProps }) {
     <button type="button" className="profile-back" onClick={onBack}>&larr; Back to All Startups</button>
     <header className="startup-detail__header startup-intelligence-hero">
       <ProjectLogo startup={startup} profile />
-      <div><p className="eyebrow">{startup.sector}</p><h2>{displayName(startup)}</h2><p>{startup.whatItBuilds ?? startup.summary}</p></div>
-      <StatusPill tone={isMainnet(startup) ? "mainnet" : "research"}>{researchStatus(startup)}</StatusPill>
+      <div><p className="eyebrow">{startup.sector}</p><h2>{displayName(startup)}</h2><p>{startup.whatItBuilds ?? startup.summary}</p><div className="startup-hero__actions"><StatusPill tone={canonicalStageTone[stage]}>{canonicalStageLabel[stage]}</StatusPill>{projectLinksFor(startup).slice(0, 2).map((link) => <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>)}</div></div>
     </header>
-    <section className="startup-intelligence-state" aria-label="Startup intelligence status">
-      <div><span>Canonical stage</span><StatusPill tone={canonicalStageTone[stage]}>{canonicalStageLabel[stage]}</StatusPill></div>
-      {contract && <><div><span>Attribution state</span><StatusPill tone={contract.attributionState === "verified" ? "verified" : contract.attributionState === "partial" ? "partial" : "outstanding"}>{contract.attributionLabel}</StatusPill></div><div><span>Measurement readiness</span><strong><i aria-hidden="true" />{contract.readinessLabel}</strong></div></>}
-    </section>
     <StartupProgression stage={stage} />
-    <MeasurementStatus startup={startup} contract={contract} />
-    <ReportIntroductionLinks startup={startup} />
+    <PublicPerformanceStatus startup={startup} contract={contract} />
+    <ReportKpis startup={startup} />
     <section className="canonical-finding"><p className="eyebrow">Canonical finding</p><RichNarrative id={startupSlug(startup) + "-canonical-finding"} value={finding} /></section>
     <DevelopmentNotice startup={startup} />
-    <ReportKpis startup={startup} />
     <DevelopmentProgress startup={startup} />
     <ReportCharts startup={startup} chartProps={chartProps} />
     <ReportTables startup={startup} />
@@ -331,11 +348,8 @@ function StartupDetail({ startup, onBack, chartProps }) {
     <NarrativeSection startup={startup} id="testing-drivers" title="Who or which wallets or cohorts drove it" value={narrative.whoDroveIt ?? narrative.testingDrivers} />
     <NarrativeSection startup={startup} id="continuity" title="Whether activity continued or users returned" value={continuity} />
     <NarrativeSection startup={startup} id="evidence-demonstrates" title="What the test activity demonstrates" value={narrative.whatEvidenceDemonstrates} />
-    <ReportEvidence startup={startup} />
     <NarrativeSection startup={startup} id="implication" title="Superteam implication" value={narrative.superteamImplication} />
-    <DevelopmentDisclosure startup={startup} label="Evidence limitations"><EvidenceLimitations startup={startup} /></DevelopmentDisclosure>
-    <ReportCsvExport startup={startup} />
-    <div><DevelopmentDisclosure startup={startup} label="Sources and methodology"><SourceLinks startup={startup} /></DevelopmentDisclosure></div>
+    <ResearchDetails startup={startup} />
     {isDevelopmentReport(startup) && <p className="static-research-notice">This report reflects evidence available up to the stated data cutoff. Metrics are not continuously updated unless a new research cycle is completed.</p>}
   </section>;
 }const internalResearchPipeline = ["Directory intake", "Identity verification", "Product research", "Technical classification", "Evidence collection", "Queue assignment", "Publication"];
@@ -372,11 +386,10 @@ function InsightsView({ statusRows, stageRows, queueRows, chartProps, researched
 function AskDandyView() {
   return <section className="ask-dandy" aria-labelledby="ask-dandy-title"><p className="eyebrow">Ask Dandy</p><h2 id="ask-dandy-title">Research assistant coming soon.</h2><p>This placeholder reserves the approved Superteam research-assistant location. No chatbot backend or live answer generation is enabled yet.</p></section>;
 }
-function DirectoryControls({ search, setSearch, technical, setTechnical, research, setResearch, sector, setSector, sort, setSort, sectors }) {
+function DirectoryControls({ search, setSearch, technical, setTechnical, sector, setSector, sort, setSort, sectors }) {
   return <section className="directory-controls" aria-label="Startup directory controls">
     <label className="directory-search"><span>Search startups</span><input type="search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Name, founder, sector or address" /></label>
     <label><span>Technical stage</span><select value={technical} onChange={(event) => setTechnical(event.target.value)}>{["All", "Off-chain", "Building", "Devnet", "Mainnet", "Historical Mainnet", "Unresolved", "Inactive"].map((value) => <option key={value}>{value}</option>)}</select></label>
-    <label><span>Research status</span><select value={research} onChange={(event) => setResearch(event.target.value)}>{["All", "Completed", "In progress", "Awaiting founder", "Not started"].map((value) => <option key={value}>{value}</option>)}</select></label>
     <label><span>Sector</span><select value={sector} onChange={(event) => setSector(event.target.value)}><option>All</option>{sectors.map((value) => <option key={value}>{value}</option>)}</select></label>
     <label><span>Sort</span><select value={sort} onChange={(event) => setSort(event.target.value)}><option value="directory">Directory order</option><option value="name">Name A-Z</option><option value="technical">Technical stage</option><option value="research">Research status</option></select></label>
   </section>;
@@ -388,7 +401,6 @@ export function DashboardContent() {
   const [pathname, setPathname] = useState(currentPathname);
   const [search, setSearch] = useState("");
   const [technical, setTechnical] = useState("All");
-  const [research, setResearch] = useState("All");
   const [sector, setSector] = useState("All");
   const [sort, setSort] = useState("directory");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -404,6 +416,7 @@ export function DashboardContent() {
     completionRate: startups.length / summarySource.directoryStartups,
   }), [startups, summarySource.directoryStartups]);
   const ecosystemStages = useMemo(() => deriveEcosystemStageCounts(startups), [startups]);
+  const measuredCount = useMemo(() => startups.filter((startup) => canonicalStartupStage(startup) === CANONICAL_STAGE.MAINNET && (startup.headlineKpis ?? []).length > 0).length, [startups]);
   const statusRows = useMemo(() => distributionRows(startups.map((item) => item.technicalState), "category"), [startups]);
   const stageRows = useMemo(() => distributionRows(startups.map((item) => normalizedStage(item.directoryStage ?? item.stage)), "stage"), [startups]);
   const queueRows = useMemo(() => startups.filter(isMainnet).map((item) => ({
@@ -418,14 +431,13 @@ export function DashboardContent() {
       const searchable = [displayName(startup), startup.founder, startup.directoryFounder, startup.sector, startup.oneLine, startup.summary, startup.whatItBuilds, startup.canonicalFinding, startup.technicalStatus, ...(startup.technicalEntryPoints ?? []).map((entry) => entry.address)].filter(Boolean).join(" ").toLowerCase();
       return (!term || searchable.includes(term))
         && (technical === "All" || technicalGroup(startup) === technical)
-        && (research === "All" || researchStatus(startup) === research)
         && (sector === "All" || sectorTags(startup).includes(sector));
     });
     return [...filtered].sort((a, b) => sort === "name" ? displayName(a).localeCompare(displayName(b))
       : sort === "technical" ? technicalGroup(a).localeCompare(technicalGroup(b))
         : sort === "research" ? researchStatus(a).localeCompare(researchStatus(b))
           : startups.indexOf(a) - startups.indexOf(b));
-  }, [research, search, sector, sort, startups, technical]);
+  }, [search, sector, sort, startups, technical]);
 
   useEffect(() => {
     const syncFromLocation = () => setPathname(currentPathname());
@@ -454,7 +466,7 @@ export function DashboardContent() {
   return <article className="page startup-archive" aria-label="Superteam UK startup analytics"><div className="archive-frame">
     <aside className="archive-rail" aria-label="Analytics sections"><BrandMark />{navItems.map((item) => <a key={item.path} className={view === item.view ? "active" : ""} href={item.path} onClick={navClick(item.path)} aria-label={item.label}><span aria-hidden="true">{item.icon}</span></a>)}</aside>
     <div className="archive-main">
-      <header className="archive-header"><div><p className="eyebrow">Superteam UK Startup Analytics</p><h1>Startup <em>analytics.</em></h1><p className="header-description">Products, evidence, users and activity across the Superteam UK startup ecosystem.</p></div><nav className="header-actions" aria-label="Primary views">{navItems.map((item) => <a key={item.path} className={view === item.view ? "active" : ""} href={item.path} onClick={navClick(item.path)}>{item.label}</a>)}</nav><button type="button" className="mobile-menu-trigger" aria-label="Open website navigation" aria-controls="mobile-site-menu" aria-expanded={mobileMenuOpen} onClick={() => setMobileMenuOpen((open) => !open)}><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span></button>{mobileMenuOpen && <nav id="mobile-site-menu" className="mobile-site-menu" aria-label="Website navigation">{navItems.map((item) => <a key={item.path} className={view === item.view ? "active" : ""} href={item.path} onClick={navClick(item.path)}>{item.label}</a>)}</nav>}</header>
+      <header className={`archive-header${view === "archive" && !selected ? " archive-header--directory" : ""}${selected ? " archive-header--profile" : ""}`}><div><p className="eyebrow">Superteam / UK</p><h1>From building<br />to <em>Mainnet.</em></h1><p className="header-description">Follow the startups building in the UK, celebrate each on-chain milestone and see what happens after launch.</p></div><nav className="header-actions" aria-label="Primary views">{navItems.map((item) => <a key={item.path} className={view === item.view ? "active" : ""} href={item.path} onClick={navClick(item.path)}>{item.label}</a>)}</nav><button type="button" className="mobile-menu-trigger" aria-label="Open website navigation" aria-controls="mobile-site-menu" aria-expanded={mobileMenuOpen} onClick={() => setMobileMenuOpen((open) => !open)}><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span></button>{mobileMenuOpen && <nav id="mobile-site-menu" className="mobile-site-menu" aria-label="Website navigation">{navItems.map((item) => <a key={item.path} className={view === item.view ? "active" : ""} href={item.path} onClick={navClick(item.path)}>{item.label}</a>)}</nav>}</header>
       {view === "overview" && <>
         <section className="metric-strip" aria-label="Research progress">
           <MetricCard id="directory-size" queryId="research_summary" sourceRows={[summary]} title="Directory universe" value={String(summary.directoryStartups)} description="Published startup records." />
@@ -467,7 +479,7 @@ export function DashboardContent() {
       </>}
       {view === "archive" && !route.notFound && (selected
         ? <StartupDetail startup={selected} onBack={() => navigateTo("/startups")} chartProps={chartProps} />
-        : <section className="startup-directory" aria-label="Startup directory"><section className="ecosystem-stage-summary" aria-label="Ecosystem progression summary"><div className="ecosystem-stage-summary__primary"><div><span>All Startups</span><strong>{ecosystemStages.total}</strong></div>{[CANONICAL_STAGE.OFFCHAIN, CANONICAL_STAGE.BUILDING, CANONICAL_STAGE.DEVNET, CANONICAL_STAGE.MAINNET].map((stage) => <div key={stage}><span>{canonicalStageLabel[stage]}</span><strong>{ecosystemStages[stage]}</strong></div>)}</div><div className="startup-journey"><span>Startup journey</span><ol aria-label="Building to growth journey"><li>Building</li><li>Devnet</li><li>Mainnet</li><li>Growth</li></ol></div><p className="ecosystem-stage-summary__secondary">Outside the active journey: <span>Historical {ecosystemStages.HISTORICAL_MAINNET}</span><span>Unresolved {ecosystemStages.UNRESOLVED}</span><span>Inactive {ecosystemStages.INACTIVE}</span></p></section><DirectoryControls search={search} setSearch={setSearch} technical={technical} setTechnical={setTechnical} research={research} setResearch={setResearch} sector={sector} setSector={setSector} sort={sort} setSort={setSort} sectors={sectors} /><p className="directory-result-count" aria-live="polite">Showing {visibleStartups.length} of {startups.length} startups</p><div className="startup-list">{visibleStartups.map((startup) => <StartupCard key={startup.id} startup={startup} onNavigate={navigateTo} />)}</div></section>)}
+        : <section className="startup-directory" aria-label="Startup directory"><section className="ecosystem-stage-summary" aria-label="Ecosystem progression summary"><div className="ecosystem-stage-summary__intro"><p className="eyebrow">The startup journey</p><h2>Ship. Reach Devnet. Launch on Mainnet. Prove growth.</h2><p>Every stage is a milestone worth recognising. Once a startup reaches attributable Mainnet activity, performance tracking can begin.</p></div><div className="ecosystem-stage-summary__primary"><div><span>All startups</span><strong>{ecosystemStages.total}</strong></div><button type="button" className={technical === "Building" ? "active" : ""} onClick={() => setTechnical(technical === "Building" ? "All" : "Building")}><span>Building</span><strong>{ecosystemStages.BUILDING}</strong><small>Preparing to ship</small></button><button type="button" className={technical === "Devnet" ? "active" : ""} onClick={() => setTechnical(technical === "Devnet" ? "All" : "Devnet")}><span>Devnet</span><strong>{ecosystemStages.DEVNET}</strong><small>First on-chain milestone</small></button><button type="button" className={technical === "Mainnet" ? "active" : ""} onClick={() => setTechnical(technical === "Mainnet" ? "All" : "Mainnet")}><span>Mainnet</span><strong>{ecosystemStages.MAINNET}</strong><small>Live on-chain</small></button><div><span>Performance</span><strong>{measuredCount}</strong><small>Reviewed metrics available</small></div></div><p className="ecosystem-stage-summary__secondary"><span>{ecosystemStages.OFFCHAIN} without a verified on-chain deployment</span><span>{ecosystemStages.HISTORICAL_MAINNET} historical</span><span>{ecosystemStages.UNRESOLVED} unresolved</span><span>{ecosystemStages.INACTIVE} inactive</span></p></section><DirectoryControls search={search} setSearch={setSearch} technical={technical} setTechnical={setTechnical} sector={sector} setSector={setSector} sort={sort} setSort={setSort} sectors={sectors} /><p className="directory-result-count" aria-live="polite">Showing {visibleStartups.length} of {startups.length} startups</p><div className="startup-list">{visibleStartups.map((startup) => <StartupCard key={startup.id} startup={startup} onNavigate={navigateTo} />)}</div></section>)}
       {view === "insights" && <InsightsView statusRows={statusRows} stageRows={stageRows} queueRows={queueRows} chartProps={chartProps} researchedCount={summary.researched} />}
       {view === "ask-dandy" && <AskDandyView />}
       {route.notFound && <section className="route-not-found" role="status"><p className="eyebrow">Not found</p><h2>Startup profile unavailable.</h2><p>The URL does not match a verified startup profile.</p><button type="button" onClick={() => navigateTo("/startups")}>Return to startups</button></section>}
