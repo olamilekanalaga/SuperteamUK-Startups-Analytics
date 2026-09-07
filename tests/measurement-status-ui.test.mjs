@@ -59,3 +59,15 @@ test("directory and startup intelligence routes have distinct public hierarchy",
   assert.match(detail,/ResearchDetails/u);
   assert.match(detail,/Back to Startup Directory/u);
 });
+test("ecosystem impact route uses verified counts and empty-safe flywheel metrics",async()=>{
+  const source=await readFile(new URL("src/content/dashboard/DashboardContent.jsx",root),"utf8");
+  assert.match(source,/pathname === "\/startups\/impact"/u);
+  assert.match(source,/How Superteam UK contributes to Solana/u);
+  assert.match(source,/Builders.*Apps.*Economic activity.*Revenue.*More builders/su);
+  assert.match(source,/Monthly active developers/u);
+  assert.match(source,/90-day developer retention/u);
+  assert.match(source,/Devnet → Mainnet launches/u);
+  assert.match(source,/value="—" detail="No compatible revenue total"/u);
+  assert.match(source,/value="—" detail="Comparable funding total unavailable"/u);
+  assert.doesNotMatch(source,/\$690K|\$18\.4M|\b124 monthly active developers\b|\b61%\b/u);
+});

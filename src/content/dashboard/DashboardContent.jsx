@@ -28,6 +28,7 @@ const profileSlugFromPath = (pathname) => pathname.match(/^\/startups\/([^/]+)\/
 const routeFromPathname = (pathname, startups) => {
   if (pathname === "/" || pathname === "") return { view: "overview", startup: null, notFound: false };
   if (pathname === "/startups" || pathname === "/startups/") return { view: "archive", startup: null, notFound: false };
+  if (pathname === "/startups/impact" || pathname === "/startups/impact/") return { view: "impact", startup: null, notFound: false };
   if (pathname === "/insights" || pathname === "/insights/") return { view: "insights", startup: null, notFound: false };
   if (pathname === "/ask-dandy" || pathname === "/ask-dandy/") return { view: "ask-dandy", startup: null, notFound: false };
   const slug = profileSlugFromPath(pathname);
@@ -109,6 +110,31 @@ const industryRowsFor = (startups) => Object.entries(startups.reduce((groups, st
 }, {})).map(([label, items]) => ({ label, count: items.length, items }))
   .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
 
+const safeIndustryMetric = (items, key) => {
+  const metrics = items.map((startup) => performanceMetricsFor(startup).find((slot) => slot.key === key)?.metric).filter(Boolean);
+  return metrics.length === 1 ? metrics[0].value : "—";
+};
+
+const impactIndustryRowsFor = (industries) => industries.map((industry) => ({
+  ...industry,
+  volume: safeIndustryMetric(industry.items, "volume"),
+  revenue: safeIndustryMetric(industry.items, "revenue"),
+}));
+
+const impactContributorRowsFor = (startups) => startups.map((startup) => {
+  const metrics = performanceMetricsFor(startup).filter(({ metric }) => metric);
+  const stage = canonicalStartupStage(startup);
+  const hasRevenue = metrics.some(({ key }) => key === "revenue");
+  const hasVolume = metrics.some(({ key }) => key === "volume");
+  return {
+    startup,
+    metrics,
+    stage,
+    role: hasRevenue ? "Generates revenue" : hasVolume ? "Drives economic activity" : stage === CANONICAL_STAGE.DEVNET ? "Tests on Devnet" : "Builds on Solana",
+  };
+}).filter(({ metrics }) => metrics.length > 0)
+  .sort((a, b) => b.metrics.length - a.metrics.length || Number(b.stage === CANONICAL_STAGE.MAINNET) - Number(a.stage === CANONICAL_STAGE.MAINNET));
+
 const cardDescription = (startup) => { const value = String(startup.whatItBuilds ?? startup.oneLine ?? startup.summary ?? "Project description not verified.").trim(); return value.match(/^.*?[.!?](?:\s|$)/u)?.[0].trim() ?? value; };
 function StartupCard({ startup, onNavigate }) {
   const stage = canonicalStartupStage(startup);
@@ -165,6 +191,45 @@ function LatestMilestones() {
     <header><h2 id="milestones-title">Latest milestones</h2></header>
     <div className="milestone-empty"><span aria-hidden="true">✦</span><strong>Milestones awaiting verified dates</strong><p>Devnet and Mainnet launches will appear here when an exact date is supported by the research.</p></div>
   </aside>;
+}
+
+function ImpactSummaryCard({ tone, icon, label, value, detail }) {
+  return <article className={`impact-summary-card impact-summary-card--${tone}`}>
+    <span aria-hidden="true">{icon}</span><div><small>{label}</small><strong>{value}</strong><p>{detail}</p></div>
+  </article>;
+}
+
+function EcosystemImpactPage({ startups, counts, industries, onNavigate }) {
+  const impactIndustries = impactIndustryRowsFor(industries);
+  const contributors = impactContributorRowsFor(startups).slice(0, 3);
+  const goToDirectory = () => onNavigate("/startups");
+  const flywheelNodes = [
+    { key: "builders", label: "Builders", detail: `${counts.total} builders tracked` },
+    { key: "apps", label: "Apps", detail: `${counts.DEVNET} Devnet · ${counts.MAINNET} Mainnet` },
+    { key: "markets", label: "Users & markets", detail: "Activity measured by industry" },
+    { key: "revenue", label: "Revenue", detail: "—" },
+    { key: "reinvestment", label: "Reinvestment", detail: "— capital raised" },
+  ];
+  const builderMetrics = [
+    ["Monthly active developers", "—", "Developer activity is not yet tracked"],
+    ["90-day developer retention", "—", "Developer retention is not yet tracked"],
+    ["Devnet → Mainnet launches", "—", "Exact transition dates are not yet stored"],
+  ];
+  return <section className="impact-page" aria-labelledby="impact-page-title">
+    <header className="impact-page__hero"><div><h1 id="impact-page-title">How Superteam UK contributes to Solana</h1><p>Builders <span>→</span> Apps <span>→</span> Economic activity <span>→</span> Revenue <span>→</span> More builders</p></div><span className="impact-data-badge">Evidence-led</span></header>
+    <section className="impact-summary-grid" aria-label="Ecosystem impact summary">
+      <ImpactSummaryCard tone="coral" icon="♟" label="Builders tracked" value={counts.total} detail="Unique builders in Superteam UK" />
+      <ImpactSummaryCard tone="lavender" icon="◇" label="Mainnet apps" value={counts.MAINNET} detail="Apps live on Solana mainnet" />
+      <ImpactSummaryCard tone="gold" icon="▥" label="App revenue" value="—" detail="No compatible revenue total" />
+      <ImpactSummaryCard tone="mint" icon="▥" label="Capital raised" value="—" detail="Comparable funding total unavailable" />
+    </section>
+    <section className="impact-core-grid">
+      <article className="impact-panel impact-flywheel"><header><h2>Superteam UK flywheel</h2><p>Builders create apps, apps drive economic activity, revenue fuels reinvestment, and attracts more builders.</p></header><div className="impact-flywheel__diagram"><ol>{flywheelNodes.map((node) => <li key={node.key} className={`impact-node impact-node--${node.key}`}><strong>{node.label}</strong><span>{node.detail}</span></li>)}</ol><div className="impact-flywheel__center"><strong>A stronger<br />Solana ecosystem</strong><span aria-hidden="true">◎</span></div></div></article>
+      <article className="impact-panel builder-engine"><header><h2>Builder engine</h2><p>A growing base of developers, shipping apps and creating real economic activity.</p></header><div>{builderMetrics.map(([label, value, detail], index) => <article key={label} className={`builder-engine__metric builder-engine__metric--${index + 1}`}><span aria-hidden="true">{index === 0 ? "♟" : index === 1 ? "▥" : "↗"}</span><div><small>{label}</small><strong>{value}</strong><p>{detail}</p></div></article>)}</div></article>
+    </section>
+    <section className="impact-industries" aria-labelledby="impact-industries-title"><header className="impact-section-heading"><div><h2 id="impact-industries-title">Industry contribution</h2><p>Superteam UK startups are active across key sectors of the Solana economy.</p></div><button type="button" onClick={goToDirectory}>View all startups →</button></header><div className="impact-industry-scroller">{impactIndustries.map((industry, index) => <article key={industry.label} className={`impact-industry-card impact-industry-card--${industryTone(index)}`}><h3>{industry.label}</h3><strong>{industry.count} {industry.count === 1 ? "startup" : "startups"}</strong><dl><div><dt>Volume</dt><dd>{industry.volume}</dd></div><div><dt>Revenue</dt><dd>{industry.revenue}</dd></div></dl></article>)}</div></section>
+    <section className="startup-contributions" aria-labelledby="startup-contributions-title"><header className="impact-section-heading"><div><h2 id="startup-contributions-title">Startup contributions</h2><p>Measured startups and their role in the ecosystem.</p></div><button type="button" onClick={goToDirectory}>View all startups →</button></header><div className="startup-contributions__table"><div className="startup-contributions__header"><span>Startup</span><span>Role in flywheel</span><span>Key metrics</span><span>12-month trend</span></div>{contributors.map(({ startup, role, metrics }) => <button type="button" key={startup.id} onClick={() => onNavigate(startupPath(startup))}><span className="startup-contribution__identity"><ProjectLogo startup={startup} /><span><strong>{displayName(startup)}</strong><small>{industryLabel(startup)}</small></span></span><span><em>{role}</em></span><span className="startup-contribution__metrics">{metrics.slice(0, 3).map(({ key, label, metric }) => <span key={key}><small>{label}</small><strong>{metric.value}</strong></span>)}</span><span className="startup-contribution__trend">—</span></button>)}</div></section>
+  </section>;
 }
 
 function DirectoryHome({ startups, counts, industries, measuredCount, search, setSearch, technical, setTechnical, sector, setSector, sort, setSort, sectors, visibleStartups, onNavigate }) {
@@ -559,11 +624,11 @@ export function DashboardContent() {
     }
   };
   const sectionItems = [
-    { id: "home", label: "Home", icon: "⌂" },
-    { id: "directory", label: "Startup Directory", icon: "▣" },
-    { id: "impact", label: "Ecosystem Impact", icon: "◉" },
-    { id: "milestones", label: "Milestones", icon: "⚑" },
-    { id: "about", label: "About", icon: "♙" },
+    { id: "home", label: "Home", icon: "⌂", href: "/startups#home" },
+    { id: "directory", label: "Startup Directory", icon: "▣", href: "/startups#directory" },
+    { id: "impact", label: "Ecosystem Impact", icon: "◉", href: "/startups/impact" },
+    { id: "milestones", label: "Milestones", icon: "⚑", href: "/startups#milestones" },
+    { id: "about", label: "About", icon: "♙", href: "/startups#about" },
   ];
   const goToSection = (id) => (event) => {
     event?.preventDefault();
@@ -571,15 +636,17 @@ export function DashboardContent() {
     globalThis.setTimeout(() => globalThis.document?.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" }), 0);
     setMobileMenuOpen(false);
   };
+  const sectionClick = (item) => item.id === "impact" ? navClick(item.href) : goToSection(item.id);
+  const sectionIsActive = (item) => view === "impact" ? item.id === "impact" : view === "archive" && !selected && item.id === "home";
 
   return <article className="page startup-archive" aria-label="Superteam UK startup intelligence"><div className="archive-frame">
     <aside className="archive-rail" aria-label="Homepage sections">
       <a className="sidebar-brand" href="/startups#home" onClick={goToSection("home")}><BrandMark /><span><strong>SuperteamUK</strong><small>Builders. Community. Impact.</small></span></a>
-      <nav>{sectionItems.map((item) => <a key={item.id} href={`/startups#${item.id}`} onClick={goToSection(item.id)}><span aria-hidden="true">{item.icon}</span>{item.label}</a>)}</nav>
+      <nav>{sectionItems.map((item) => <a key={item.id} className={sectionIsActive(item) ? "active" : undefined} href={item.href} onClick={sectionClick(item)}><span aria-hidden="true">{item.icon}</span>{item.label}</a>)}</nav>
       <aside className="sidebar-note"><span aria-hidden="true">♞</span><p>A stronger<br />UK startup<br />ecosystem onchain.</p></aside>
     </aside>
     <div className="archive-main">
-      <header className="mobile-app-header"><a href="/startups#home" onClick={goToSection("home")}>SuperteamUK</a><button type="button" aria-label="Open website navigation" aria-controls="mobile-site-menu" aria-expanded={mobileMenuOpen} onClick={() => setMobileMenuOpen((open) => !open)}>☰</button>{mobileMenuOpen && <nav id="mobile-site-menu" className="mobile-site-menu" aria-label="Website navigation">{sectionItems.map((item) => <a key={item.id} href={`/startups#${item.id}`} onClick={goToSection(item.id)}>{item.label}</a>)}</nav>}</header>
+      <header className="mobile-app-header"><a href="/startups#home" onClick={goToSection("home")}>SuperteamUK</a><button type="button" aria-label="Open website navigation" aria-controls="mobile-site-menu" aria-expanded={mobileMenuOpen} onClick={() => setMobileMenuOpen((open) => !open)}>☰</button>{mobileMenuOpen && <nav id="mobile-site-menu" className="mobile-site-menu" aria-label="Website navigation">{sectionItems.map((item) => <a key={item.id} href={item.href} onClick={sectionClick(item)}>{item.label}</a>)}</nav>}</header>
       {view === "overview" && <>
         <section className="metric-strip" aria-label="Research progress">
           <MetricCard id="directory-size" queryId="research_summary" sourceRows={[summary]} title="Directory universe" value={String(summary.directoryStartups)} description="Published startup records." />
@@ -593,11 +660,12 @@ export function DashboardContent() {
       {view === "archive" && !route.notFound && (selected
         ? <StartupDetail startup={selected} onBack={() => navigateTo("/startups")} chartProps={chartProps} />
         : <DirectoryHome startups={startups} counts={ecosystemStages} industries={industries} measuredCount={measuredCount} search={search} setSearch={setSearch} technical={technical} setTechnical={setTechnical} sector={sector} setSector={setSector} sort={sort} setSort={setSort} sectors={sectors} visibleStartups={visibleStartups} onNavigate={navigateTo} />)}
+      {view === "impact" && <EcosystemImpactPage startups={startups} counts={ecosystemStages} industries={industries} onNavigate={navigateTo} />}
       {view === "insights" && <InsightsView statusRows={statusRows} stageRows={stageRows} queueRows={queueRows} chartProps={chartProps} researchedCount={summary.researched} />}
       {view === "ask-dandy" && <AskDandyView />}
       {route.notFound && <section className="route-not-found" role="status"><p className="eyebrow">Not found</p><h2>Startup profile unavailable.</h2><p>The URL does not match a verified startup profile.</p><button type="button" onClick={() => navigateTo("/startups")}>Return to startups</button></section>}
       <footer className="archive-footer"><span>Evidence-led research by Olamilekan Alaga</span><span>Data cutoff · {snapshot.report?.asOf ?? "2026-09-02"}</span></footer>
     </div>
-    <nav className="mobile-bottom-nav" aria-label="Mobile homepage sections">{sectionItems.slice(0, 4).map((item) => <a key={item.id} href={`/startups#${item.id}`} onClick={goToSection(item.id)}><span aria-hidden="true">{item.icon}</span><small>{item.id === "directory" ? "Directory" : item.id === "impact" ? "Impact" : item.label}</small></a>)}</nav>
+    <nav className="mobile-bottom-nav" aria-label="Mobile homepage sections">{sectionItems.slice(0, 4).map((item) => <a key={item.id} className={sectionIsActive(item) ? "active" : undefined} href={item.href} onClick={sectionClick(item)}><span aria-hidden="true">{item.icon}</span><small>{item.id === "directory" ? "Directory" : item.id === "impact" ? "Impact" : item.label}</small></a>)}</nav>
   </div></article>;
 }
