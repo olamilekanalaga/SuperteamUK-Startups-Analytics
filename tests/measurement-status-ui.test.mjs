@@ -40,8 +40,20 @@ test("AgriDex remains blocked on attribution without fabricated identifiers or v
 });
 test("frontend integration reuses one component and does not expose fetched sample data",async()=>{
   const source=await readFile(new URL("src/content/dashboard/DashboardContent.jsx",root),"utf8");
-  assert.match(source,/function MeasurementStatus\(\{ startup \}\)/u);
-  assert.match(source,/<MeasurementStatus startup=\{startup\} \/>/u);
+  assert.match(source,/function MeasurementStatus\(\{ startup, contract \}\)/u);
+  assert.match(source,/<MeasurementStatus startup=\{startup\} contract=\{contract\} \/>/u);
   assert.doesNotMatch(source,/92\.6|2026-01-24T23:30/u);
   assert.match(source,/No live pipeline values are connected/u);
+});
+test("directory and startup intelligence routes have distinct information hierarchy",async()=>{
+  const source=await readFile(new URL("src/content/dashboard/DashboardContent.jsx",root),"utf8");
+  const directoryBranch=source.match(/selected\s*\?\s*<StartupDetail[\s\S]*?:\s*<section className="startup-directory"[\s\S]*?<DirectoryControls/u)?.[0]??"";
+  assert.match(directoryBranch,/ecosystem-stage-summary/u);
+  assert.match(directoryBranch,/DirectoryControls/u);
+  const detail=source.slice(source.indexOf("function StartupDetail"),source.indexOf("const internalResearchPipeline"));
+  assert.doesNotMatch(detail,/ecosystem-stage-summary|DirectoryControls/u);
+  assert.ok(detail.indexOf("startup-intelligence-hero")<detail.indexOf("<MeasurementStatus startup"));
+  assert.ok(detail.indexOf("<MeasurementStatus startup")<detail.indexOf("canonical-finding"));
+  assert.match(detail,/Back to All Startups/u);
+  assert.match(detail,/StartupProgression/u);
 });

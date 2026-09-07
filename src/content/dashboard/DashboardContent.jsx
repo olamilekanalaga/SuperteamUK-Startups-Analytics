@@ -280,15 +280,21 @@ function ReportCsvExport({ startup }) {
 }
 
 const shortAddress = (address) => address.length > 14 ? address.slice(0, 6) + "..." + address.slice(-4) : address;
-function MeasurementStatus({ startup }) {
-  const contract = buildStartupMeasurementStatus(startup, { stage: canonicalStartupStage(startup), attributionState: attributionState(startup) });
+function StartupProgression({ stage }) {
+  const current = stage === CANONICAL_STAGE.HISTORICAL_MAINNET ? CANONICAL_STAGE.MAINNET : stage;
+  const journey = [CANONICAL_STAGE.BUILDING, CANONICAL_STAGE.DEVNET, CANONICAL_STAGE.MAINNET, "GROWTH"];
+  return <section className="startup-progress" aria-label="Startup progression">
+    <span>Startup progression</span>
+    <ol>{journey.map((item) => <li key={item} aria-current={item === current ? "step" : undefined} className={item === current ? "current" : ""}>{item === "GROWTH" ? "Growth" : canonicalStageLabel[item]}</li>)}</ol>
+  </section>;
+}
+function MeasurementStatus({ startup, contract }) {
   if (!contract) return null;
   return <section className="measurement-status" aria-labelledby={startupSlug(startup) + "-measurement-title"}>
-    <div className="measurement-status__heading"><div><p className="eyebrow">Measurement system</p><h3 id={startupSlug(startup) + "-measurement-title"}>On-chain measurement readiness</h3></div><div className="measurement-status__badges"><StatusPill tone="mainnet">{contract.stage}</StatusPill><StatusPill tone={contract.attributionState === "verified" ? "verified" : contract.attributionState === "partial" ? "partial" : "outstanding"}>{contract.attributionLabel}</StatusPill></div></div>
-    <div className="measurement-readiness"><span>Measurement readiness</span><strong><i aria-hidden="true" />{contract.readinessLabel}</strong></div>
-    <div className="measurement-status__grid">
-      <section className="measurement-panel"><h4>Known on-chain sources</h4>{contract.sources.length ? <ul className="measurement-sources">{contract.sources.map((source) => <li key={source.label + source.address}><div><strong>{source.label}</strong><span>{source.confirmation}</span></div>{source.explorerUrl ? <a href={source.explorerUrl} target="_blank" rel="noopener noreferrer" title={source.address} aria-label={source.label + ": " + source.address}>{shortAddress(source.address)}</a> : <code title={source.address}>{shortAddress(source.address)}</code>}</li>)}</ul> : <p className="measurement-empty">{contract.sourceEmptyMessage}</p>}</section>
+    <div className="measurement-status__heading"><div><p className="eyebrow">Measurement system</p><h3 id={startupSlug(startup) + "-measurement-title"}>Measurement status</h3></div></div>
+    <div className="measurement-status__grid measurement-status__grid--coverage-first">
       <section className="measurement-panel"><h4>Data coverage</h4><ul className="measurement-coverage">{contract.coverage.map((item) => <li key={item.label}><span>{item.label}</span><strong data-status={item.status}>{item.statusLabel}</strong></li>)}</ul></section>
+      <section className="measurement-panel"><h4>Known on-chain infrastructure</h4>{contract.sources.length ? <ul className="measurement-sources">{contract.sources.map((source) => <li key={source.label + source.address}><div><strong>{source.label}</strong><span>{source.confirmation}</span></div>{source.explorerUrl ? <a href={source.explorerUrl} target="_blank" rel="noopener noreferrer" title={source.address} aria-label={source.label + ": " + source.address}>{shortAddress(source.address)}</a> : <code title={source.address}>{shortAddress(source.address)}</code>}</li>)}</ul> : <p className="measurement-empty">{contract.sourceEmptyMessage}</p>}</section>
     </div>
     <section className="measurement-panel measurement-performance"><h4>Performance</h4><div className="measurement-metrics">{contract.metrics.map((metric) => <article key={metric.label}><span>{metric.label}</span><strong aria-label={metric.label + " value unavailable"}>—</strong><small>{metric.statusLabel}</small></article>)}</div></section>
     <p className="measurement-status__note">No live pipeline values are connected. Research aggregates elsewhere in this report are not promoted into this measurement contract.</p>
@@ -298,16 +304,23 @@ function StartupDetail({ startup, onBack, chartProps }) {
   const narrative = startup.reportNarrative ?? {};
   const finding = startup.canonicalFinding ?? startup.finding;
   const continuity = narrative.retention ?? narrative.testingContinuity ?? narrative.continuity;
+  const stage = canonicalStartupStage(startup);
+  const contract = buildStartupMeasurementStatus(startup, { stage, attributionState: attributionState(startup) });
   return <section className={"startup-profile startup-profile--" + technicalGroup(startup).toLowerCase().replace(/[^a-z]+/g, "-")} aria-label={displayName(startup) + " profile"}>
-    <button type="button" className="profile-back" onClick={onBack}>&larr; Back to startups</button>
-    <header className="startup-detail__header">
+    <button type="button" className="profile-back" onClick={onBack}>&larr; Back to All Startups</button>
+    <header className="startup-detail__header startup-intelligence-hero">
       <ProjectLogo startup={startup} profile />
       <div><p className="eyebrow">{startup.sector}</p><h2>{displayName(startup)}</h2><p>{startup.whatItBuilds ?? startup.summary}</p></div>
       <StatusPill tone={isMainnet(startup) ? "mainnet" : "research"}>{researchStatus(startup)}</StatusPill>
     </header>
+    <section className="startup-intelligence-state" aria-label="Startup intelligence status">
+      <div><span>Canonical stage</span><StatusPill tone={canonicalStageTone[stage]}>{canonicalStageLabel[stage]}</StatusPill></div>
+      {contract && <><div><span>Attribution state</span><StatusPill tone={contract.attributionState === "verified" ? "verified" : contract.attributionState === "partial" ? "partial" : "outstanding"}>{contract.attributionLabel}</StatusPill></div><div><span>Measurement readiness</span><strong><i aria-hidden="true" />{contract.readinessLabel}</strong></div></>}
+    </section>
+    <StartupProgression stage={stage} />
+    <MeasurementStatus startup={startup} contract={contract} />
     <ReportIntroductionLinks startup={startup} />
     <section className="canonical-finding"><p className="eyebrow">Canonical finding</p><RichNarrative id={startupSlug(startup) + "-canonical-finding"} value={finding} /></section>
-    <MeasurementStatus startup={startup} />
     <DevelopmentNotice startup={startup} />
     <ReportKpis startup={startup} />
     <DevelopmentProgress startup={startup} />
@@ -325,8 +338,7 @@ function StartupDetail({ startup, onBack, chartProps }) {
     <div><DevelopmentDisclosure startup={startup} label="Sources and methodology"><SourceLinks startup={startup} /></DevelopmentDisclosure></div>
     {isDevelopmentReport(startup) && <p className="static-research-notice">This report reflects evidence available up to the stated data cutoff. Metrics are not continuously updated unless a new research cycle is completed.</p>}
   </section>;
-}
-const internalResearchPipeline = ["Directory intake", "Identity verification", "Product research", "Technical classification", "Evidence collection", "Queue assignment", "Publication"];
+}const internalResearchPipeline = ["Directory intake", "Identity verification", "Product research", "Technical classification", "Evidence collection", "Queue assignment", "Publication"];
 
 function QueueList({ rows }) {
   return <section className="mainnet-queue" aria-label="Mainnet analysis queue"><h2>Mainnet analysis queue</h2><div>{rows.map((row) => <article key={row.profilePath}><div><h3>{row.startup}</h3><p>{row.network}</p></div><StatusPill tone={row.addressStatus === "Verified address - ready for analysis" ? "verified" : "outstanding"}>{row.addressStatus}</StatusPill>{row.entryPoint && <a href={row.entryPointUrl} target="_blank" rel="noopener noreferrer">{row.entryPoint}</a>}<p>{row.nextAction}</p><a href={row.profilePath}>Open startup profile</a></article>)}</div></section>;

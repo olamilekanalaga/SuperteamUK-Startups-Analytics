@@ -611,3 +611,58 @@
 @media (max-width: 340px) {
   .measurement-metrics { grid-template-columns: 1fr; }
 }
+
+/* Startup intelligence route hierarchy */
+.startup-intelligence-state {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 18px 0 14px;
+}
+.startup-intelligence-state > div,
+.startup-progress {
+  border: 1px solid var(--analytics-card-border);
+  border-radius: 16px;
+  background: var(--analytics-card-background);
+  box-shadow: var(--analytics-card-shadow);
+}
+.startup-intelligence-state > div {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  min-height: 88px;
+  padding: 14px 16px;
+  gap: 9px;
+}
+.startup-intelligence-state > div > span,
+.startup-progress > span {
+  color: var(--secondary);
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.startup-intelligence-state strong { display: flex; align-items: center; gap: 8px; font-size: 15px; }
+.startup-intelligence-state strong i { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 15%, transparent); }
+.startup-progress { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 13px 16px; }
+.startup-progress ol { display: flex; align-items: center; gap: 9px; margin: 0; padding: 0; list-style: none; }
+.startup-progress li { display: flex; align-items: center; gap: 9px; color: var(--secondary); font-size: 12px; font-weight: 700; }
+.startup-progress li:not(:last-child)::after { content: "→"; color: var(--secondary); opacity: .65; }
+.startup-progress li.current { color: var(--text); }
+.startup-progress li.current::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 17%, transparent); }
+.measurement-status__grid--coverage-first { grid-template-areas: "coverage sources"; }
+.measurement-status__grid--coverage-first > :first-child { grid-area: coverage; }
+.measurement-status__grid--coverage-first > :last-child { grid-area: sources; }
+@media (max-width: 720px) {
+  .startup-profile { padding-top: 16px; }
+  .profile-back { margin-bottom: 18px; }
+  .startup-intelligence-hero { gap: 14px; }
+  .startup-intelligence-hero .project-logo--profile { width: 64px; height: 64px; }
+  .startup-intelligence-state { grid-template-columns: 1fr; gap: 9px; margin-top: 14px; }
+  .startup-intelligence-state > div { min-height: 70px; padding: 12px 14px; }
+  .startup-progress { display: grid; gap: 10px; overflow: hidden; }
+  .startup-progress ol { width: 100%; justify-content: space-between; gap: 4px; }
+  .startup-progress li { gap: 4px; font-size: 10px; }
+  .measurement-status { margin-top: 20px; }
+  .measurement-status__grid--coverage-first { grid-template-areas: "coverage" "sources"; }
+}
