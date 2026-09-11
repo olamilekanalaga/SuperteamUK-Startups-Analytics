@@ -9,7 +9,7 @@ const startups=data.queries.researched_startups.rows;
 const contractFor=(name)=>{const startup=startups.find((row)=>row.startup===name);return buildStartupMeasurementStatus(startup,{stage:canonicalStartupStage(startup),attributionState:attributionState(startup)});};
 test("measurement status applies dynamically to all and only canonical Mainnet startups",()=>{
   const contracts=startups.map((startup)=>buildStartupMeasurementStatus(startup,{stage:canonicalStartupStage(startup),attributionState:attributionState(startup)})).filter(Boolean);
-  assert.equal(contracts.length,30);
+  assert.equal(contracts.length,32);
   assert.equal(buildStartupMeasurementStatus(startups.find((row)=>row.startup==="END Corp"),{stage:"DEVNET",attributionState:"verified"}),null);
 });
 test("Purebet is partial, fully measurable, source-ready, and empty of live values",()=>{
