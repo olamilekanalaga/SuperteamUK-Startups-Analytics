@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 
 import { ChartRenderer, DataComponent, DataTable, MetricCard, RichNarrative, useDataApp } from "../../data-app-public.jsx";
-import { CANONICAL_STAGE, attributionState, canonicalStageLabel, canonicalStageTone, canonicalStartupStage, deriveEcosystemStageCounts } from "./startup-stage.js";
+import { CANONICAL_STAGE, attributionState, canonicalStageLabel, canonicalStageTone, canonicalStartupStage, deriveEcosystemStageCounts, publicStartupDataset } from "./startup-stage.js";
 import { buildStartupMeasurementStatus } from "../../../analytics/measurement/startup-contract.js";
 
 const statusSpec = { type: "bar", x: "category", y: "startups", showXAxisLabel: false, showYAxisLabel: false };
@@ -204,11 +204,11 @@ function EcosystemImpactPage({ startups, counts, industries, onNavigate }) {
   const contributors = impactContributorRowsFor(startups).slice(0, 3);
   const goToDirectory = () => onNavigate("/startups");
   const flywheelNodes = [
-    { key: "builders", label: "Builders", detail: `${counts.total} builders tracked` },
+    { key: "builders", label: "Builders", detail: `${counts.total} startups tracked` },
     { key: "apps", label: "Apps", detail: `${counts.DEVNET} Devnet · ${counts.MAINNET} Mainnet` },
-    { key: "markets", label: "Users & markets", detail: "Activity measured by industry" },
+    { key: "markets", label: "Economic activity", detail: "Activity measured by industry" },
     { key: "revenue", label: "Revenue", detail: "—" },
-    { key: "reinvestment", label: "Reinvestment", detail: "— capital raised" },
+    { key: "reinvestment", label: "More builders", detail: "— capital raised" },
   ];
   const builderMetrics = [
     ["Monthly active developers", "—", "Developer activity is not yet tracked"],
@@ -218,7 +218,7 @@ function EcosystemImpactPage({ startups, counts, industries, onNavigate }) {
   return <section className="impact-page" aria-labelledby="impact-page-title">
     <header className="impact-page__hero"><div><h1 id="impact-page-title">How Superteam UK contributes to Solana</h1><p>Builders <span>→</span> Apps <span>→</span> Economic activity <span>→</span> Revenue <span>→</span> More builders</p></div><span className="impact-data-badge">Evidence-led</span></header>
     <section className="impact-summary-grid" aria-label="Ecosystem impact summary">
-      <ImpactSummaryCard tone="coral" icon="♟" label="Builders tracked" value={counts.total} detail="Unique builders in Superteam UK" />
+      <ImpactSummaryCard tone="coral" icon="♟" label="Startups tracked" value={counts.total} detail="Startups in the audited Superteam UK directory" />
       <ImpactSummaryCard tone="lavender" icon="◇" label="Mainnet apps" value={counts.MAINNET} detail="Apps live on Solana mainnet" />
       <ImpactSummaryCard tone="gold" icon="▥" label="App revenue" value="—" detail="No compatible revenue total" />
       <ImpactSummaryCard tone="mint" icon="▥" label="Capital raised" value="—" detail="Comparable funding total unavailable" />
@@ -241,7 +241,7 @@ function DirectoryHome({ startups, counts, industries, measuredCount, search, se
   };
   const chooseIndustry = (label) => { setSector(label); globalThis.setTimeout(() => scrollTo("directory"), 0); };
   return <>
-    <section id="home" className="directory-hero"><div><p className="eyebrow">Superteam / UK</p><h1>Superteam UK Startup Intelligence</h1><p>Building <span>→</span> Devnet <span>→</span> Mainnet <span>→</span> Growth</p></div><aside><strong>UK builders.<br />Global impact.</strong><span>Real startups. Real progress.</span></aside></section>
+    <section id="home" className="directory-hero"><div><p className="eyebrow">Superteam / UK</p><h1>Superteam UK Startup Analytics</h1><p>Building <span>→</span> Devnet <span>→</span> Mainnet <span>→</span> Growth</p></div><aside><strong>UK builders.<br />Global impact.</strong><span>Real startups. Real progress.</span></aside></section>
     <section className="headline-metrics" aria-label="Ecosystem headline metrics">
       <HeadlineMetricCard tone="coral" icon="♟" label="Total startups" value={counts.total} onClick={() => chooseStage("All")} />
       <HeadlineMetricCard tone="lavender" icon="▰" label="Mainnet" value={counts.MAINNET} onClick={() => chooseStage("Mainnet")} />
@@ -562,24 +562,24 @@ function DirectoryControls({ search, setSearch, technical, setTechnical, sector,
 
 export function DashboardContent() {
   const { snapshot, reviewedRows, chartProps } = useDataApp();
-  const startups = reviewedRows("researched_startups");
+  const allStartups = reviewedRows("researched_startups");
+  const startups = useMemo(() => publicStartupDataset(allStartups), [allStartups]);
   const [pathname, setPathname] = useState(currentPathname);
   const [search, setSearch] = useState("");
   const [technical, setTechnical] = useState("All");
   const [sector, setSector] = useState("All");
   const [sort, setSort] = useState("directory");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const route = useMemo(() => routeFromPathname(pathname, startups), [pathname, startups]);
+  const route = useMemo(() => routeFromPathname(pathname, allStartups), [pathname, allStartups]);
   const view = route.view;
   const selected = route.startup;
-  const summarySource = reviewedRows("research_summary")[0];
   const summary = useMemo(() => ({
-    directoryStartups: summarySource.directoryStartups,
+    directoryStartups: startups.length,
     researched: startups.length,
     nonMainnet: startups.filter((item) => !isMainnet(item)).length,
     mainnetQueue: startups.filter(isMainnet).length,
-    completionRate: startups.length / summarySource.directoryStartups,
-  }), [startups, summarySource.directoryStartups]);
+    completionRate: startups.length ? 1 : 0,
+  }), [startups]);
   const ecosystemStages = useMemo(() => deriveEcosystemStageCounts(startups), [startups]);
   const measuredCount = useMemo(() => startups.filter((startup) => canonicalStartupStage(startup) === CANONICAL_STAGE.MAINNET && (startup.headlineKpis ?? []).length > 0).length, [startups]);
   const statusRows = useMemo(() => distributionRows(startups.map((item) => item.technicalState), "category"), [startups]);
@@ -639,7 +639,7 @@ export function DashboardContent() {
   const sectionClick = (item) => item.id === "impact" ? navClick(item.href) : goToSection(item.id);
   const sectionIsActive = (item) => view === "impact" ? item.id === "impact" : view === "archive" && !selected && item.id === "home";
 
-  return <article className="page startup-archive" aria-label="Superteam UK startup intelligence"><div className="archive-frame">
+  return <article className="page startup-archive" aria-label="Superteam UK startup analytics"><div className="archive-frame">
     <aside className="archive-rail" aria-label="Homepage sections">
       <a className="sidebar-brand" href="/startups#home" onClick={goToSection("home")}><BrandMark /><span><strong>SuperteamUK</strong><small>Builders. Community. Impact.</small></span></a>
       <nav>{sectionItems.map((item) => <a key={item.id} className={sectionIsActive(item) ? "active" : undefined} href={item.href} onClick={sectionClick(item)}><span aria-hidden="true">{item.icon}</span>{item.label}</a>)}</nav>

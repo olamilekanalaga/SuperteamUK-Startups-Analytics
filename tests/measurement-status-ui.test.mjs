@@ -64,6 +64,7 @@ test("ecosystem impact route uses verified counts and empty-safe flywheel metric
   assert.match(source,/pathname === "\/startups\/impact"/u);
   assert.match(source,/How Superteam UK contributes to Solana/u);
   assert.match(source,/Builders.*Apps.*Economic activity.*Revenue.*More builders/su);
+  assert.match(source,/label="Startups tracked"/u);
   assert.match(source,/Monthly active developers/u);
   assert.match(source,/90-day developer retention/u);
   assert.match(source,/Devnet → Mainnet launches/u);

@@ -40,7 +40,7 @@ test("derived totals reflect the founder-confirmed Xeno off-chain classification
 test("pathname is the source of truth for overview, directory, insights, profiles, invalid slugs, and history", () => {
   for (const route of ['pathname === "/"', 'pathname === "/startups"', 'pathname === "/insights"', "profileSlugFromPath(pathname)"]) assert.ok(source.includes(route), route);
   assert.match(source, /useState\(currentPathname\)/u);
-  assert.match(source, /routeFromPathname\(pathname, startups\)/u);
+  assert.match(source, /routeFromPathname\(pathname, allStartups\)/u);
   assert.match(source, /addEventListener\("popstate"/u);
   assert.match(source, /history\.pushState/u);
   assert.match(source, /route\.notFound[\s\S]*Startup profile unavailable/u);
@@ -262,6 +262,33 @@ test("public navigation follows the homepage section model while preserving hidd
   assert.match(source, /className="mobile-bottom-nav"/u);
   assert.match(source, /className="mobile-site-menu"/u);
   assert.match(css, /@media \(max-width: 800px\)[\s\S]*\.archive-rail \{ display: none;/u);
+});
+
+test("public ecosystem views use the audited 73-startup directory population", async () => {
+  const { publicStartupDataset, deriveEcosystemStageCounts } = await import("../src/content/dashboard/startup-stage.js");
+  const publicStartups = publicStartupDataset(startups);
+  assert.equal(publicStartups.length, 73);
+  assert.equal(new Set(publicStartups.map((row) => row.id)).size, 73);
+  assert.deepEqual(startups.filter((row) => !publicStartups.includes(row)).map((row) => row.startup), ["Cluck Rush", "Fitter Circle", "Prob Trade", "Parasol"]);
+  assert.deepEqual(deriveEcosystemStageCounts(publicStartups), {
+    total: 73,
+    OFFCHAIN: 22,
+    BUILDING: 4,
+    DEVNET: 4,
+    MAINNET: 30,
+    HISTORICAL_MAINNET: 2,
+    UNRESOLVED: 10,
+    INACTIVE: 1,
+  });
+  assert.match(source, /routeFromPathname\(pathname, allStartups\)/u);
+  assert.match(source, /publicStartupDataset\(allStartups\)/u);
+});
+
+test("public product branding uses Analytics without rewriting startup descriptions", () => {
+  assert.match(source, /Superteam UK Startup Analytics/u);
+  assert.match(source, /aria-label="Superteam UK startup analytics"/u);
+  assert.doesNotMatch(source, /Superteam UK Startup Intelligence/u);
+  assert.ok(startups.some((row) => /intelligence/iu.test(JSON.stringify(row))), "startup-owned intelligence wording remains in the research data");
 });
 
 test("directory supports approved search, stage and industry filters without changing source records", () => {
