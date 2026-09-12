@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 
 import { ChartRenderer, DataComponent, DataTable, MetricCard, RichNarrative, useDataApp } from "../../data-app-public.jsx";
-import { CANONICAL_STAGE, attributionState, canonicalStageLabel, canonicalStageTone, canonicalStartupStage, deriveEcosystemStageCounts } from "./startup-stage.js";
+import { CANONICAL_STAGE, attributionState, canonicalStageLabel, canonicalStageTone, canonicalStartupStage, deriveEcosystemStageCounts, publicStartupDataset } from "./startup-stage.js";
 import { buildStartupMeasurementStatus } from "../../../analytics/measurement/startup-contract.js";
 
 const statusSpec = { type: "bar", x: "category", y: "startups", showXAxisLabel: false, showYAxisLabel: false };
@@ -562,24 +562,24 @@ function DirectoryControls({ search, setSearch, technical, setTechnical, sector,
 
 export function DashboardContent() {
   const { snapshot, reviewedRows, chartProps } = useDataApp();
-  const startups = reviewedRows("researched_startups");
+  const allStartups = reviewedRows("researched_startups");
+  const startups = useMemo(() => publicStartupDataset(allStartups), [allStartups]);
   const [pathname, setPathname] = useState(currentPathname);
   const [search, setSearch] = useState("");
   const [technical, setTechnical] = useState("All");
   const [sector, setSector] = useState("All");
   const [sort, setSort] = useState("directory");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const route = useMemo(() => routeFromPathname(pathname, startups), [pathname, startups]);
+  const route = useMemo(() => routeFromPathname(pathname, allStartups), [pathname, allStartups]);
   const view = route.view;
   const selected = route.startup;
-  const summarySource = reviewedRows("research_summary")[0];
   const summary = useMemo(() => ({
-    directoryStartups: summarySource.directoryStartups,
+    directoryStartups: startups.length,
     researched: startups.length,
     nonMainnet: startups.filter((item) => !isMainnet(item)).length,
     mainnetQueue: startups.filter(isMainnet).length,
-    completionRate: startups.length / summarySource.directoryStartups,
-  }), [startups, summarySource.directoryStartups]);
+    completionRate: startups.length ? 1 : 0,
+  }), [startups]);
   const ecosystemStages = useMemo(() => deriveEcosystemStageCounts(startups), [startups]);
   const measuredCount = useMemo(() => startups.filter((startup) => canonicalStartupStage(startup) === CANONICAL_STAGE.MAINNET && (startup.headlineKpis ?? []).length > 0).length, [startups]);
   const statusRows = useMemo(() => distributionRows(startups.map((item) => item.technicalState), "category"), [startups]);

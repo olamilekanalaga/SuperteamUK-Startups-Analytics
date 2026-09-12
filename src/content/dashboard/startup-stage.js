@@ -8,6 +8,19 @@ export const CANONICAL_STAGE = Object.freeze({
   INACTIVE: "INACTIVE",
 });
 
+// Retain all reviewed research while keeping public ecosystem views aligned to
+// the currently authenticated Superteam UK directory membership.
+export const PUBLIC_DIRECTORY_EXCLUDED_IDS = Object.freeze([
+  "STUK-057",
+  "STUK-060",
+  "STUK-063",
+  "STUK-065",
+]);
+
+const publicDirectoryExcludedIds = new Set(PUBLIC_DIRECTORY_EXCLUDED_IDS);
+
+export const publicStartupDataset = (startups) => startups.filter((startup) => !publicDirectoryExcludedIds.has(startup.id));
+
 const unverifiedStageById = Object.freeze({
   "STUK-003": CANONICAL_STAGE.OFFCHAIN,
   "STUK-007": CANONICAL_STAGE.BUILDING,
