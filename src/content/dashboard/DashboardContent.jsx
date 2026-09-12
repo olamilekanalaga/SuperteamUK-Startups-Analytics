@@ -241,7 +241,7 @@ function DirectoryHome({ startups, counts, industries, measuredCount, search, se
   };
   const chooseIndustry = (label) => { setSector(label); globalThis.setTimeout(() => scrollTo("directory"), 0); };
   return <>
-    <section id="home" className="directory-hero"><div><p className="eyebrow">Superteam / UK</p><h1>Superteam UK Startup Intelligence</h1><p>Building <span>→</span> Devnet <span>→</span> Mainnet <span>→</span> Growth</p></div><aside><strong>UK builders.<br />Global impact.</strong><span>Real startups. Real progress.</span></aside></section>
+    <section id="home" className="directory-hero"><div><p className="eyebrow">Superteam / UK</p><h1>Superteam UK Startup Analytics</h1><p>Building <span>→</span> Devnet <span>→</span> Mainnet <span>→</span> Growth</p></div><aside><strong>UK builders.<br />Global impact.</strong><span>Real startups. Real progress.</span></aside></section>
     <section className="headline-metrics" aria-label="Ecosystem headline metrics">
       <HeadlineMetricCard tone="coral" icon="♟" label="Total startups" value={counts.total} onClick={() => chooseStage("All")} />
       <HeadlineMetricCard tone="lavender" icon="▰" label="Mainnet" value={counts.MAINNET} onClick={() => chooseStage("Mainnet")} />
