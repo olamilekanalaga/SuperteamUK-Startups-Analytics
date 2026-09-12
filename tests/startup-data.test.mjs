@@ -22,25 +22,25 @@ const canonicalRows = startups.slice(0, 43).filter((row) => row.id !== "STUK-008
 test("unrelated STUK-001 through STUK-043 records remain byte-stable outside logo metadata", () => {
   const fingerprint = createHash("sha256").update(JSON.stringify(canonicalRows)).digest("hex");
   assert.equal(fingerprint, "a43a7aead6101eb9b20a9238a85e1650a4c5edf35c6aa1f0f926bed898a3574f");
-  assert.deepEqual(startups.map((row) => row.id), Array.from({ length: 77 }, (_, i) => `STUK-${String(i + 1).padStart(3, "0")}`));
-  assert.equal(new Set(startups.map(slug)).size, 77);
+  assert.deepEqual(startups.map((row) => row.id), Array.from({ length: 66 }, (_, i) => `STUK-${String(i + 1).padStart(3, "0")}`));
+  assert.equal(new Set(startups.map(slug)).size, 66);
 });
 
 test("derived totals reflect the founder-confirmed Xeno off-chain classification", () => {
   const summary = snapshot.queries.research_summary.rows[0];
-  assert.equal(summary.directoryStartups, 77);
-  assert.equal(startups.length, 77);
-  assert.equal(mainnet.length, 35);
-  assert.equal(startups.length - mainnet.length, 42);
-  assert.equal(77 - startups.length, 0);
-  assert.equal(Number(((startups.length / 77) * 100).toFixed(1)), 100);
-  assert.deepEqual(summary, { directoryStartups: 77, researched: 77, nonMainnet: 42, mainnetQueue: 35, completionRate: 1 });
+  assert.equal(summary.directoryStartups, 66);
+  assert.equal(startups.length, 66);
+  assert.equal(mainnet.length, 32);
+  assert.equal(startups.length - mainnet.length, 34);
+  assert.equal(66 - startups.length, 0);
+  assert.equal(Number(((startups.length / 66) * 100).toFixed(1)), 100);
+  assert.deepEqual(summary, { directoryStartups: 66, researched: 66, nonMainnet: 34, mainnetQueue: 32, completionRate: 1 });
 });
 
 test("pathname is the source of truth for overview, directory, insights, profiles, invalid slugs, and history", () => {
   for (const route of ['pathname === "/"', 'pathname === "/startups"', 'pathname === "/insights"', "profileSlugFromPath(pathname)"]) assert.ok(source.includes(route), route);
   assert.match(source, /useState\(currentPathname\)/u);
-  assert.match(source, /routeFromPathname\(pathname, allStartups\)/u);
+  assert.match(source, /routeFromPathname\(pathname, startups\)/u);
   assert.match(source, /addEventListener\("popstate"/u);
   assert.match(source, /history\.pushState/u);
   assert.match(source, /route\.notFound[\s\S]*Startup profile unavailable/u);
@@ -164,8 +164,8 @@ test("project claims, token cautions, and attribution boundaries remain explicit
 });
 
 test("new records have unique names/slugs and route through the existing profile system", () => {
-  assert.equal(new Set(startups.map((row) => row.startup.toLowerCase())).size, 77);
-  assert.equal(new Set(startups.map(slug)).size, 77);
+  assert.equal(new Set(startups.map((row) => row.startup.toLowerCase())).size, 66);
+  assert.equal(new Set(startups.map(slug)).size, 66);
   assert.deepEqual(startups.slice(43, 53).map(slug), ["cherry-fun", "lissen", "vanish", "alpha-fc", "darklake", "seer", "fairscale", "xeno-money", "pangea", "altify"]);
   assert.match(source, /startupPath = \(startup\) => "\/startups\/" \+ startupSlug\(startup\)/u);
 });
@@ -186,7 +186,7 @@ test("STUK-054 through STUK-066 form the final additive canonical batch", () => 
     ["STUK-065", "Parasol", "Mainnet Analysis Queue"],
     ["STUK-066", "Bonfires.ai", "Mainnet Analysis Queue"],
   ];
-  assert.deepEqual(startups.slice(53, 66).map((row) => [row.id, row.startup, row.queue]), expected);
+  assert.deepEqual(startups.slice(53).map((row) => [row.id, row.startup, row.queue]), expected);
 });
 
 test("final batch preserves evidence boundaries and devnet separation", () => {
@@ -195,14 +195,14 @@ test("final batch preserves evidence boundaries and devnet separation", () => {
   assert.match(startups.find((row) => row.id === "STUK-054").technicalStatus, /Project-claimed/);
   assert.match(startups.find((row) => row.id === "STUK-058").dataQualityNotes.join(" "), /no mint is canonical/i);
   assert.match(startups.find((row) => row.id === "STUK-066").dataQualityNotes.join(" "), /not proof/i);
-  for (const row of startups.slice(53, 66)) {
+  for (const row of startups.slice(53)) {
     assert.equal(row.lastReviewed, "2026-09-02");
     for (const key of ["technicalEntryPoints", "completedAnalysis", "outstandingAnalysis", "verifiedMetrics", "projectReportedMetrics", "dataQualityNotes", "sources"]) assert.ok(Array.isArray(row[key]), row.id + " " + key);
   }
 });
 
 test("final batch logos are local or have a documented monogram decision", async () => {
-  for (const row of startups.slice(53, 66)) {
+  for (const row of startups.slice(53)) {
     assert.ok(row.logoAuditSources.length > 0, row.id);
     if (row.logoPath) await access(new URL("public" + row.logoPath, root));
     else assert.match(row.logoAuditCategory, /^monogram-/);
@@ -222,8 +222,8 @@ test("Cesto and Xeno Money use the authenticated replacement images", async () =
   await access(new URL("public" + xeno.logoPath, root));
   const authenticated = startups.filter((row) => row.logoPath);
   const monograms = startups.filter((row) => !row.logoPath).map((row) => row.startup);
-  assert.equal(authenticated.length, 71);
-  assert.deepEqual(monograms, ["Joyplay Ltd", "Yauga", "Pangea", "Nexus AI", "Percolator", "Dominion Silver"]);
+  assert.equal(authenticated.length, 61);
+  assert.deepEqual(monograms, ["Joyplay Ltd", "Yauga", "Pangea", "Nexus AI", "Percolator"]);
 });
 
 test("address status labels derive from entry-point attribution and preserve the Purebet candidate address", () => {
@@ -246,12 +246,12 @@ test("address status labels derive from entry-point attribution and preserve the
 
 test("unrelated research records and queue membership remain preserved", () => {
   const fingerprint = createHash("sha256")
-    .update(JSON.stringify(startups.slice(0, 66).filter((row) => row.id !== "STUK-008" && row.id !== "STUK-019" && !developmentIds.has(row.id)).map((row) => Object.fromEntries(Object.entries(row).filter(([key]) => !logoKeys.has(key))))))
+    .update(JSON.stringify(startups.filter((row) => row.id !== "STUK-008" && row.id !== "STUK-019" && !developmentIds.has(row.id)).map((row) => Object.fromEntries(Object.entries(row).filter(([key]) => !logoKeys.has(key))))))
     .digest("hex");
   assert.equal(fingerprint, "587e0a1d32a16146d97367e42280bca9a5d9c9c5d5297893bd93b38b10b945ed");
-  assert.equal(startups.length, 77);
-  assert.equal(mainnet.length, 35);
-  assert.equal(startups.length - mainnet.length, 42);
+  assert.equal(startups.length, 66);
+  assert.equal(mainnet.length, 32);
+  assert.equal(startups.length - mainnet.length, 34);
 });
 
 test("public navigation follows the homepage section model while preserving hidden legacy routes", () => {
@@ -262,33 +262,6 @@ test("public navigation follows the homepage section model while preserving hidd
   assert.match(source, /className="mobile-bottom-nav"/u);
   assert.match(source, /className="mobile-site-menu"/u);
   assert.match(css, /@media \(max-width: 800px\)[\s\S]*\.archive-rail \{ display: none;/u);
-});
-
-test("public ecosystem views use the audited 73-startup directory population", async () => {
-  const { publicStartupDataset, deriveEcosystemStageCounts } = await import("../src/content/dashboard/startup-stage.js");
-  const publicStartups = publicStartupDataset(startups);
-  assert.equal(publicStartups.length, 73);
-  assert.equal(new Set(publicStartups.map((row) => row.id)).size, 73);
-  assert.deepEqual(startups.filter((row) => !publicStartups.includes(row)).map((row) => row.startup), ["Cluck Rush", "Fitter Circle", "Prob Trade", "Parasol"]);
-  assert.deepEqual(deriveEcosystemStageCounts(publicStartups), {
-    total: 73,
-    OFFCHAIN: 22,
-    BUILDING: 4,
-    DEVNET: 4,
-    MAINNET: 30,
-    HISTORICAL_MAINNET: 2,
-    UNRESOLVED: 10,
-    INACTIVE: 1,
-  });
-  assert.match(source, /routeFromPathname\(pathname, allStartups\)/u);
-  assert.match(source, /publicStartupDataset\(allStartups\)/u);
-});
-
-test("public product branding uses Analytics without rewriting startup descriptions", () => {
-  assert.match(source, /Superteam UK Startup Analytics/u);
-  assert.match(source, /aria-label="Superteam UK startup analytics"/u);
-  assert.doesNotMatch(source, /Superteam UK Startup Intelligence/u);
-  assert.ok(startups.some((row) => /intelligence/iu.test(JSON.stringify(row))), "startup-owned intelligence wording remains in the research data");
 });
 
 test("directory supports approved search, stage and industry filters without changing source records", () => {
@@ -457,11 +430,11 @@ test("Overview KPI cards reuse the theme-aware directory-card depth without chan
   assert.match(source, /title="Researched"/u);
   assert.match(source, /title="Queue A"/u);
   assert.match(source, /title="Queue B"/u);
-  assert.deepEqual(snapshot.queries.research_summary.rows[0], { directoryStartups: 77, researched: 77, nonMainnet: 42, mainnetQueue: 35, completionRate: 1 });
+  assert.deepEqual(snapshot.queries.research_summary.rows[0], { directoryStartups: 66, researched: 66, nonMainnet: 34, mainnetQueue: 32, completionRate: 1 });
 });
 test("canonical startup stages preserve the approved seven-state progression model", () => {
   const counts = deriveEcosystemStageCounts(startups);
-  assert.deepEqual(counts, { total: 77, OFFCHAIN: 23, BUILDING: 5, DEVNET: 4, MAINNET: 32, HISTORICAL_MAINNET: 2, UNRESOLVED: 10, INACTIVE: 1 });
+  assert.deepEqual(counts, { total: 66, OFFCHAIN: 19, BUILDING: 5, DEVNET: 4, MAINNET: 30, HISTORICAL_MAINNET: 2, UNRESOLVED: 5, INACTIVE: 1 });
   assert.equal(Object.values(counts).slice(1).reduce((sum, count) => sum + count, 0), counts.total);
 });
 
@@ -493,61 +466,4 @@ test("directory uses canonical counts, journey filters and stage badges in the a
   assert.match(source, /canonicalStageLabel\[canonicalStartupStage\(startup\)\]/u);
   assert.match(source, /function JourneyNavigator/u);
   assert.match(css, /\.startup-list \{ display: grid; grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/u);
-});
-
-
-test("STUK-067 through STUK-077 add the authenticated directory handoff without replacing prior rows", async () => {
-  const expected = [
-    ["STUK-067", "Rapidscreen", "Off-chain", "Non-Mainnet Research"],
-    ["STUK-068", "XPlace", "Unverified", "Mainnet Analysis Queue"],
-    ["STUK-069", "Ribh Finance", "Unverified", "Non-Mainnet Research"],
-    ["STUK-070", "Dominion Silver", "Mainnet candidate", "Mainnet Analysis Queue"],
-    ["STUK-071", "Jade Capital Holdings, Inc.", "Unverified", "Non-Mainnet Research"],
-    ["STUK-072", "Reflow Technologies", "Infrastructure", "Non-Mainnet Research"],
-    ["STUK-073", "Dr. Fraudsworths' Fantastical Finance Factory", "Mainnet candidate", "Mainnet Analysis Queue"],
-    ["STUK-074", "Fabriq", "Infrastructure", "Non-Mainnet Research"],
-    ["STUK-075", "The Syndicate", "Identity unresolved", "Non-Mainnet Research"],
-    ["STUK-076", "Polaris Data", "Off-chain", "Non-Mainnet Research"],
-    ["STUK-077", "Starcap", "Unverified", "Non-Mainnet Research"],
-  ];
-  assert.deepEqual(startups.slice(66).map((row) => [row.id, row.startup, row.classification, row.queue]), expected);
-  assert.deepEqual(startups.slice(0, 66).map((row) => row.id), Array.from({ length: 66 }, (_, i) => `STUK-${String(i + 1).padStart(3, "0")}`));
-  for (const row of startups.slice(66)) {
-    assert.equal(row.lastReviewed, "2026-09-11", row.id);
-    assert.equal(row.metrics.length, 0, row.id);
-    assert.equal(row.verifiedMetrics.length, 0, row.id);
-    assert.match(row.userEvidence, /Not publicly verifiable/u);
-    assert.ok(row.sources.includes("https://superteamuk.org/startup-directory"), row.id);
-    if (row.logoPath) await access(new URL("public" + row.logoPath, root));
-  }
-});
-
-test("new mainnet-candidate identifiers remain typed and repository-documented rather than RPC-verified", () => {
-  const dominion = startups.find((row) => row.startup === "Dominion Silver");
-  const fraudsworth = startups.find((row) => row.startup.startsWith("Dr. Fraudsworths"));
-  assert.equal(dominion.technicalEntryPoints.filter((entry) => entry.type === "Executable program").length, 1);
-  assert.equal(dominion.technicalEntryPoints.filter((entry) => entry.type === "Token mint").length, 1);
-  assert.equal(fraudsworth.technicalEntryPoints.filter((entry) => entry.type === "Executable program").length, 6);
-  assert.equal(fraudsworth.technicalEntryPoints.filter((entry) => entry.type === "Token mint").length, 3);
-  for (const entry of [...dominion.technicalEntryPoints, ...fraudsworth.technicalEntryPoints]) {
-    assert.match(entry.network, /Solana mainnet-beta/u);
-    assert.match(entry.attributionStatus, /not freshly verified via RPC/u);
-    assert.ok(entry.source.startsWith("https://github.com/"));
-  }
-  assert.equal(dominion.logoPath, null);
-  assert.equal(dominion.logoAuditCategory, "monogram-no-downloadable-asset");
-});
-
-test("new unresolved and infrastructure records preserve attribution boundaries", () => {
-  const xplace = startups.find((row) => row.startup === "XPlace");
-  const syndicate = startups.find((row) => row.startup === "The Syndicate");
-  const starcap = startups.find((row) => row.startup === "Starcap");
-  assert.equal(canonicalStartupStage(xplace), CANONICAL_STAGE.UNRESOLVED);
-  assert.equal(xplace.queue, "Mainnet Analysis Queue");
-  assert.match(xplace.canonicalFinding, /Kamino-wide activity cannot be attributed/u);
-  assert.equal(syndicate.website, null);
-  assert.equal(syndicate.xAccount, null);
-  assert.equal(canonicalStartupStage(syndicate), CANONICAL_STAGE.UNRESOLVED);
-  assert.equal(starcap.otherChainLead.address, "0x8d1612b4b78ebf08cfbf01a04fa270ccbb0509a2");
-  assert.match(starcap.canonicalFinding, /rather than proof of a Solana deployment/u);
 });

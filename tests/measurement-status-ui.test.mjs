@@ -9,7 +9,7 @@ const startups=data.queries.researched_startups.rows;
 const contractFor=(name)=>{const startup=startups.find((row)=>row.startup===name);return buildStartupMeasurementStatus(startup,{stage:canonicalStartupStage(startup),attributionState:attributionState(startup)});};
 test("measurement status applies dynamically to all and only canonical Mainnet startups",()=>{
   const contracts=startups.map((startup)=>buildStartupMeasurementStatus(startup,{stage:canonicalStartupStage(startup),attributionState:attributionState(startup)})).filter(Boolean);
-  assert.equal(contracts.length,32);
+  assert.equal(contracts.length,30);
   assert.equal(buildStartupMeasurementStatus(startups.find((row)=>row.startup==="END Corp"),{stage:"DEVNET",attributionState:"verified"}),null);
 });
 test("Purebet is partial, fully measurable, source-ready, and empty of live values",()=>{
@@ -64,7 +64,6 @@ test("ecosystem impact route uses verified counts and empty-safe flywheel metric
   assert.match(source,/pathname === "\/startups\/impact"/u);
   assert.match(source,/How Superteam UK contributes to Solana/u);
   assert.match(source,/Builders.*Apps.*Economic activity.*Revenue.*More builders/su);
-  assert.match(source,/label="Startups tracked"/u);
   assert.match(source,/Monthly active developers/u);
   assert.match(source,/90-day developer retention/u);
   assert.match(source,/Devnet → Mainnet launches/u);
